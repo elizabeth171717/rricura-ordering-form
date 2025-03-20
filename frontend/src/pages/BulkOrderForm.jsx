@@ -156,7 +156,7 @@ const BulkOrderForm = () => {
             ))}
           </select>
 
-          <h2>Choose your tamale</h2>
+          <h2>Choose your tamale:</h2>
           <div className="tamale-options">
             {tamaleOptions.map((tamale) => (
               <div
