@@ -1,0 +1,207 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: #333;
+  font-weight: bold;
+ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+img{
+display: block;
+width: 100%;
+}
+
+a {text-decoration: none;
+color: #333;}
+
+h2{
+  margin: .50rem 0;
+}
+
+
+h3{
+  text-align: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  
+  padding: 2rem 1rem;
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.705); /* Modern depth */
+}
+
+.logo{
+  margin: 0 auto;
+  width: 250px;
+}
+
+
+.tamale-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.tamale-card {
+  width: 120px;
+  text-align: center;
+  border: 2px solid #ccc;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.705); /* Modern depth */
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+     margin: 1rem 0;
+}
+
+.tamale-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+
+.tamale-card.selected {
+  border-color:#9D0759;
+  background-color: #fff3e0;
+}
+
+
+.side-selection{
+  background-color: #9D0759;
+  color: white;
+  padding: .5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+
+.price-breakdown{
+  margin: .50rem 0;
+}
+
+     /* Style for input fields */
+     input:not([type="checkbox"]), textarea, select {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      background: #fff;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin: .25rem 0;
+    }
+    
+    /* Focus effect: glows and changes color */
+input:focus, textarea:focus, select:focus {
+  border-color: #9D0759;
+  box-shadow: 0 0 8px rgba(255, 59, 107, 0.3);
+}
+
+/* Placeholder styling */
+input::placeholder, textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Button Styling */
+button {
+  display: inline-block;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #9D0759, #ff7eb3);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 59, 107, 0.3);
+  margin: 2rem 0;
+}
+
+button:hover {
+  background: #9D0759;
+  box-shadow: 0 6px 15px rgba(255, 59, 107, 0.4);
+}
+
+button:active {
+  transform: scale(0.95); /* Shrinks the button slightly */
+}
+
+
+@media (min-width:50rem) {
+  form{
+    width: 100%;
+    
+  }
+ 
+  .form-container{
+    display: flex;
+ 
+ justify-content: space-around;
+    width: 100%;
+
+  }
+  .form-container>div{
+   
+    width: 40%;
+    padding: 1rem;
+  }
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.modal-message {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-button:hover {
+  background-color: #45a049;
+}
