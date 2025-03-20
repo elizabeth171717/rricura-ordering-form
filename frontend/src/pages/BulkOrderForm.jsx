@@ -14,7 +14,6 @@ import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
 
 const tamaleOptions = [
-  { name: "Sweet", price: 3.0, image: sweet },
   { name: "Rajas", price: 4.0, image: rajastamale },
   {
     name: "ChickenCornHusk",
@@ -27,6 +26,8 @@ const tamaleOptions = [
     price: 6.0,
     image: bananaleafchicken,
   },
+  { name: "Sweet", price: 3.0, image: sweet },
+
   { name: "PorkBananaLeaf", price: 6.0, image: bananaleafpork },
   { name: "Vegan", price: 5.0, image: vegantamale },
 ];
@@ -138,7 +139,7 @@ const BulkOrderForm = () => {
     <form onSubmit={handleSubmit} className="form">
       <img className="logo" src={Logo} />
       <h3>
-        💥Please note, we required a 2 days advance notice in all orders, We do
+        💥Please note, we required a 2 days advanced notice in all orders, We do
         not deliver Sundays!
       </h3>
       <div className="form-container">
