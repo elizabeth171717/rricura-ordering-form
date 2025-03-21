@@ -13,6 +13,12 @@ import cornporktamale from "../assets/cornporktamale.jpg";
 import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
 
+// Determine the backend URL based on the environment
+const BACKEND_URL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_BACKEND_URL_PRODUCTION
+    : import.meta.env.VITE_BACKEND_URL_DEVELOPMENT;
+
 const tamaleOptions = [
   { name: "Rajas", price: 4.0, image: rajastamale },
   {
@@ -122,10 +128,7 @@ const BulkOrderForm = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/order",
-        orderData
-      );
+      const response = await axios.post(`${BACKEND_URL}/order`, orderData);
       console.log("Order submitted:", response.data);
       setShowModal(true); // Show modal on success
       resetForm(); // Clear the form after submission
