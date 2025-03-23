@@ -3,7 +3,7 @@ import axios from "axios";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
-import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 
 import Logo from "../assets/logo.png";
 import sweet from "../assets/sweettamale.png";
@@ -14,7 +14,6 @@ import rajastamale from "../assets/rajastamale.jpg";
 import cornporktamale from "../assets/cornporktamale.jpg";
 import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
-import { CiTextAlignCenter } from "react-icons/ci";
 
 // Determine the backend URL based on the environment
 const BACKEND_URL =
