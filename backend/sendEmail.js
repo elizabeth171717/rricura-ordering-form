@@ -18,7 +18,8 @@ async function sendEmail(customerEmail, customerName, orderData) {
     const orderSummary = `
     Hi ${customerName},
 
-    We have received your order and are preparing it. Here are your order details:
+    Thank you for your order, here are the details, 
+    if you need to to change anything reply to these email , if everything looks fine we will send a payment link soon! :
 
     🔹 Order Summary:
     -Quantity:${quantity} tamales.
@@ -35,7 +36,7 @@ async function sendEmail(customerEmail, customerName, orderData) {
     ⏰ Time: ${deliveryTime}
     📍 Delivery Address: ${deliveryAddress?.street || "N/A"}, ${deliveryAddress?.city || "N/A"}, ${deliveryAddress?.state || "N/A"} ${deliveryAddress?.zip || "N/A"}
 
-    We will contact you when the driver is on the way.
+    
     Thank you for ordering from Rricura Tamales Mexicanos!
 
     

@@ -29,6 +29,7 @@ const CustomerInfo = ({
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
+        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
       />
       <br />
       <br />
@@ -38,6 +39,7 @@ const CustomerInfo = ({
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
         required
+        pattern="\d{10}"
       />
       <br />
       <br />

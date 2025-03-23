@@ -3,6 +3,8 @@ import axios from "axios";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
+import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
+
 import Logo from "../assets/logo.png";
 import sweet from "../assets/sweettamale.png";
 import bananaleafpork from "../assets/bananaleafpork.jpg";
@@ -12,6 +14,7 @@ import rajastamale from "../assets/rajastamale.jpg";
 import cornporktamale from "../assets/cornporktamale.jpg";
 import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
+import { CiTextAlignCenter } from "react-icons/ci";
 
 // Determine the backend URL based on the environment
 const BACKEND_URL =
@@ -81,7 +84,7 @@ const BulkOrderForm = () => {
     setCustomerName("");
     setCustomerEmail("");
     setCustomerPhone("");
-    setSelectedDate(null);
+    setSelectedDate("");
     setSelectedTime("");
     setDeliveryAddress({
       street: "",
@@ -91,8 +94,14 @@ const BulkOrderForm = () => {
     });
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent multiple clicks
+    if (isSubmitting) return;
+
     if (
       !quantity ||
       !selectedTamale ||
@@ -109,6 +118,9 @@ const BulkOrderForm = () => {
       alert("Please fill in all fields.");
       return;
     }
+
+    // Disable the button
+    setIsSubmitting(true);
 
     const orderData = {
       quantity,
@@ -135,16 +147,34 @@ const BulkOrderForm = () => {
     } catch (error) {
       console.error("Error submitting order:", error);
       alert("Failed to submit order.");
+    } finally {
+      setIsSubmitting(false); // Re-enable button after completion (optional)
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="form">
       <img className="logo" src={Logo} />
-      <h3>
-        💥Please note, we required a 2 days advanced notice in all orders, We do
-        not deliver Sundays!
-      </h3>
+      <div className="icon-container">
+        <a
+          href="https://www.instagram.com/r_ricura/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaInstagram />
+        </a>
+        <a
+          href="https://www.facebook.com/profile.php?id=61566890440038"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaFacebook />
+        </a>
+      </div>
+      <h5>
+        We required a 2 days advanced notice in all orders, We do not deliver
+        Sundays!
+      </h5>
       <div className="form-container">
         <div className="left">
           <h2>How many Tamales do you need?</h2>
@@ -204,7 +234,7 @@ const BulkOrderForm = () => {
             <p>
               Delivery Fee: ${subtotal > 0 ? deliveryFee.toFixed(2) : "0.00"}
             </p>
-            <h3>Total: ${subtotal > 0 ? total.toFixed(2) : "0.00"}</h3>
+            <h2>Total: ${subtotal > 0 ? total.toFixed(2) : "0.00"}</h2>
           </div>
         </div>
         <div className="right">
@@ -242,8 +272,12 @@ const BulkOrderForm = () => {
 
           <DeliveryAddress onAddressChange={handleAddressChange} />
 
-          <button type="submit" disabled={!quantity || !selectedTamale}>
-            Submit Order
+          <button
+            onClick={handleSubmit}
+            disabled={isSubmitting || !quantity || !selectedTamale}
+            className={`submit-button ${isSubmitting ? "disabled" : ""}`}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Order"}
           </button>
         </div>
       </div>

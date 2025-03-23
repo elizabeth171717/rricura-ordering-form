@@ -21,17 +21,18 @@ color: #333;}
 
 h2{
   margin: .50rem 0;
+  color: #9D0759;
 }
 
-
-h3{
+h5{
   text-align: center;
 }
+
 form {
   display: flex;
   flex-direction: column;
   
-  padding: 2rem 1rem;
+  padding:0 1rem 2rem 1rem;
   background-color: white;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.705); /* Modern depth */
 }
@@ -41,6 +42,11 @@ form {
   width: 250px;
 }
 
+.icon-container{
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+}
 
 .tamale-options {
   display: flex;
@@ -62,7 +68,8 @@ form {
 
 .tamale-card img {
   width: 100%;
-  height: auto;
+  height: 80%;;
+  object-fit: cover;
   border-radius: 8px;
 }
 
@@ -70,12 +77,12 @@ form {
 .tamale-card.selected {
   border-color:#9D0759;
   background-color: #fff3e0;
+  padding: .25rem;
 }
 
 
 .side-selection{
-  background-color: #9D0759;
-  color: white;
+  
   padding: .5rem;
   display: flex;
   gap: 1rem;
@@ -83,7 +90,9 @@ form {
 
 
 .price-breakdown{
-  margin: .50rem 0;
+ padding: .50rem;
+  border:1px solid #9D0759;
+
 }
 
      /* Style for input fields */
