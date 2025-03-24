@@ -30,15 +30,7 @@ app.post("/order", async (req, res) => {
     const orderData = req.body; // Receive the entire request body
     const { customerEmail, customerName } = orderData; // Extract customer info
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ success: false, message: "Invalid email format" });
-    }
-
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(phone)) {
-      return res.status(400).json({ success: false, message: "Invalid phone number. Must be 10 digits." });
-    }
+    
     
     console.log("New Order Received:", orderData);
 
