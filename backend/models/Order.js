@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+  orderNumber: { type: String, required: true, unique: true }, // Add orderNumber here
   quantity: { type: Number, required: true },
   tamale: { type: String, required: true },
   sourCream: { type: Number, required: true, default: 0 },

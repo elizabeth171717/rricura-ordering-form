@@ -93,6 +93,15 @@ const BulkOrderForm = () => {
     });
   };
 
+  const generateOrderNumber = () => {
+    const timestamp = Date.now(); // Marca de tiempo actual
+    const randomString = Math.random()
+      .toString(36)
+      .substring(2, 6)
+      .toUpperCase(); // 4 caracteres aleatorios
+    return `TML-${timestamp}-${randomString}`;
+  };
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -118,10 +127,12 @@ const BulkOrderForm = () => {
       return;
     }
 
+    const orderNumber = generateOrderNumber();
     // Disable the button
     setIsSubmitting(true);
 
     const orderData = {
+      orderNumber,
       quantity,
       tamale: selectedTamale.name,
       sourCream: sourCream ? 5.0 : 0,

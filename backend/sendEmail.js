@@ -13,14 +13,15 @@ async function sendEmail(customerEmail, customerName, orderData) {
   console.log("📨 Sending email to:", customerEmail);
   try {
     // Format order details for email
-    const { quantity, tamale, sourCream = 0, salsaVerde = 0, subtotal, tax, deliveryFee, total, deliveryDate, deliveryTime, deliveryAddress } = orderData;
+    const { orderNumber, quantity, tamale, sourCream = 0, salsaVerde = 0, subtotal, tax, deliveryFee, total, deliveryDate, deliveryTime, deliveryAddress } = orderData;
     
     const orderSummary = `
     Hi ${customerName},
 
-    Thank you for your order, here are the details, 
-    if you need to to change anything reply to these email , if everything looks fine we will send a payment link soon! :
+    Thank you for your order, we will send a payment link soon, 
+    if you need to make any changes feel free to reply to these email! :
 
+    🔹 **Order Number:** ${orderNumber}
     🔹 Order Summary:
     -Quantity:${quantity} tamales.
     - Tamales: ${tamale} 
@@ -51,7 +52,7 @@ async function sendEmail(customerEmail, customerName, orderData) {
     };
 
     await transporter.sendMail(customerMailOptions);
-    console.log("✅ Receipt email sent to customer:", customerEmail);
+    console.log(`✅ Receipt email sent to customer: ${customerEmail} (Order #${orderNumber})`);
 
     // 🔥 DEBUG: Check if OWNER_EMAIL exists
     if (!process.env.OWNER_EMAIL) {
