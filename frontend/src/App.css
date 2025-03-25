@@ -24,7 +24,7 @@ h2{
   color: #9D0759;
 }
 
-h5{
+h4{
   text-align: center;
 }
 
@@ -47,7 +47,9 @@ form {
   display: flex;
   gap: 1rem;
 }
-
+.icon-container a{
+font-size: 2rem;
+}
 
 .tamale-options {
   display: flex;

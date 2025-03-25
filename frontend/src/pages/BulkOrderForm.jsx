@@ -181,10 +181,10 @@ const BulkOrderForm = () => {
           <FaFacebook />
         </a>
       </div>
-      <h5>
+      <h4>
         We required a 2 days advanced notice in all orders, We do not deliver
         Sundays!
-      </h5>
+      </h4>
       <div className="form-container">
         <div className="left">
           <h2>How many Tamales do you need?</h2>
