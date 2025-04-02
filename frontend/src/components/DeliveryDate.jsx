@@ -24,6 +24,7 @@ const DeliveryDateComponent = ({ onDateSelect }) => {
   return (
     <div>
       <h2>Select Delivery Date:</h2>
+      <p>We require a 2 days advance notice in all order, close sundays.</p>
       <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}

@@ -4,7 +4,6 @@ import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
-
 import Logo from "../assets/logo.png";
 import sweet from "../assets/sweettamale.png";
 import bananaleafpork from "../assets/bananaleafpork.jpg";
@@ -15,36 +14,26 @@ import cornporktamale from "../assets/cornporktamale.jpg";
 import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
 
-// Determine the backend URL based on the environment
+// Backend URL configuration
 const BACKEND_URL =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_BACKEND_URL_PRODUCTION
     : import.meta.env.VITE_BACKEND_URL_DEVELOPMENT;
 
 const tamaleOptions = [
-  { name: "Rajas", price: 4.0, image: rajastamale },
-  {
-    name: "ChickenCornHusk",
-    price: 4.0,
-    image: chickentamale,
-  },
-  { name: "PorkCornHusk", price: 4.0, image: cornporktamale },
-  {
-    name: "ChickenBananaLeaf",
-    price: 6.0,
-    image: bananaleafchicken,
-  },
-  { name: "Sweet", price: 3.0, image: sweet },
-
-  { name: "PorkBananaLeaf", price: 6.0, image: bananaleafpork },
-  { name: "Vegan", price: 5.0, image: vegantamale },
+  { name: "Rajas", image: rajastamale, basePrice: 48 },
+  { name: "ChickenCornHusk", image: chickentamale, basePrice: 48 },
+  { name: "PorkCornHusk", image: cornporktamale, basePrice: 48 },
+  { name: "ChickenBananaLeaf", image: bananaleafchicken, basePrice: 72 },
+  { name: "PorkBananaLeaf", image: bananaleafpork, basePrice: 72 },
+  { name: "Vegan", image: vegantamale, basePrice: 60 },
+  { name: "Sweet", image: sweet, basePrice: 36 },
 ];
 
 const BulkOrderForm = () => {
-  const [quantity, setQuantity] = useState("");
-  const [selectedTamale, setSelectedTamale] = useState(null);
-  const [sourCream, setSourCream] = useState(false);
-  const [salsaVerde, setSalsaVerde] = useState(false);
+  const [selectedTamale, setSelectedTamale] = useState(
+    tamaleOptions.map((tamale) => ({ ...tamale, quantity: 0 }))
+  );
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -57,17 +46,26 @@ const BulkOrderForm = () => {
     zip: "",
   });
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const deliveryFee = 5.0;
   const taxRate = 0.08;
 
-  // Base subtotal calculation (Tamales + Sides)
-  const tamaleSubtotal =
-    quantity && selectedTamale ? quantity * selectedTamale.price : 0;
-  const sidesSubtotal = sourCream * 5 + salsaVerde * 5;
-  const subtotal = tamaleSubtotal + sidesSubtotal;
+  // Function to update tamale quantities
+  const handleQuantityChange = (index, newQuantity) => {
+    const updatedSelections = [...selectedTamale];
+    updatedSelections[index].quantity = newQuantity;
+    setSelectedTamale(updatedSelections);
+  };
 
-  // Tax and final total
+  // Calculate subtotal
+  const subtotal = selectedTamale.reduce(
+    (sum, tamale) => sum + tamale.basePrice * tamale.quantity,
+    0
+  );
+
+  // Calculate tax and total
   const tax = subtotal * taxRate;
+  const displayDeliveryFee = subtotal > 0 ? deliveryFee : 0;
   const total = subtotal + tax + (subtotal > 0 ? deliveryFee : 0);
 
   // Handle address change
@@ -75,15 +73,15 @@ const BulkOrderForm = () => {
     setDeliveryAddress(updatedAddress);
   };
 
+  // Reset form
   const resetForm = () => {
-    setQuantity("");
-    setSelectedTamale(null);
-    setSourCream(false);
-    setSalsaVerde(false);
+    setSelectedTamale(
+      tamaleOptions.map((tamale) => ({ ...tamale, quantity: 0 }))
+    );
     setCustomerName("");
     setCustomerEmail("");
     setCustomerPhone("");
-    setSelectedDate("");
+    setSelectedDate(null);
     setSelectedTime("");
     setDeliveryAddress({
       street: "",
@@ -93,26 +91,28 @@ const BulkOrderForm = () => {
     });
   };
 
+  // Generate order number
   const generateOrderNumber = () => {
-    const timestamp = Date.now(); // Marca de tiempo actual
+    const timestamp = Date.now();
     const randomString = Math.random()
       .toString(36)
       .substring(2, 6)
-      .toUpperCase(); // 4 caracteres aleatorios
+      .toUpperCase();
     return `TML-${timestamp}-${randomString}`;
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // Validate that at least one tamale is selected
+    if (selectedTamale.every((tamale) => tamale.quantity === 0)) {
+      alert("Please select at least one tamale.");
+      return;
+    }
 
-    // Prevent multiple clicks
+    e.preventDefault();
     if (isSubmitting) return;
 
     if (
-      !quantity ||
-      !selectedTamale ||
       !customerName ||
       !customerEmail ||
       !customerPhone ||
@@ -128,15 +128,11 @@ const BulkOrderForm = () => {
     }
 
     const orderNumber = generateOrderNumber();
-    // Disable the button
     setIsSubmitting(true);
 
     const orderData = {
       orderNumber,
-      quantity,
-      tamale: selectedTamale.name,
-      sourCream: sourCream ? 5.0 : 0,
-      salsaVerde: salsaVerde ? 5.0 : 0,
+      tamales: selectedTamale.filter((tamale) => tamale.quantity > 0),
       subtotal,
       tax,
       deliveryFee,
@@ -152,19 +148,23 @@ const BulkOrderForm = () => {
     try {
       const response = await axios.post(`${BACKEND_URL}/order`, orderData);
       console.log("Order submitted:", response.data);
-      setShowModal(true); // Show modal on success
-      resetForm(); // Clear the form after submission
+      setShowModal(true);
+      resetForm();
     } catch (error) {
       console.error("Error submitting order:", error);
       alert("Failed to submit order.");
     } finally {
-      setIsSubmitting(false); // Re-enable button after completion (optional)
+      setIsSubmitting(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      <img className="logo" src={Logo} />
+      <img className="logo" src={Logo} alt="Logo" />
+
+      <h3>
+        Transform you next event into a fiesta, full of flavor & Tradition!
+      </h3>
       <div className="icon-container">
         <a
           href="https://www.instagram.com/r_ricura/"
@@ -181,73 +181,64 @@ const BulkOrderForm = () => {
           <FaFacebook />
         </a>
       </div>
-      <h4>
-        We required a 2 days advanced notice in all orders, We do not deliver
-        Sundays!
-      </h4>
       <div className="form-container">
         <div className="left">
-          <h2>How many Tamales do you need?</h2>
-          <select
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-          >
-            <option value="">Select</option>
-            {[12, 24, 30, 50, 100, 200].map((num) => (
-              <option key={num} value={num}>
-                {num}
-              </option>
-            ))}
-          </select>
-
-          <h2>Choose your tamale:</h2>
+          {/* Tamale Selection Cards */}
           <div className="tamale-options">
-            {tamaleOptions.map((tamale) => (
-              <div
-                key={tamale.name}
-                className={`tamale-card ${
-                  selectedTamale?.name === tamale.name ? "selected" : ""
-                }`}
-                onClick={() => setSelectedTamale(tamale)}
-              >
+            {selectedTamale.map((tamale, index) => (
+              <div key={tamale.name} className="tamale-card">
                 <img src={tamale.image} alt={tamale.name} />
-                <p>{tamale.name.replace(/([A-Z])/g, " $1").trim()}</p>
+                <div className="tamale-descrition">
+                  <h3>{tamale.name.replace(/([A-Z])/g, " $1").trim()}</h3>
+                  <p>${tamale.basePrice} per dozen (12 tamales)</p>
+                </div>
+                <div className="tamale-quantity">
+                  <select
+                    value={tamale.quantity || ""}
+                    onChange={(e) =>
+                      handleQuantityChange(index, Number(e.target.value))
+                    }
+                  >
+                    <option value="" disabled>
+                      Select
+                    </option>
+                    <option value={0}>Remove</option> {/* Add this line */}
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <option key={num} value={num}>
+                        {num} Dozen{num > 1 ? "s" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Side Selection (Checkboxes) */}
-          <h2>Dont forget to add</h2>
-          <div className="side-selection">
-            <label>
-              <input
-                type="checkbox"
-                checked={sourCream}
-                onChange={() => setSourCream(!sourCream)}
-              />
-              Sour Cream ($5.00)
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                checked={salsaVerde}
-                onChange={() => setSalsaVerde(!salsaVerde)}
-              />
-              Salsa Verde ($5.00)
-            </label>
+          <div className="selected-items">
+            {selectedTamale
+              .filter((tamale) => tamale.quantity > 0) // Only show selected tamales
+              .map((tamale, index) => (
+                <h2 key={index}>
+                  {tamale.quantity} Dozen{tamale.quantity > 1 ? "s" : ""}{" "}
+                  {tamale.name}
+                </h2>
+              ))}
           </div>
 
-          <div className="price-breakdown">
-            <p>Subtotal: ${subtotal.toFixed(2)}</p>
-            <p>Tax (8%): ${subtotal > 0 ? tax.toFixed(2) : "0.00"}</p>
-            <p>
-              Delivery Fee: ${subtotal > 0 ? deliveryFee.toFixed(2) : "0.00"}
-            </p>
-            <h2>Total: ${subtotal > 0 ? total.toFixed(2) : "0.00"}</h2>
-          </div>
+          <p>Subtotal: ${subtotal.toFixed(2)}</p>
+          <p>Tax (8%): ${tax.toFixed(2)}</p>
+          <p>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</p>
+
+          <h2>Total: ${total.toFixed(2)}</h2>
         </div>
         <div className="right">
+          {/* Delivery Date and Time Components */}
+          <DeliveryDateComponent onDateSelect={setSelectedDate} />
+          <DeliveryTimeComponent
+            selectedTime={selectedTime}
+            onTimeSelect={setSelectedTime}
+          />
+
           <h2>Customer Information</h2>
           <input
             type="text"
@@ -271,20 +262,16 @@ const BulkOrderForm = () => {
             required
           />
 
-          {/* Delivery Date and Time Components */}
-          <DeliveryDateComponent onDateSelect={setSelectedDate} />
-          <DeliveryTimeComponent
-            selectedTime={selectedTime}
-            onTimeSelect={setSelectedTime}
-          />
-
           {/* Delivery Address Component */}
 
           <DeliveryAddress onAddressChange={handleAddressChange} />
 
           <button
             onClick={handleSubmit}
-            disabled={isSubmitting || !quantity || !selectedTamale}
+            disabled={
+              isSubmitting ||
+              selectedTamale.every((tamale) => tamale.quantity === 0)
+            }
             className={`submit-button ${isSubmitting ? "disabled" : ""}`}
           >
             {isSubmitting ? "Submitting..." : "Submit Order"}

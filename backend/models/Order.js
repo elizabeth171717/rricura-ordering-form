@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
   orderNumber: { type: String, required: true, unique: true }, // Add orderNumber here
-  quantity: { type: Number, required: true },
-  tamale: { type: String, required: true },
-  sourCream: { type: Number, required: true, default: 0 },
-  salsaVerde: { type: Number, required: true, default: 0 },
+  tamales: [
+    {
+      name: { type: String, required: true }, // Tamale name (e.g., "Chicken Tamales")
+      quantity: { type: Number, required: true }, // Quantity of that tamale
+    }
+  ],
+
   subtotal: { type: Number, required: true },
   tax: { type: Number, required: true },
   deliveryFee: { type: Number, required: true },

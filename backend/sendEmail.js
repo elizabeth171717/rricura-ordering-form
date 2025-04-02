@@ -13,8 +13,14 @@ async function sendEmail(customerEmail, customerName, orderData) {
   console.log("📨 Sending email to:", customerEmail);
   try {
     // Format order details for email
-    const { orderNumber, quantity, tamale, sourCream = 0, salsaVerde = 0, subtotal, tax, deliveryFee, total, deliveryDate, deliveryTime, deliveryAddress } = orderData;
+    const { orderNumber,  tamales, subtotal, tax, deliveryFee, total, deliveryDate, deliveryTime, deliveryAddress } = orderData;
     
+    // Format tamale order summary
+const tamaleSummary = tamales.map(tamale => 
+  `- ${tamale.quantity}x ${tamale.name} ($${tamale.basePrice.toFixed(2)} each)`
+).join("\n");
+
+
     const orderSummary = `
     Hi ${customerName},
 
@@ -24,10 +30,7 @@ async function sendEmail(customerEmail, customerName, orderData) {
 
     🔹 **Order Number:** ${orderNumber}
     🔹 Order Summary:
-    -Quantity:${quantity} tamales.
-    - Tamales: ${tamale} 
-    - Sour Cream: $${sourCream.toFixed(2)}
-    - Salsa Verde: $${salsaVerde.toFixed(2)}
+     ${tamaleSummary} 
     - Subtotal: $${subtotal.toFixed(2)}
     - Tax: $${tax.toFixed(2)}
     - Delivery Fee: $${deliveryFee.toFixed(2)}
