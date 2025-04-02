@@ -225,47 +225,53 @@ const BulkOrderForm = () => {
               ))}
           </div>
 
-          <p>Subtotal: ${subtotal.toFixed(2)}</p>
-          <p>Tax (8%): ${tax.toFixed(2)}</p>
-          <p>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</p>
-
-          <h2>Total: ${total.toFixed(2)}</h2>
+          <div className="price-breakdown">
+            <p>Subtotal: ${subtotal.toFixed(2)}</p>
+            <p>Tax (8%): ${tax.toFixed(2)}</p>
+            <p>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</p>
+            <h2>Total: ${total.toFixed(2)}</h2>
+          </div>
         </div>
         <div className="right">
-          {/* Delivery Date and Time Components */}
-          <DeliveryDateComponent onDateSelect={setSelectedDate} />
-          <DeliveryTimeComponent
-            selectedTime={selectedTime}
-            onTimeSelect={setSelectedTime}
-          />
+          <div>
+            {/* Delivery Date and Time Components */}
+            <DeliveryDateComponent onDateSelect={setSelectedDate} />
+          </div>
+          <div>
+            <DeliveryTimeComponent
+              selectedTime={selectedTime}
+              onTimeSelect={setSelectedTime}
+            />
+          </div>
+          <div>
+            <h2>Customer Information</h2>
+            <input
+              type="text"
+              placeholder="Customer Name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Customer Email"
+              value={customerEmail}
+              onChange={(e) => setCustomerEmail(e.target.value)}
+              required
+            />
+            <input
+              type="tel"
+              placeholder="Customer Phone"
+              value={customerPhone}
+              onChange={(e) => setCustomerPhone(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            {/* Delivery Address Component */}
 
-          <h2>Customer Information</h2>
-          <input
-            type="text"
-            placeholder="Customer Name"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Customer Email"
-            value={customerEmail}
-            onChange={(e) => setCustomerEmail(e.target.value)}
-            required
-          />
-          <input
-            type="tel"
-            placeholder="Customer Phone"
-            value={customerPhone}
-            onChange={(e) => setCustomerPhone(e.target.value)}
-            required
-          />
-
-          {/* Delivery Address Component */}
-
-          <DeliveryAddress onAddressChange={handleAddressChange} />
-
+            <DeliveryAddress onAddressChange={handleAddressChange} />
+          </div>
           <button
             onClick={handleSubmit}
             disabled={
