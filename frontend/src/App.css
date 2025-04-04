@@ -19,14 +19,11 @@ width: 100%;
 a {text-decoration: none;
 color: #333;}
 
-h2{
- 
-  color: #9D0759;
-  
-}
 
 h3{
   text-align: center;
+  color: #9D0759;
+  
 }
 
 form {
@@ -40,7 +37,7 @@ form {
 
 .logo{
   margin: 0 auto;
-  width: 250px;
+  width: 150px;
 }
 
 .icon-container{
@@ -50,7 +47,7 @@ form {
   gap: 1rem;
 }
 .icon-container a{
-font-size: 2rem;
+font-size: 1.50rem;
 }
 
 .tamale-options {
@@ -84,7 +81,7 @@ font-size: 2rem;
   width: 30%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+ 
 }
 
 .tamale-quantity{
@@ -134,7 +131,7 @@ margin-right: 5px;
      /* Style for input fields */
      input:not([type="checkbox"]), textarea, select {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.2rem;
       font-size: 1rem;
       border: 2px solid #ddd;
       border-radius: 8px;

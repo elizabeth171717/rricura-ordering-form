@@ -14,7 +14,7 @@ const DeliveryTimeComponent = ({ selectedTime, onTimeSelect }) => {
 
   return (
     <div className="delivery-time">
-      <h2>Select Delivery Time:</h2>
+      <h3>Select Delivery Time:</h3>
       <select
         value={selectedTime}
         onChange={(e) => onTimeSelect(e.target.value)}

@@ -32,6 +32,7 @@ const CustomerInfo = ({
       />
       <br />
       <br />
+
       <input
         type="tel"
         placeholder="Phone"

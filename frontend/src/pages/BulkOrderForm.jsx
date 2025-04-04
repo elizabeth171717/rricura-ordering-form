@@ -163,7 +163,8 @@ const BulkOrderForm = () => {
       <img className="logo" src={Logo} alt="Logo" />
 
       <h3>
-        Transform you next event into a fiesta, full of flavor & Tradition!
+        Transform you next event into a fiesta🎉, full of flavor🤤 & Tradition
+        🇲🇽!
       </h3>
       <div className="icon-container">
         <a
@@ -190,7 +191,7 @@ const BulkOrderForm = () => {
                 <img src={tamale.image} alt={tamale.name} />
                 <div className="tamale-descrition">
                   <h3>{tamale.name.replace(/([A-Z])/g, " $1").trim()}</h3>
-                  <p>${tamale.basePrice} per dozen (12 tamales)</p>
+                  <p>Sold by dozen - ${tamale.basePrice} per dozen</p>
                 </div>
                 <div className="tamale-quantity">
                   <select
@@ -244,7 +245,7 @@ const BulkOrderForm = () => {
             />
           </div>
           <div>
-            <h2>Customer Information</h2>
+            <h3>Customer Information</h3>
             <input
               type="text"
               placeholder="Customer Name"

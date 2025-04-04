@@ -28,8 +28,8 @@ const tamaleSummary = tamales.map(tamale =>
     if you need to make any changes to you order feel free to reply to these email,
     otherwise you will receive a payment link shortly! :
 
-    🔹 **Order Number:** ${orderNumber}
-    🔹 Order Summary:
+    🔹**Order Number:** ${orderNumber}
+    🔹Order Summary:
      ${tamaleSummary} 
     - Subtotal: $${subtotal.toFixed(2)}
     - Tax: $${tax.toFixed(2)}

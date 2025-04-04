@@ -22,7 +22,7 @@ function DeliveryAddress({ onAddressChange }) {
 
   return (
     <div>
-      <h2>Delivery Address</h2>
+      <h3>Delivery Address</h3>
 
       <input
         type="text"
