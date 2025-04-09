@@ -5,6 +5,7 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
+import { BACKEND_URL } from "../constants/constants";
 
 const CheckoutForm = ({ orderData, navigate }) => {
   const stripe = useStripe();
@@ -33,13 +34,10 @@ const CheckoutForm = ({ orderData, navigate }) => {
       setLoading(false);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       try {
-        await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL_DEVELOPMENT}/api/payment`,
-          {
-            paymentIntentId: paymentIntent.id,
-            orderData,
-          }
-        );
+        await axios.post(`${BACKEND_URL}/api/payment`, {
+          paymentIntentId: paymentIntent.id,
+          orderData,
+        });
         localStorage.removeItem("cartItems");
 
         navigate("/thank-you", { state: { orderData } });

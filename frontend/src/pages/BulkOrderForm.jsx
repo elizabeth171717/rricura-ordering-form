@@ -15,12 +15,6 @@ import cornporktamale from "../assets/cornporktamale.jpg";
 import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
 
-// Backend URL configuration
-const BACKEND_URL =
-  import.meta.env.MODE === "production"
-    ? import.meta.env.VITE_BACKEND_URL_PRODUCTION
-    : import.meta.env.VITE_BACKEND_URL_DEVELOPMENT;
-
 const tamaleOptions = [
   { name: "🔥Rajas", image: rajastamale, basePrice: 48 },
   { name: "ChickenCornHusk", image: chickentamale, basePrice: 48 },

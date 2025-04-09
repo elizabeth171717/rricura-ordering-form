@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import axios from "axios";
+import { BACKEND_URL } from "../constants/constants";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -16,15 +17,10 @@ const PaymentPage = () => {
   useEffect(() => {
     if (orderData?.total && orderData?.customerEmail) {
       axios
-        .post(
-          `${
-            import.meta.env.VITE_BACKEND_URL_DEVELOPMENT
-          }/api/create-payment-intent`,
-          {
-            total: orderData.total,
-            customerEmail: orderData.customerEmail,
-          }
-        )
+        .post(`${BACKEND_URL}/api/create-payment-intent`, {
+          total: orderData.total,
+          customerEmail: orderData.customerEmail,
+        })
         .then((res) => setClientSecret(res.data.clientSecret))
         .catch((err) =>
           console.error("Error getting Stripe clientSecret:", err)
