@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
@@ -21,7 +22,7 @@ const BACKEND_URL =
     : import.meta.env.VITE_BACKEND_URL_DEVELOPMENT;
 
 const tamaleOptions = [
-  { name: "Rajas", image: rajastamale, basePrice: 48 },
+  { name: "🔥Rajas", image: rajastamale, basePrice: 48 },
   { name: "ChickenCornHusk", image: chickentamale, basePrice: 48 },
   { name: "PorkCornHusk", image: cornporktamale, basePrice: 48 },
   { name: "ChickenBananaLeaf", image: bananaleafchicken, basePrice: 72 },
@@ -49,6 +50,7 @@ const BulkOrderForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const deliveryFee = 5.0;
   const taxRate = 0.08;
+  const navigate = useNavigate();
 
   // Function to update tamale quantities
   const handleQuantityChange = (index, newQuantity) => {
@@ -71,24 +73,6 @@ const BulkOrderForm = () => {
   // Handle address change
   const handleAddressChange = (updatedAddress) => {
     setDeliveryAddress(updatedAddress);
-  };
-
-  // Reset form
-  const resetForm = () => {
-    setSelectedTamale(
-      tamaleOptions.map((tamale) => ({ ...tamale, quantity: 0 }))
-    );
-    setCustomerName("");
-    setCustomerEmail("");
-    setCustomerPhone("");
-    setSelectedDate(null);
-    setSelectedTime("");
-    setDeliveryAddress({
-      street: "",
-      city: "",
-      state: "",
-      zip: "",
-    });
   };
 
   // Generate order number
@@ -145,17 +129,9 @@ const BulkOrderForm = () => {
       deliveryAddress,
     };
 
-    try {
-      const response = await axios.post(`${BACKEND_URL}/order`, orderData);
-      console.log("Order submitted:", response.data);
-      setShowModal(true);
-      resetForm();
-    } catch (error) {
-      console.error("Error submitting order:", error);
-      alert("Failed to submit order.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    navigate("/paymnet-page", {
+      state: { orderData },
+    });
   };
 
   return (
@@ -164,7 +140,7 @@ const BulkOrderForm = () => {
 
       <h3>
         Transform you next event into a fiesta🎉, full of flavor🤤 & Tradition
-        🇲🇽!
+        🫔!
       </h3>
       <div className="icon-container">
         <a
@@ -228,7 +204,7 @@ const BulkOrderForm = () => {
 
           <div className="price-breakdown">
             <p>Subtotal: ${subtotal.toFixed(2)}</p>
-            <p>Tax (8%): ${tax.toFixed(2)}</p>
+            <p>Tax: ${tax.toFixed(2)}</p>
             <p>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</p>
             <h2>Total: ${total.toFixed(2)}</h2>
           </div>
@@ -281,7 +257,7 @@ const BulkOrderForm = () => {
             }
             className={`submit-button ${isSubmitting ? "disabled" : ""}`}
           >
-            {isSubmitting ? "Submitting..." : "Submit Order"}
+            {isSubmitting ? "Submitting..." : "Procced to Payment"}
           </button>
         </div>
       </div>

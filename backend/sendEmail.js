@@ -24,9 +24,7 @@ const tamaleSummary = tamales.map(tamale =>
     const orderSummary = `
     Hi ${customerName},
 
-    Thank you for your order, here are the details, 
-    if you need to make any changes to you order feel free to reply to these email,
-    otherwise you will receive a payment link shortly! :
+    We have received you order, here are the details:
 
     🔹**Order Number:** ${orderNumber}
     🔹Order Summary:
@@ -45,7 +43,7 @@ const tamaleSummary = tamales.map(tamale =>
     Thank you for ordering from Rricura Tamales Mexicanos!
 
     
-    Rricura Tamales Mexicanos
+    
     `;
 
     const customerMailOptions = {
