@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
+import LoadingOverlay from "../components/LoadingOverlay";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import axios from "axios";
@@ -30,10 +32,12 @@ const PaymentPage = () => {
 
   if (!orderData)
     return <div>Invalid order. Please go back and try again.</div>;
-  if (!clientSecret) return <div>Loading payment form...</div>;
+  if (!clientSecret)
+    return <LoadingOverlay message="Loading secure payment form..." />;
 
   return (
     <div className="paymentPage-container">
+      <Link to="/">← Go back to order form</Link>
       <h2>Complete Your Payment</h2>
       {/* 🔥 Display the total to be paid */}
       <div className="total">
