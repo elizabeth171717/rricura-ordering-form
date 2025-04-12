@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { stripePromise } from "../stripe";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
@@ -26,6 +26,12 @@ const tamaleOptions = [
 ];
 
 const BulkOrderForm = () => {
+  // ✅ Preload Stripe as soon as this page loads
+  useEffect(() => {
+    stripePromise.then(() => {
+      console.log("✅ Stripe.js has started downloading in the background");
+    });
+  }, []);
   const [selectedTamale, setSelectedTamale] = useState(
     tamaleOptions.map((tamale) => ({ ...tamale, quantity: 0 }))
   );
@@ -132,10 +138,10 @@ const BulkOrderForm = () => {
     <form onSubmit={handleSubmit} className="form">
       <img className="logo" src={Logo} alt="Logo" />
 
-      <h3>
+      <h2>
         Transform you next event into a fiesta🎉, full of flavor🤤 & Tradition
         🫔!
-      </h3>
+      </h2>
       <div className="icon-container">
         <a
           href="https://www.instagram.com/r_ricura/"
@@ -189,10 +195,10 @@ const BulkOrderForm = () => {
             {selectedTamale
               .filter((tamale) => tamale.quantity > 0) // Only show selected tamales
               .map((tamale, index) => (
-                <h2 key={index}>
+                <p key={index}>
                   {tamale.quantity} Dozen{tamale.quantity > 1 ? "s" : ""}{" "}
                   {tamale.name}
-                </h2>
+                </p>
               ))}
           </div>
 

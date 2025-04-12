@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { loadStripe } from "@stripe/stripe-js";
+
 import LoadingOverlay from "../components/LoadingOverlay";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+import { stripePromise } from "../stripe";
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const { orderData } = location.state || {};
   const [clientSecret, setClientSecret] = useState("");
 

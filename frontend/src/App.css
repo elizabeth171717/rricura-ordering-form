@@ -19,7 +19,11 @@ width: 100%;
 a {text-decoration: none;
 color: #333;}
 
-
+h2{
+  text-align: center;
+  margin: .25rem 0;
+  font-size: 1.25rem;
+}
 h3{
   text-align: center;
   color: #9D0759;
@@ -30,14 +34,14 @@ form {
   display: flex;
   flex-direction: column;
   
-  padding:1rem;
+  padding:2rem 1rem;
   background-color: white;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.705); /* Modern depth */
 }
 
 .logo{
   margin: 0 auto;
-  width: 150px;
+  width: 170px;
 }
 
 .icon-container{
@@ -77,13 +81,15 @@ font-size: 1.50rem;
   
 }
 
-.tamale-card img {
+.tamale-card  img{
   width: 30%;
   height: 100%;
   object-fit: cover;
  border-top-left-radius: 8px;
  border-bottom-left-radius: 8px;
 }
+
+
 
 .tamale-quantity{
 margin-right: 5px;
