@@ -16,11 +16,11 @@ import vegantamale from "../assets/cheeseredsauce.jpg";
 import SuccessModal from "../components/SuccessModal";
 
 const tamaleOptions = [
-  { name: "🔥Rajas", image: rajastamale, basePrice: 48 },
-  { name: "ChickenCornHusk", image: chickentamale, basePrice: 48 },
-  { name: "PorkCornHusk", image: cornporktamale, basePrice: 48 },
-  { name: "ChickenBananaLeaf", image: bananaleafchicken, basePrice: 72 },
-  { name: "PorkBananaLeaf", image: bananaleafpork, basePrice: 72 },
+  { name: "Rajas", image: rajastamale, basePrice: 48 },
+  { name: "Chicken Corn Husk", image: chickentamale, basePrice: 48 },
+  { name: "Pork Corn Husk", image: cornporktamale, basePrice: 48 },
+  { name: "Chicken Banana Leaf", image: bananaleafchicken, basePrice: 72 },
+  { name: "Pork Banana Leaf", image: bananaleafpork, basePrice: 72 },
   { name: "Vegan", image: vegantamale, basePrice: 60 },
   { name: "Sweet", image: sweet, basePrice: 36 },
 ];

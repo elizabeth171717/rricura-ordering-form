@@ -4,11 +4,18 @@ import { Link } from "react-router-dom";
 
 import LoadingOverlay from "../components/LoadingOverlay";
 import { Elements } from "@stripe/react-stripe-js";
+import { stripePromise } from "../stripe";
 import CheckoutForm from "../components/CheckoutForm";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
-import { stripePromise } from "../stripe";
 
+console.log("📦 Backend URL:", BACKEND_URL);
+const client = import.meta.env.VITE_CLIENT;
+console.log("🏷️ Client tenant:", client); // should say "rricura"
+console.log(
+  "📬 Final POST URL:",
+  `${BACKEND_URL}/api/${client}/create-payment-intent`
+);
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,7 +26,7 @@ const PaymentPage = () => {
   useEffect(() => {
     if (orderData?.total && orderData?.customerEmail) {
       axios
-        .post(`${BACKEND_URL}/api/create-payment-intent`, {
+        .post(`${BACKEND_URL}/api/${client}/create-payment-intent`, {
           total: orderData.total,
           customerEmail: orderData.customerEmail,
         })

@@ -12,8 +12,7 @@ const SuccessModal = ({ onClose }) => {
       <div className="modal-container">
         <h2 className="modal-title">Thank You!</h2>
         <p className="modal-message">
-          Thank you! We have received your order and will contact you soon for
-          order confirmation and payment.
+          Thank you for Choosing us, We have received your order!!!
         </p>
         <button className="modal-button" onClick={onClose}>
           Close
