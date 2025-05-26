@@ -5,7 +5,7 @@ import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
-import Logo from "../assets/logo.png";
+
 import sweet from "../assets/sweettamale.png";
 import bananaleafpork from "../assets/bananaleafpork.jpg";
 import bananaleafchicken from "../assets/bananaleafchicken.jpg";
@@ -136,7 +136,7 @@ const BulkOrderForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      <img className="logo" src={Logo} alt="Logo" />
+      <img className="logo" src="/logo.png" alt="Logo" />
 
       <h2>
         Transform you next event into a fiesta🎉, full of flavor🤤 & Tradition
