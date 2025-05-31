@@ -5,7 +5,7 @@ import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import DeliveryAddress from "../components/DeliveryAddress";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
-
+import TipSelector from "../components/TipSelector";
 import sweet from "../assets/sweettamale.png";
 import bananaleafpork from "../assets/bananaleafpork.jpg";
 import bananaleafchicken from "../assets/bananaleafchicken.jpg";
@@ -48,6 +48,8 @@ const BulkOrderForm = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedTip, setSelectedTip] = useState(null);
+
   const deliveryFee = 5.0;
   const taxRate = 0.08;
   const navigate = useNavigate();
@@ -68,7 +70,13 @@ const BulkOrderForm = () => {
   // Calculate tax and total
   const tax = subtotal * taxRate;
   const displayDeliveryFee = subtotal > 0 ? deliveryFee : 0;
-  const total = subtotal + tax + (subtotal > 0 ? deliveryFee : 0);
+
+  const safeTip = isNaN(selectedTip) ? 0 : selectedTip;
+  const total =
+    subtotal +
+    tax +
+    (subtotal > 0 ? deliveryFee : 0) +
+    (subtotal > 0 ? safeTip : 0);
 
   // Handle address change
   const handleAddressChange = (updatedAddress) => {
@@ -120,6 +128,7 @@ const BulkOrderForm = () => {
       subtotal,
       tax,
       deliveryFee,
+      tip: selectedTip || 0, // default to 0 if none selected
       total,
       customerName,
       customerEmail,
@@ -203,10 +212,9 @@ const BulkOrderForm = () => {
           </div>
 
           <div className="price-breakdown">
-            <p>Subtotal: ${subtotal.toFixed(2)}</p>
-            <p>Tax: ${tax.toFixed(2)}</p>
-            <p>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</p>
-            <h2>Total: ${total.toFixed(2)}</h2>
+            <p>
+              <strong>Subtotal</strong>: ${subtotal.toFixed(2)}
+            </p>
           </div>
         </div>
         <div className="right">
@@ -249,7 +257,24 @@ const BulkOrderForm = () => {
 
             <DeliveryAddress onAddressChange={handleAddressChange} />
           </div>
+
+          <div className="price-breakdown">
+            <p>
+              <strong>Subtotal: ${subtotal.toFixed(2)}</strong>
+            </p>
+            <p>
+              <strong>Tax: ${tax.toFixed(2)}</strong>
+            </p>
+            <p>
+              <strong>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</strong>
+            </p>
+            <TipSelector subtotal={subtotal} onTipChange={setSelectedTip} />
+            <h2>
+              <strong>Total: ${total.toFixed(2)}</strong>
+            </h2>
+          </div>
           <button
+            type="submit"
             onClick={handleSubmit}
             disabled={
               isSubmitting ||

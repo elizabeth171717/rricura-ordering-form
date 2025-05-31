@@ -27,7 +27,7 @@ h2{
 h3{
   text-align: center;
   color: #9D0759;
-  
+  margin-bottom: .50rem;
 }
 
 form {
@@ -236,4 +236,28 @@ button:active {
   color: #374151; /* gray-700 */
   font-size: 1.125rem;
   font-weight: 500;
+}
+
+.tip-selection{
+  
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.tip-button {
+padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 4px;
+  transition: background-color 0.2s ease;
+}
+
+
+.tip-button.selected {
+
+  color: yellow;
 }
