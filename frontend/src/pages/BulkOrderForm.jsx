@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { stripePromise } from "../stripe";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
-import DeliveryAddress from "../components/DeliveryAddress";
+
+import DeliveryForm from "../components/DeliveryAddress";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
 import TipSelector from "../components/TipSelector";
 import sweet from "../assets/sweettamale.png";
@@ -40,17 +41,12 @@ const BulkOrderForm = () => {
   const [customerPhone, setCustomerPhone] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState({
-    street: "",
-    city: "",
-    state: "",
-    zip: "",
-  });
+  const [deliveryInfo, setDeliveryInfo] = useState(null); // includes fee, address, etc.
+
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedTip, setSelectedTip] = useState(null);
 
-  const deliveryFee = 5.0;
   const taxRate = 0.08;
   const navigate = useNavigate();
 
@@ -69,19 +65,11 @@ const BulkOrderForm = () => {
 
   // Calculate tax and total
   const tax = subtotal * taxRate;
-  const displayDeliveryFee = subtotal > 0 ? deliveryFee : 0;
 
   const safeTip = isNaN(selectedTip) ? 0 : selectedTip;
-  const total =
-    subtotal +
-    tax +
-    (subtotal > 0 ? deliveryFee : 0) +
-    (subtotal > 0 ? safeTip : 0);
 
-  // Handle address change
-  const handleAddressChange = (updatedAddress) => {
-    setDeliveryAddress(updatedAddress);
-  };
+  const total =
+    subtotal + tax + (subtotal > 0 ? safeTip : 0) + (deliveryInfo?.fee || 0);
 
   // Generate order number
   const generateOrderNumber = () => {
@@ -110,10 +98,7 @@ const BulkOrderForm = () => {
       !customerPhone ||
       !selectedDate ||
       !selectedTime ||
-      !deliveryAddress.street ||
-      !deliveryAddress.city ||
-      !deliveryAddress.state ||
-      !deliveryAddress.zip
+      !deliveryInfo
     ) {
       alert("Please fill in all fields.");
       return;
@@ -127,7 +112,6 @@ const BulkOrderForm = () => {
       tamales: selectedTamale.filter((tamale) => tamale.quantity > 0),
       subtotal,
       tax,
-      deliveryFee,
       tip: selectedTip || 0, // default to 0 if none selected
       total,
       customerName,
@@ -135,7 +119,7 @@ const BulkOrderForm = () => {
       customerPhone,
       deliveryDate: selectedDate.toDateString(),
       deliveryTime: selectedTime,
-      deliveryAddress,
+      deliveryAddress: deliveryInfo, // ✅ Correct and clean
     };
 
     navigate("/paymnet-page", {
@@ -255,7 +239,7 @@ const BulkOrderForm = () => {
           <div>
             {/* Delivery Address Component */}
 
-            <DeliveryAddress onAddressChange={handleAddressChange} />
+            <DeliveryForm onFeeCalculated={setDeliveryInfo} />
           </div>
 
           <div className="price-breakdown">
@@ -266,8 +250,13 @@ const BulkOrderForm = () => {
               <strong>Tax: ${tax.toFixed(2)}</strong>
             </p>
             <p>
-              <strong>Delivery Fee: ${displayDeliveryFee.toFixed(2)}</strong>
+              <strong>Delivery Fee: ${deliveryInfo?.fee?.toFixed(2)}</strong>
             </p>
+            {selectedTip > 0 && (
+              <p className="summary-line">
+                <strong>Tip: ${selectedTip.toFixed(2)}</strong>
+              </p>
+            )}
             <TipSelector subtotal={subtotal} onTipChange={setSelectedTip} />
             <h2>
               <strong>Total: ${total.toFixed(2)}</strong>
