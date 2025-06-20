@@ -28,7 +28,7 @@ function AppetizerSection({ onUpdate }) {
 
   return (
     <div className="Appetizer-section">
-      <h2>SOUPS & ANTOJOS ✨</h2>
+      <h2>SOUPS && ANTOJOS ✨</h2>
       <div className="options">
         {selectedAppetizers.map((tamale, index) => (
           <div key={tamale.name} className="tamale-card">
