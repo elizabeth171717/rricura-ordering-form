@@ -100,6 +100,9 @@ export default function DeliveryForm({ onFeeCalculated }) {
       } else {
         setErrorMessage("An unexpected error occurred. Please try again.");
       }
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000); // 👈 hides after 5 seconds
 
       if (onFeeCalculated) onFeeCalculated(null);
     } finally {
@@ -109,7 +112,7 @@ export default function DeliveryForm({ onFeeCalculated }) {
 
   return (
     <div className="max-w-md mx-auto p-4 space-y-4">
-      <h2 className="text-xl font-semibold">Enter Your Delivery Address</h2>
+      <h3>Enter Your Delivery Address</h3>
 
       <input
         name="street"
@@ -170,9 +173,6 @@ export default function DeliveryForm({ onFeeCalculated }) {
 
       {deliveryFee && (
         <div className="bg-green-100 p-3 rounded mt-2">
-          <p>
-            <strong>Distance:</strong> {deliveryFee.distanceMiles} miles
-          </p>
           <p>
             <strong>Delivery Fee:</strong> ${deliveryFee.fee}
           </p>

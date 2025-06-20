@@ -1,7 +1,8 @@
 import "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import BulkOrderForm from "./pages/BulkOrderForm";
+import Menu from "./pages/menu";
+import Checkout from "./pages/Checkout";
 import ThankYouPage from "./pages/ThankYouPage";
 import PaymentPage from "./pages/PaymentPage";
 
@@ -9,7 +10,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<BulkOrderForm />} />
+        <Route path="/" element={<Menu />} />
+        <Route path="Checkout" element={<Checkout />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/paymnet-page" element={<PaymentPage />} />
       </Routes>
