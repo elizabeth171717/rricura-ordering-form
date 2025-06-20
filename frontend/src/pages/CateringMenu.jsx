@@ -6,7 +6,7 @@ import DrinkSection from "../components/DrinkSection";
 import AppetizerSection from "../components/AppetizerSection";
 import SideSection from "../components/SideSection";
 
-const Menu = () => {
+const CateringMenu = () => {
   const navigate = useNavigate();
   const [selectedTamales, setSelectedTamales] = useState([]);
   const [selectedDrinks, setSelectedDrinks] = useState([]);
@@ -96,4 +96,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default CateringMenu;
