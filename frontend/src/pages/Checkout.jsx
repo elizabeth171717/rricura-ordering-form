@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { stripePromise } from "../stripe";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
-
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
 
 import TipSelector from "../components/TipSelector";
@@ -16,18 +17,6 @@ const Checkout = () => {
     stripePromise.then(() => {
       console.log("✅ Stripe.js has started downloading in the background");
     });
-  }, []);
-
-  const [tamales, setTamales] = useState([]);
-  const [drinks, setDrinks] = useState([]);
-  const [appetizers, setAppetizers] = useState([]);
-  const [sides, setSides] = useState([]);
-
-  useEffect(() => {
-    setTamales(JSON.parse(localStorage.getItem("selectedTamales")) || []);
-    setDrinks(JSON.parse(localStorage.getItem("selectedDrinks")) || []);
-    setAppetizers(JSON.parse(localStorage.getItem("selectedAppetizers")) || []);
-    setSides(JSON.parse(localStorage.getItem("selectedSides")) || []);
   }, []);
 
   const [customerName, setCustomerName] = useState("");
@@ -44,20 +33,40 @@ const Checkout = () => {
   const taxRate = 0.08;
   const navigate = useNavigate();
 
-  // Calculate subtotal
-  const allItems = [...tamales, ...drinks, ...appetizers, ...sides];
-  const subtotal = allItems.reduce(
-    (sum, item) => sum + item.basePrice * item.quantity,
-    0
+  // Grab selected items from localStorage
+  const selectedTamales = JSON.parse(
+    localStorage.getItem("selectedTamales") || "[]"
+  );
+  const selectedDrinks = JSON.parse(
+    localStorage.getItem("selectedDrinks") || "[]"
+  );
+  const selectedAppetizers = JSON.parse(
+    localStorage.getItem("selectedAppetizers") || "[]"
+  );
+  const selectedSides = JSON.parse(
+    localStorage.getItem("selectedSides") || "[]"
   );
 
+  const allItems = [
+    ...selectedTamales,
+    ...selectedDrinks,
+    ...selectedAppetizers,
+    ...selectedSides,
+  ];
+
+  // Calculate subtotal
+  const storedSubtotal = parseFloat(localStorage.getItem("menuSubtotal") || 0);
+
   // Calculate tax and total
-  const tax = subtotal * taxRate;
+  const tax = storedSubtotal * taxRate;
 
   const safeTip = isNaN(selectedTip) ? 0 : selectedTip;
 
   const total =
-    subtotal + tax + (subtotal > 0 ? safeTip : 0) + (deliveryInfo?.fee || 0);
+    storedSubtotal +
+    tax +
+    (storedSubtotal > 0 ? safeTip : 0) +
+    (deliveryInfo?.fee || 0);
 
   // Generate order number
   const generateOrderNumber = () => {
@@ -72,10 +81,6 @@ const Checkout = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     // Validate that at least one tamale is selected
-    if (allItems.every((item) => item.quantity === 0)) {
-      alert("Please select at least one item from the menu.");
-      return;
-    }
 
     e.preventDefault();
     if (isSubmitting) return;
@@ -98,7 +103,7 @@ const Checkout = () => {
     const orderData = {
       orderNumber,
       items: allItems.filter((item) => item.quantity > 0),
-      subtotal,
+      subtotal: storedSubtotal, // 👈 rename key here
       tax,
       tip: selectedTip || 0, // default to 0 if none selected
       total,
@@ -117,9 +122,11 @@ const Checkout = () => {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      <button onClick={() => navigate(-1)} className="back-button">
+      <Navigation />
+      <span onClick={() => navigate(-1)} className="back-button">
         ⬅ Back to Menu
-      </button>
+      </span>
+
       <h2>CHECK OUT</h2>
 
       <div className="form-container">
@@ -134,7 +141,7 @@ const Checkout = () => {
             ))}
 
             <h2>
-              <strong> Subtotal: ${subtotal.toFixed(2)}</strong>
+              <strong> Subtotal: ${storedSubtotal.toFixed(2)}</strong>
             </h2>
           </div>
 
@@ -183,7 +190,7 @@ const Checkout = () => {
 
           <div className="price-breakdown">
             <p>
-              <strong>Subtotal: ${subtotal.toFixed(2)}</strong>
+              <strong>Subtotal: ${storedSubtotal.toFixed(2)}</strong>
             </p>
             <p>
               <strong>Tax: ${tax.toFixed(2)}</strong>
@@ -200,7 +207,10 @@ const Checkout = () => {
               <strong>Total: ${total.toFixed(2)}</strong>
             </h2>
 
-            <TipSelector subtotal={subtotal} onTipChange={setSelectedTip} />
+            <TipSelector
+              subtotal={storedSubtotal}
+              onTipChange={setSelectedTip}
+            />
           </div>
           <button
             type="submit"
@@ -215,6 +225,7 @@ const Checkout = () => {
         </div>
       </div>
       {showModal && <SuccessModal onClose={() => setShowModal(false)} />}
+      <Footer />
     </form>
   );
 };

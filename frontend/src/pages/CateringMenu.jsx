@@ -1,10 +1,13 @@
 // src/pages/Menu.jsx
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import TamaleSection from "../components/TamaleSection";
 import DrinkSection from "../components/DrinkSection";
 import AppetizerSection from "../components/AppetizerSection";
 import SideSection from "../components/SideSection";
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 
 const CateringMenu = () => {
   const navigate = useNavigate();
@@ -12,6 +15,18 @@ const CateringMenu = () => {
   const [selectedDrinks, setSelectedDrinks] = useState([]);
   const [selectedAppetizers, setSelectedAppetizers] = useState([]);
   const [selectedSides, setSelectedSides] = useState([]);
+
+  // ✅ Only needed once, here
+  const allItems = [
+    ...selectedTamales,
+    ...selectedDrinks,
+    ...selectedAppetizers,
+    ...selectedSides,
+  ];
+  const subtotal = allItems.reduce(
+    (sum, item) => sum + item.basePrice * item.quantity,
+    0
+  );
 
   const handleNext = () => {
     const validTamales = selectedTamales.filter((t) => t.quantity > 0);
@@ -38,12 +53,15 @@ const CateringMenu = () => {
     localStorage.setItem("selectedSides", JSON.stringify(validSides));
     // Do the same for sides/apps later
 
+    // ✅ USE subtotal here (this was the missing piece you mentioned)
+    localStorage.setItem("menuSubtotal", subtotal.toFixed(2)); // 👈 right here
+
     navigate("/checkout");
   };
 
   return (
     <div className="menu-page">
-      <img className="logo" src="/logo.png" alt="Logo" />
+      <Navigation />
       <div className="title-container">
         <div className="title">
           <h2>CATERING MENU 🍴</h2>
@@ -65,6 +83,8 @@ const CateringMenu = () => {
           <AppetizerSection onUpdate={setSelectedAppetizers} />
         </div>
       </div>
+
+      <div style={{ height: "150px" }} />
       {[
         ...selectedTamales,
         ...selectedDrinks,
@@ -86,12 +106,18 @@ const CateringMenu = () => {
               </p>
             ))}
 
+          {/* ✅ Subtotal goes here */}
+          <p style={{ fontWeight: "bold", marginTop: "1rem" }}>
+            Subtotal: ${subtotal.toFixed(2)}
+          </p>
+
           <button onClick={handleNext} className="proceed-button">
             Proceed to Checkout
           </button>
         </div>
       )}
-      <div style={{ height: "150px" }} />
+
+      <Footer />
     </div>
   );
 };
