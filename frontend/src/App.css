@@ -15,9 +15,6 @@ img{
 display: block;
 width: 100%;
 }
-p{
-  font-weight: bold;
-}
 
 a {text-decoration: none;
 color: #333;}
@@ -71,15 +68,7 @@ font-size: 1.50rem;
   text-align: center;
   margin: 1rem 0;
 }
-/*form*/
-form {
-  display: flex;
-  flex-direction: column;
-  
-  padding:2rem 1rem;
-  background-color: white;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.705); /* Modern depth */
-}
+
 
 
 
@@ -89,6 +78,22 @@ form {
   padding:2rem  1rem 0 1rem;
 }
 
+
+/*form checkout page*/
+form {
+  display: flex;
+  flex-direction: column;
+  
+  padding:2rem 1rem;
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.705); /* Modern depth */
+}
+
+.form-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
 .left-container{
 display: flex;

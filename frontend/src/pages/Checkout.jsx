@@ -18,7 +18,9 @@ const Checkout = () => {
       console.log("✅ Stripe.js has started downloading in the background");
     });
   }, []);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -214,7 +216,6 @@ const Checkout = () => {
           </div>
           <button
             type="submit"
-            onClick={handleSubmit}
             disabled={
               isSubmitting || allItems.every((item) => item.quantity === 0)
             }
