@@ -231,8 +231,8 @@ margin-right: 5px;
   }
  
   .form-container{
-    display: flex;
-  
+  display: flex;
+  flex-direction: row;
  justify-content: space-around;
     width: 100%;
 
