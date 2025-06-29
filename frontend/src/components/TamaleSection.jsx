@@ -9,17 +9,33 @@ import vegantamale from "../assets/cheeseredsauce.jpg";
 import sweet from "../assets/sweettamale.png";
 
 const tamaleOptions = [
-  { name: "Rajas Tamales", image: rajastamale, basePrice: 48 },
-  { name: "Chicken Tamales-Corn Husk ", image: chickentamale, basePrice: 48 },
-  { name: "Pork Tamales-Corn Husk ", image: cornporktamale, basePrice: 48 },
+  { name: "Rajas Tamales", image: rajastamale, basePrice: 48, unit: "dozen" },
+  {
+    name: "Chicken Tamales-Corn Husk ",
+    image: chickentamale,
+    basePrice: 48,
+    unit: "dozen",
+  },
+  {
+    name: "Pork Tamales-Corn Husk ",
+    image: cornporktamale,
+    basePrice: 48,
+    unit: "dozen",
+  },
   {
     name: "Chicken Tamales-Banana Leaf",
     image: bananaleafchicken,
     basePrice: 72,
+    unit: "dozen",
   },
-  { name: "Pork Tamales- Banana Leaf", image: bananaleafpork, basePrice: 72 },
-  { name: "Vegan Tamales", image: vegantamale, basePrice: 60 },
-  { name: "Sweet Tamales", image: sweet, basePrice: 36 },
+  {
+    name: "Pork Tamales- Banana Leaf",
+    image: bananaleafpork,
+    basePrice: 72,
+    unit: "dozen",
+  },
+  { name: "Vegan Tamales", image: vegantamale, basePrice: 60, unit: "dozen" },
+  { name: "Sweet Tamales", image: sweet, basePrice: 36, unit: "dozen" },
 ];
 
 function TamaleSection({ onUpdate }) {

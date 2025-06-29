@@ -1,6 +1,6 @@
 // src/pages/Menu.jsx
 import React, { useState } from "react";
-
+import IngredientsModal from "../components/Ingridients";
 import { useNavigate } from "react-router-dom";
 import TamaleSection from "../components/TamaleSection";
 import DrinkSection from "../components/DrinkSection";
@@ -15,7 +15,7 @@ const CateringMenu = () => {
   const [selectedDrinks, setSelectedDrinks] = useState([]);
   const [selectedAppetizers, setSelectedAppetizers] = useState([]);
   const [selectedSides, setSelectedSides] = useState([]);
-
+  const [showIngredients, setShowIngredients] = useState(false);
   // ✅ Only needed once, here
   const allItems = [
     ...selectedTamales,
@@ -67,10 +67,21 @@ const CateringMenu = () => {
           <h2>CATERING MENU 🍴</h2>
         </div>
         <div className="sub-title">
-          <h3>
-            Mix and match tamales, add aguas frescas, soups, and salsa verde for
-            the full experience!
-          </h3>
+          <p>
+            Build your perfect meal — mix and match tamales by the dozen, add
+            sides and drinks, and taste the richness of real Mexican
+            tradition.👉{" "}
+            <span
+              onClick={() => setShowIngredients(true)}
+              style={{
+                color: "blue",
+                textDecoration: "underline",
+                cursor: "pointer",
+              }}
+            >
+              View Ingredients
+            </span>
+          </p>
         </div>
       </div>
       <div className="forms-container">
@@ -101,7 +112,7 @@ const CateringMenu = () => {
             .filter((item) => item.quantity > 0)
             .map((item, i) => (
               <p key={i}>
-                {item.quantity} {item.unit || "x"} {item.name} – $
+                {item.quantity} {item.size || item.unit || "x"} {item.name} – $
                 {(item.basePrice * item.quantity).toFixed(2)}
               </p>
             ))}
@@ -116,7 +127,10 @@ const CateringMenu = () => {
           </button>
         </div>
       )}
-
+      <IngredientsModal
+        isOpen={showIngredients}
+        onClose={() => setShowIngredients(false)}
+      />
       <Footer />
     </div>
   );

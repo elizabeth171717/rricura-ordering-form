@@ -5,9 +5,9 @@ import chickenSoup from "../assets/chickensoup.jpg";
 import esquite from "../assets/esquite.jpg";
 
 const appetizerOptions = [
-  { name: "Black Bean Soup", image: blackBean, basePrice: 48 },
-  { name: "Chicken Soup", image: chickenSoup, basePrice: 48 },
-  { name: "Esquite", image: esquite, basePrice: 48 },
+  { name: "Black Bean Soup", image: blackBean, basePrice: 48, unit: "dozen" },
+  { name: "Chicken Soup", image: chickenSoup, basePrice: 48, unit: "dozen" },
+  { name: "Esquite", image: esquite, basePrice: 48, unit: "dozen" },
 ];
 
 function AppetizerSection({ onUpdate }) {

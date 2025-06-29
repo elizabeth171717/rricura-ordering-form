@@ -9,13 +9,13 @@ import water from "../assets/bottlewater.jpg";
 import champurrado from "../assets/champurrado.jpg";
 
 const drinkOptions = [
-  { name: "Agua De Pina", image: pina, basePrice: 48 },
-  { name: "Agua de Jamaica", image: jamaica, basePrice: 48 },
-  { name: "Agua de Melon", image: melon, basePrice: 48 },
-  { name: "Agua de Sandia", image: sandia, basePrice: 48 },
-  { name: "Soft Drinks", image: sodas, basePrice: 36 },
-  { name: "Bottle Water", image: water, basePrice: 36 },
-  { name: "Champurrado", image: champurrado, basePrice: 48 },
+  { name: "Agua De Pina", image: pina, basePrice: 48, unit: "dozen" },
+  { name: "Agua de Jamaica", image: jamaica, basePrice: 48, unit: "dozen" },
+  { name: "Agua de Melon", image: melon, basePrice: 48, unit: "dozen" },
+  { name: "Agua de Sandia", image: sandia, basePrice: 48, unit: "dozen" },
+  { name: "Soft Drinks", image: sodas, basePrice: 36, unit: "dozen" },
+  { name: "Bottle Water", image: water, basePrice: 36, unit: "dozen" },
+  { name: "Champurrado", image: champurrado, basePrice: 48, unit: "dozen" },
 ];
 
 function DrinkSection({ onUpdate }) {

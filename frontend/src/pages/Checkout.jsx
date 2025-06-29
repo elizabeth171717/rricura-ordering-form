@@ -6,7 +6,7 @@ import DeliveryTimeComponent from "../components/DeliveryTime";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
-
+import Terms from "../components/Terms";
 import TipSelector from "../components/TipSelector";
 
 import SuccessModal from "../components/SuccessModal";
@@ -29,6 +29,7 @@ const Checkout = () => {
   const [deliveryInfo, setDeliveryInfo] = useState(null); // includes fee, address, etc.
 
   const [showModal, setShowModal] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedTip, setSelectedTip] = useState(null);
 
@@ -137,7 +138,7 @@ const Checkout = () => {
             <h2>Order Summary 🤤</h2>
             {allItems.map((item, i) => (
               <p key={i}>
-                {item.quantity} {item.unit || "x"} {item.name} – $
+                {item.quantity} {item.size || item.unit || "x"} {item.name} – $
                 {(item.basePrice * item.quantity).toFixed(2)}
               </p>
             ))}
@@ -214,6 +215,23 @@ const Checkout = () => {
               onTipChange={setSelectedTip}
             />
           </div>
+
+          <div>
+            <label>
+              <input type="checkbox" required /> I have read and agree to the{" "}
+              <span
+                onClick={() => setShowTerms(true)}
+                style={{
+                  textDecoration: "underline",
+                  color: "blue",
+                  cursor: "pointer",
+                }}
+              >
+                Terms & Conditions
+              </span>
+            </label>
+          </div>
+
           <button
             type="submit"
             disabled={
@@ -226,6 +244,8 @@ const Checkout = () => {
         </div>
       </div>
       {showModal && <SuccessModal onClose={() => setShowModal(false)} />}
+      {showTerms && <Terms onClose={() => setShowTerms(false)} />}
+
       <Footer />
     </form>
   );
