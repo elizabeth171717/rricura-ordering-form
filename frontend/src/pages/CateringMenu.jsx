@@ -67,10 +67,9 @@ const CateringMenu = () => {
           <h2>CATERING MENU 🍴</h2>
         </div>
         <div className="sub-title">
-          <p>
-            Build your perfect meal — mix and match tamales by the dozen, add
-            sides and drinks, and taste the richness of real Mexican
-            tradition.👉{" "}
+          <h3>
+            Mix and match tamales by the dozen, add sides, drinks, and salsa
+            verde.👉{" "}
             <span
               onClick={() => setShowIngredients(true)}
               style={{
@@ -81,7 +80,7 @@ const CateringMenu = () => {
             >
               View Ingredients
             </span>
-          </p>
+          </h3>
         </div>
       </div>
       <div className="forms-container">
