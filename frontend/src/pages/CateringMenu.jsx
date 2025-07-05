@@ -68,8 +68,8 @@ const CateringMenu = () => {
         </div>
         <div className="sub-title">
           <h3>
-            Mix and match tamales by the dozen, add sides, drinks, and salsa
-            verde.👉{" "}
+            Mix and match tamales by the dozen, add drinks ,salsa verde and
+            more.👉{" "}
             <span
               onClick={() => setShowIngredients(true)}
               style={{
