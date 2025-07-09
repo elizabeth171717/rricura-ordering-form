@@ -1,67 +1,60 @@
-import "react";
-import PropTypes from "prop-types";
+import React from "react";
+
+const formatPhoneNumber = (value) => {
+  if (!value) return value;
+  const phoneNumber = value.replace(/[^\d]/g, "");
+  const phoneNumberLength = phoneNumber.length;
+
+  if (phoneNumberLength < 4) return phoneNumber;
+  if (phoneNumberLength < 7) {
+    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+  }
+  return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+    3,
+    6
+  )}-${phoneNumber.slice(6, 10)}`;
+};
 
 const CustomerInfo = ({
-  name,
-  setName,
-  email,
-  setEmail,
-  phone,
-  setPhone,
-  address,
-  setAddress,
+  customerName,
+  setCustomerName,
+  customerEmail,
+  setCustomerEmail,
+  customerPhone,
+  setCustomerPhone,
 }) => {
   return (
     <div>
       <h3>Customer Information</h3>
       <input
         type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        placeholder="Customer Name"
+        value={customerName}
+        onChange={(e) => setCustomerName(e.target.value)}
         required
       />
-      <br />
-      <br />
       <input
         type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Customer Email"
+        value={customerEmail}
+        onChange={(e) => setCustomerEmail(e.target.value)}
         required
       />
-      <br />
-      <br />
-
       <input
         type="tel"
-        placeholder="Phone"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        required
-      />
-      <br />
-      <br />
-      <input
-        type="text"
-        placeholder="Delivery Address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
+        placeholder="Customer Phone"
+        value={customerPhone}
+        onChange={(e) => {
+          const input = e.target.value.replace(/\D/g, ""); // Remove non-digits
+          if (input.length <= 10) {
+            const formatted = formatPhoneNumber(input);
+            setCustomerPhone(formatted);
+          }
+        }}
         required
       />
     </div>
   );
-};
-
-CustomerInfo.propTypes = {
-  name: PropTypes.string.isRequired,
-  setName: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  setEmail: PropTypes.func.isRequired,
-  phone: PropTypes.string.isRequired,
-  setPhone: PropTypes.func.isRequired,
-  address: PropTypes.string.isRequired,
-  setAddress: PropTypes.func.isRequired,
 };
 
 export default CustomerInfo;

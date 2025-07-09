@@ -6,6 +6,7 @@ import TamaleSection from "../components/TamaleSection";
 import DrinkSection from "../components/DrinkSection";
 import AppetizerSection from "../components/AppetizerSection";
 import SideSection from "../components/SideSection";
+import PromoCode from "../components/PromoCode";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
@@ -16,6 +17,9 @@ const CateringMenu = () => {
   const [selectedAppetizers, setSelectedAppetizers] = useState([]);
   const [selectedSides, setSelectedSides] = useState([]);
   const [showIngredients, setShowIngredients] = useState(false);
+  const [discount, setDiscount] = useState(0);
+  const [promoCode, setPromoCode] = useState("");
+
   // ✅ Only needed once, here
   const allItems = [
     ...selectedTamales,
@@ -27,6 +31,12 @@ const CateringMenu = () => {
     (sum, item) => sum + item.basePrice * item.quantity,
     0
   );
+
+  // Handle promo update from child component
+  const handlePromoApply = (discountAmount, code) => {
+    setDiscount(discountAmount);
+    setPromoCode(code);
+  };
 
   const handleNext = () => {
     const validTamales = selectedTamales.filter((t) => t.quantity > 0);
@@ -55,6 +65,8 @@ const CateringMenu = () => {
 
     // ✅ USE subtotal here (this was the missing piece you mentioned)
     localStorage.setItem("menuSubtotal", subtotal.toFixed(2)); // 👈 right here
+    localStorage.setItem("promoCode", promoCode); // ✅ add this
+    localStorage.setItem("menuDiscount", discount.toFixed(2)); // ✅ add this
 
     navigate("/checkout");
   };
@@ -115,10 +127,10 @@ const CateringMenu = () => {
                 {(item.basePrice * item.quantity).toFixed(2)}
               </p>
             ))}
-
+          <PromoCode subtotal={subtotal} onApply={handlePromoApply} />
           {/* ✅ Subtotal goes here */}
-          <p style={{ fontWeight: "bold", marginTop: "1rem" }}>
-            Subtotal: ${subtotal.toFixed(2)}
+          <p>
+            <strong>Subtotal: ${(subtotal - discount).toFixed(2)}</strong>
           </p>
 
           <button onClick={handleNext} className="proceed-button">

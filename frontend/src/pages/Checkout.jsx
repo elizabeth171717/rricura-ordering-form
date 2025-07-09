@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { stripePromise } from "../stripe";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
+import CostumerInfo from "../components/CostumerInfo";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
@@ -59,16 +60,20 @@ const Checkout = () => {
 
   // Calculate subtotal
   const storedSubtotal = parseFloat(localStorage.getItem("menuSubtotal") || 0);
+  const discount = parseFloat(localStorage.getItem("menuDiscount") || 0);
+  const promoCode = localStorage.getItem("promoCode") || "";
+  const discountedSubtotal = storedSubtotal - discount;
 
   // Calculate tax and total
-  const tax = storedSubtotal * taxRate;
+
+  const tax = discountedSubtotal * taxRate;
 
   const safeTip = isNaN(selectedTip) ? 0 : selectedTip;
 
   const total =
-    storedSubtotal +
+    discountedSubtotal +
     tax +
-    (storedSubtotal > 0 ? safeTip : 0) +
+    (discountedSubtotal > 0 ? safeTip : 0) +
     (deliveryInfo?.fee || 0);
 
   // Generate order number
@@ -106,8 +111,10 @@ const Checkout = () => {
     const orderData = {
       orderNumber,
       items: allItems.filter((item) => item.quantity > 0),
-      subtotal: storedSubtotal, // 👈 rename key here
+      subtotal: discountedSubtotal, // 👈 rename key here
       tax,
+      discountAmount: discount, // ✅
+      appliedPromoCode: promoCode, // ✅
       tip: selectedTip || 0, // default to 0 if none selected
       total,
       customerName,
@@ -118,7 +125,7 @@ const Checkout = () => {
       deliveryAddress: deliveryInfo, // ✅ Correct and clean
     };
 
-    navigate("/paymnet-page", {
+    navigate("/payment-page", {
       state: { orderData },
     });
   };
@@ -143,35 +150,33 @@ const Checkout = () => {
               </p>
             ))}
 
-            <h2>
-              <strong> Subtotal: ${storedSubtotal.toFixed(2)}</strong>
-            </h2>
+            {/* Show original subtotal */}
+            <h3>Subtotal: ${storedSubtotal.toFixed(2)}</h3>
+
+            {discount > 0 && promoCode && (
+              <>
+                <h3 style={{ color: "green" }}>
+                  Promo discount applied: -${discount.toFixed(2)} ({promoCode})
+                </h3>
+
+                <h2>
+                  <strong>
+                    Total after discount: $
+                    {(storedSubtotal - discount).toFixed(2)}
+                  </strong>
+                </h2>
+              </>
+            )}
           </div>
 
-          <div>
-            <h3>Customer Information</h3>
-            <input
-              type="text"
-              placeholder="Customer Name"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Customer Email"
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-              required
-            />
-            <input
-              type="tel"
-              placeholder="Customer Phone"
-              value={customerPhone}
-              onChange={(e) => setCustomerPhone(e.target.value)}
-              required
-            />
-          </div>
+          <CostumerInfo
+            customerName={customerName}
+            setCustomerName={setCustomerName}
+            customerEmail={customerEmail}
+            setCustomerEmail={setCustomerEmail}
+            customerPhone={customerPhone}
+            setCustomerPhone={setCustomerPhone}
+          />
         </div>
         <div className="right">
           <div>
@@ -193,8 +198,9 @@ const Checkout = () => {
 
           <div className="price-breakdown">
             <p>
-              <strong>Subtotal: ${storedSubtotal.toFixed(2)}</strong>
+              <strong>Subtotal: ${discountedSubtotal.toFixed(2)}</strong>
             </p>
+
             <p>
               <strong>Tax: ${tax.toFixed(2)}</strong>
             </p>
@@ -211,7 +217,7 @@ const Checkout = () => {
             </h2>
 
             <TipSelector
-              subtotal={storedSubtotal}
+              subtotal={discountedSubtotal}
               onTipChange={setSelectedTip}
             />
           </div>
