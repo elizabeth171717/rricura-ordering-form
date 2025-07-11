@@ -7,9 +7,25 @@ const Navigation = () => {
   return (
     <div className="navigation">
       <img className="logo" src="/logo.png" alt="Logo" />
+
       <div className="icons-container">
-        <FontAwesomeIcon icon={faFacebook} style={{ fontSize: "24px" }} />
-        <FontAwesomeIcon icon={faInstagram} style={{ fontSize: "24px" }} />
+        <a
+          href="https://www.facebook.com/profile.php?id=61566890440038"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon
+            icon={faFacebook}
+            style={{ fontSize: "24px", marginRight: "10px" }}
+          />
+        </a>
+        <a
+          href="https://www.instagram.com/r_ricura/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon icon={faInstagram} style={{ fontSize: "24px" }} />
+        </a>
       </div>
     </div>
   );
