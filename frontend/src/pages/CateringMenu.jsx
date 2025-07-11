@@ -106,37 +106,40 @@ const CateringMenu = () => {
         </div>
       </div>
 
-      <div style={{ height: "150px" }} />
       {[
         ...selectedTamales,
         ...selectedDrinks,
         ...selectedAppetizers,
         ...selectedSides,
       ].filter((item) => item.quantity > 0).length > 0 && (
-        <div className="fixed-checkout-btn">
-          {[
-            ...selectedTamales,
-            ...selectedDrinks,
-            ...selectedAppetizers,
-            ...selectedSides,
-          ]
-            .filter((item) => item.quantity > 0)
-            .map((item, i) => (
-              <p key={i}>
-                {item.quantity} {item.size || item.unit || "x"} {item.name} – $
-                {(item.basePrice * item.quantity).toFixed(2)}
-              </p>
-            ))}
-          <PromoCode subtotal={subtotal} onApply={handlePromoApply} />
-          {/* ✅ Subtotal goes here */}
-          <p>
-            <strong>Subtotal: ${(subtotal - discount).toFixed(2)}</strong>
-          </p>
+        <>
+          {/* Spacer only appears when there are items */}
+          <div style={{ height: "190px" }} />
+          <div className="fixed-checkout-btn">
+            {[
+              ...selectedTamales,
+              ...selectedDrinks,
+              ...selectedAppetizers,
+              ...selectedSides,
+            ]
+              .filter((item) => item.quantity > 0)
+              .map((item, i) => (
+                <p key={i}>
+                  {item.quantity} {item.size || item.unit || "x"} {item.name} –
+                  ${(item.basePrice * item.quantity).toFixed(2)}
+                </p>
+              ))}
+            <PromoCode subtotal={subtotal} onApply={handlePromoApply} />
+            {/* ✅ Subtotal goes here */}
+            <p>
+              <strong>Subtotal: ${(subtotal - discount).toFixed(2)}</strong>
+            </p>
 
-          <button onClick={handleNext} className="proceed-button">
-            Proceed to Checkout
-          </button>
-        </div>
+            <button onClick={handleNext} className="proceed-button">
+              Proceed to Checkout
+            </button>
+          </div>
+        </>
       )}
       <IngredientsModal
         isOpen={showIngredients}
