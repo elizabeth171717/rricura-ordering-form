@@ -37,10 +37,11 @@ h3{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  padding: 1rem .50rem;
 }
 .logo{
+width: 170px;
 
-  width: 170px;
 }
 
 
@@ -48,16 +49,28 @@ h3{
  
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  align-items: center;
+  gap: .75rem;
+  
 }
 .icon-container a{
 font-size: 1.50rem;
+
+}
+
+.location{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .50rem;
 }
 
      /*back  button*/
 .back-button{
   margin:1rem 0;
   cursor: pointer;
+  color: #9D0759;
 }
 
 /*GLOBAL ENDS*/
@@ -73,20 +86,18 @@ font-size: 1.50rem;
 
 
 /*MENU PAGES*/
-.menu-page{
+.menu{
   
-  padding:2rem  1rem 0 1rem;
+  padding:1rem;
 }
 
 
 /*form checkout page*/
-form {
+.checkout-form {
   display: flex;
   flex-direction: column;
-  
-  padding:2rem 1rem;
-  background-color: white;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.705); /* Modern depth */
+  padding:0 1rem ;
+ 
 }
 
 .form-container{
@@ -429,4 +440,111 @@ footer{
  
   text-align: center;
   
+}
+
+/************HOME PAGE***********/
+.hero-section{
+  background-color: #9D0759;
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+}
+
+.home-btn{
+  padding: .50rem;
+  border: 3px solid white;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.home-btn:hover{
+  border: black;
+}
+
+.info-section{
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.section-title{
+  text-align: center;
+}
+
+.cards{
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.flip-card {
+  width: 100%;
+  
+  height: 400px;
+  perspective: 1000px;
+  margin: 1rem auto;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card:active .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: white;
+ 
+}
+
+.flip-card-front {
+  background-size: cover;
+  background-position: center;
+
+}
+
+.flip-card-front h1 {
+  background-color: rgba(71, 68, 68, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.flip-card-back {
+  background-color: #9D0759;
+  transform: rotateY(180deg);
+  text-align: center;
+}
+
+
+@media (min-width:45rem) {
+  .flip-card {
+  width: 40%;
+  
+  height: 400px;
+ 
+}
 }

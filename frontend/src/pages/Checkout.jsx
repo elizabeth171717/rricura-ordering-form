@@ -57,7 +57,7 @@ const Checkout = () => {
     ...selectedAppetizers,
     ...selectedSides,
   ];
-
+  console.log("🧪 Items being submitted:", allItems);
   // Calculate subtotal
   const storedSubtotal = parseFloat(localStorage.getItem("menuSubtotal") || 0);
   const discount = parseFloat(localStorage.getItem("menuDiscount") || 0);
@@ -131,129 +131,131 @@ const Checkout = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <div className="checkout-page">
       <Navigation />
-      <span onClick={() => navigate(-1)} className="back-button">
-        ⬅ Back to Menu
-      </span>
+      <form onSubmit={handleSubmit} className="checkout-form">
+        <span onClick={() => navigate(-1)} className="back-button">
+          ⬅ Back to Menu
+        </span>
 
-      <h2>CHECK OUT</h2>
+        <h2>CHECK OUT</h2>
 
-      <div className="form-container">
-        <div className="left">
-          <div className="selected-items">
-            <h2>Order Summary 🤤</h2>
-            {allItems.map((item, i) => (
-              <p key={i}>
-                {item.quantity} {item.size || item.unit || "x"} {item.name} – $
-                {(item.basePrice * item.quantity).toFixed(2)}
-              </p>
-            ))}
+        <div className="form-container">
+          <div className="left">
+            <div className="selected-items">
+              <h2>Order Summary 🤤</h2>
+              {allItems.map((item, i) => (
+                <p key={i}>
+                  {item.quantity} {item.size || item.unit || "x"} {item.name} –
+                  ${(item.basePrice * item.quantity).toFixed(2)}
+                </p>
+              ))}
 
-            {/* Show original subtotal */}
-            <h3>Subtotal: ${storedSubtotal.toFixed(2)}</h3>
+              {/* Show original subtotal */}
+              <h2>Subtotal: ${storedSubtotal.toFixed(2)}</h2>
 
-            {discount > 0 && promoCode && (
-              <>
-                <h3 style={{ color: "green" }}>
-                  Promo discount applied: -${discount.toFixed(2)} ({promoCode})
-                </h3>
+              {discount > 0 && promoCode && (
+                <>
+                  <h3 style={{ color: "green" }}>
+                    Promo discount applied: -${discount.toFixed(2)} ({promoCode}
+                    )
+                  </h3>
 
-                <h2>
-                  <strong>
-                    Total after discount: $
-                    {(storedSubtotal - discount).toFixed(2)}
-                  </strong>
-                </h2>
-              </>
-            )}
-          </div>
+                  <h2>
+                    <strong>
+                      Total after discount: $
+                      {(storedSubtotal - discount).toFixed(2)}
+                    </strong>
+                  </h2>
+                </>
+              )}
+            </div>
 
-          <CostumerInfo
-            customerName={customerName}
-            setCustomerName={setCustomerName}
-            customerEmail={customerEmail}
-            setCustomerEmail={setCustomerEmail}
-            customerPhone={customerPhone}
-            setCustomerPhone={setCustomerPhone}
-          />
-        </div>
-        <div className="right">
-          <div>
-            {/* Delivery Date and Time Components */}
-            <DeliveryDateComponent onDateSelect={setSelectedDate} />
-          </div>
-          <div>
-            <DeliveryTimeComponent
-              selectedTime={selectedTime}
-              onTimeSelect={setSelectedTime}
+            <CostumerInfo
+              customerName={customerName}
+              setCustomerName={setCustomerName}
+              customerEmail={customerEmail}
+              setCustomerEmail={setCustomerEmail}
+              customerPhone={customerPhone}
+              setCustomerPhone={setCustomerPhone}
             />
           </div>
+          <div className="right">
+            <div>
+              {/* Delivery Date and Time Components */}
+              <DeliveryDateComponent onDateSelect={setSelectedDate} />
+            </div>
+            <div>
+              <DeliveryTimeComponent
+                selectedTime={selectedTime}
+                onTimeSelect={setSelectedTime}
+              />
+            </div>
 
-          <div>
-            {/* Delivery Address Component */}
+            <div>
+              {/* Delivery Address Component */}
 
-            <DeliveryForm onFeeCalculated={setDeliveryInfo} />
-          </div>
+              <DeliveryForm onFeeCalculated={setDeliveryInfo} />
+            </div>
 
-          <div className="price-breakdown">
-            <p>
-              <strong>Subtotal: ${discountedSubtotal.toFixed(2)}</strong>
-            </p>
-
-            <p>
-              <strong>Tax: ${tax.toFixed(2)}</strong>
-            </p>
-            <p>
-              <strong>Delivery Fee: ${deliveryInfo?.fee?.toFixed(2)}</strong>
-            </p>
-            {selectedTip > 0 && (
-              <p className="summary-line">
-                <strong>Tip: ${selectedTip.toFixed(2)}</strong>
+            <div className="price-breakdown">
+              <p>
+                <strong>Subtotal: ${discountedSubtotal.toFixed(2)}</strong>
               </p>
-            )}
-            <h2>
-              <strong>Total: ${total.toFixed(2)}</strong>
-            </h2>
 
-            <TipSelector
-              subtotal={discountedSubtotal}
-              onTipChange={setSelectedTip}
-            />
+              <p>
+                <strong>Tax: ${tax.toFixed(2)}</strong>
+              </p>
+              <p>
+                <strong>Delivery Fee: ${deliveryInfo?.fee?.toFixed(2)}</strong>
+              </p>
+              {selectedTip > 0 && (
+                <p className="summary-line">
+                  <strong>Tip: ${selectedTip.toFixed(2)}</strong>
+                </p>
+              )}
+              <h2>
+                <strong>Total: ${total.toFixed(2)}</strong>
+              </h2>
+
+              <TipSelector
+                subtotal={discountedSubtotal}
+                onTipChange={setSelectedTip}
+              />
+            </div>
+
+            <div>
+              <label>
+                <input type="checkbox" required /> I have read and agree to the{" "}
+                <span
+                  onClick={() => setShowTerms(true)}
+                  style={{
+                    textDecoration: "underline",
+                    color: "blue",
+                    cursor: "pointer",
+                  }}
+                >
+                  Terms & Conditions
+                </span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={
+                isSubmitting || allItems.every((item) => item.quantity === 0)
+              }
+              className={`submit-button ${isSubmitting ? "disabled" : ""}`}
+            >
+              {isSubmitting ? "Submitting..." : "Procced to Payment"}
+            </button>
           </div>
-
-          <div>
-            <label>
-              <input type="checkbox" required /> I have read and agree to the{" "}
-              <span
-                onClick={() => setShowTerms(true)}
-                style={{
-                  textDecoration: "underline",
-                  color: "blue",
-                  cursor: "pointer",
-                }}
-              >
-                Terms & Conditions
-              </span>
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            disabled={
-              isSubmitting || allItems.every((item) => item.quantity === 0)
-            }
-            className={`submit-button ${isSubmitting ? "disabled" : ""}`}
-          >
-            {isSubmitting ? "Submitting..." : "Procced to Payment"}
-          </button>
         </div>
-      </div>
-      {showModal && <SuccessModal onClose={() => setShowModal(false)} />}
-      {showTerms && <Terms onClose={() => setShowTerms(false)} />}
-
+        {showModal && <SuccessModal onClose={() => setShowModal(false)} />}
+        {showTerms && <Terms onClose={() => setShowTerms(false)} />}
+      </form>
       <Footer />
-    </form>
+    </div>
   );
 };
 

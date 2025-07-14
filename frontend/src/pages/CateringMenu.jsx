@@ -72,16 +72,14 @@ const CateringMenu = () => {
   };
 
   return (
-    <div className="menu-page">
+    <div className="catering-page">
       <Navigation />
-      <div className="title-container">
-        <div className="title">
-          <h2>CATERING MENU 🍴</h2>
-        </div>
-        <div className="sub-title">
-          <h3>
-            Mix and match tamales by the dozen, add drinks ,salsa verde and
-            more.👉{" "}
+      <div className="menu">
+        <div className="title-container">
+          <div className="title">
+            <h2>CATERING MENU 🍴</h2>
+          </div>
+          <div className="sub-title">
             <span
               onClick={() => setShowIngredients(true)}
               style={{
@@ -92,59 +90,59 @@ const CateringMenu = () => {
             >
               View Ingredients
             </span>
-          </h3>
-        </div>
-      </div>
-      <div className="forms-container">
-        <div className="left-container">
-          <TamaleSection onUpdate={setSelectedTamales} />
-          <SideSection onUpdate={setSelectedSides} />
-        </div>
-        <div className="right-container">
-          <DrinkSection onUpdate={setSelectedDrinks} />
-          <AppetizerSection onUpdate={setSelectedAppetizers} />
-        </div>
-      </div>
-
-      {[
-        ...selectedTamales,
-        ...selectedDrinks,
-        ...selectedAppetizers,
-        ...selectedSides,
-      ].filter((item) => item.quantity > 0).length > 0 && (
-        <>
-          {/* Spacer only appears when there are items */}
-          <div style={{ height: "190px" }} />
-          <div className="fixed-checkout-btn">
-            {[
-              ...selectedTamales,
-              ...selectedDrinks,
-              ...selectedAppetizers,
-              ...selectedSides,
-            ]
-              .filter((item) => item.quantity > 0)
-              .map((item, i) => (
-                <p key={i}>
-                  {item.quantity} {item.size || item.unit || "x"} {item.name} –
-                  ${(item.basePrice * item.quantity).toFixed(2)}
-                </p>
-              ))}
-            <PromoCode subtotal={subtotal} onApply={handlePromoApply} />
-            {/* ✅ Subtotal goes here */}
-            <p>
-              <strong>Subtotal: ${(subtotal - discount).toFixed(2)}</strong>
-            </p>
-
-            <button onClick={handleNext} className="proceed-button">
-              Proceed to Checkout
-            </button>
           </div>
-        </>
-      )}
-      <IngredientsModal
-        isOpen={showIngredients}
-        onClose={() => setShowIngredients(false)}
-      />
+        </div>
+        <div className="forms-container">
+          <div className="left-container">
+            <TamaleSection onUpdate={setSelectedTamales} />
+            <SideSection onUpdate={setSelectedSides} />
+          </div>
+          <div className="right-container">
+            <DrinkSection onUpdate={setSelectedDrinks} />
+            <AppetizerSection onUpdate={setSelectedAppetizers} />
+          </div>
+        </div>
+
+        {[
+          ...selectedTamales,
+          ...selectedDrinks,
+          ...selectedAppetizers,
+          ...selectedSides,
+        ].filter((item) => item.quantity > 0).length > 0 && (
+          <>
+            {/* Spacer only appears when there are items */}
+            <div style={{ height: "190px" }} />
+            <div className="fixed-checkout-btn">
+              {[
+                ...selectedTamales,
+                ...selectedDrinks,
+                ...selectedAppetizers,
+                ...selectedSides,
+              ]
+                .filter((item) => item.quantity > 0)
+                .map((item, i) => (
+                  <p key={i}>
+                    {item.quantity} {item.size || item.unit || "x"} {item.name}{" "}
+                    – ${(item.basePrice * item.quantity).toFixed(2)}
+                  </p>
+                ))}
+              <PromoCode subtotal={subtotal} onApply={handlePromoApply} />
+              {/* ✅ Subtotal goes here */}
+              <p>
+                <strong>Subtotal: ${(subtotal - discount).toFixed(2)}</strong>
+              </p>
+
+              <button onClick={handleNext} className="proceed-button">
+                Proceed to Checkout
+              </button>
+            </div>
+          </>
+        )}
+        <IngredientsModal
+          isOpen={showIngredients}
+          onClose={() => setShowIngredients(false)}
+        />
+      </div>
       <Footer />
     </div>
   );
