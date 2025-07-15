@@ -30,7 +30,7 @@ const FlipCard = ({ title, description, image, direction = "left" }) => {
           <h1>{title}</h1>
         </div>
         <div className="flip-card-back">
-          <p>{description}</p>
+          <h2>{description}</h2>
         </div>
       </div>
     </motion.div>
