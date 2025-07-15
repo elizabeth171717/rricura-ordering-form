@@ -466,16 +466,16 @@ footer{
 
 
 .home-btn{
-  padding: .50rem;
-  border: 3px solid white;
+  padding: 1rem;
+  
   border-radius: 6px;
   font-weight: bold;
-  color: white;
-
+  background-color: white;
+color: #9D0759;
 }
 
 .home-btn:hover{
-  border: black;
+background-color:black;
 }
 
 .hero-boxes{
@@ -510,7 +510,9 @@ footer{
 .cards{
   width: 100%;
   overflow-x: hidden; /* 💥 Prevents horizontal scroll during animation */
-
+ background-image: url(../public/bg.png);
+ 
+ padding: 5rem 0;
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -574,7 +576,7 @@ footer{
 
 @media (min-width:45rem) {
   .flip-card {
-  width: 40%;
+  width: 60%;
   
   height: 400px;
  

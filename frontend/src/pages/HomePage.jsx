@@ -10,6 +10,7 @@ import holidayPic from "../assets/holiday.jpg";
 import corporatePic from "../assets/watermelon.jpg";
 import FamilyPic from "../assets/esquite.jpg";
 import weddingPic from "../assets/mix.jpg";
+
 import Footer from "../components/Footer";
 
 const HomePage = () => {
@@ -18,25 +19,9 @@ const HomePage = () => {
       <Navigation />
       <div className="hero-section">
         <div className="hero-intro">
-          <div className="hero-boxes">
-            <div className="h-box">
-              <span>
-                <FontAwesomeIcon icon={faTruck} />
-              </span>
-              <p>Delivery only</p>
-            </div>
-            <div className="h-box">
-              <FontAwesomeIcon icon={faCalendarDays} />
-              <p>2 days advanced notice</p>
-            </div>
-            <div className="h-box">
-              <FontAwesomeIcon icon={faBan} />
-              <p>Closed Sundays</p>
-            </div>
-          </div>
           <div className="hero-title">
             <h2>
-              Order authentic MEXICAN TAMALES🫔 for your next event — from
+              Order authentic MEXICAN TAMALES 🫔 for your next event 🎉— from
               intimate gatherings of 12 to large parties of 1000 or more !!!
             </h2>
           </div>
@@ -47,11 +32,24 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <div className="hero-boxes">
+        <div className="h-box">
+          <span>
+            <FontAwesomeIcon icon={faTruck} />
+          </span>
+          <p>Delivery only</p>
+        </div>
+        <div className="h-box">
+          <FontAwesomeIcon icon={faCalendarDays} />
+          <p>2 days advanced notice</p>
+        </div>
+        <div className="h-box">
+          <FontAwesomeIcon icon={faBan} />
+          <p>Closed Sundays</p>
+        </div>
+      </div>
 
       <div className="info-section">
-        <div className="section-title">
-          <h1>👉WE CATER👈</h1>
-        </div>
         <div className="cards">
           <FlipCard
             title="TAMALES"
@@ -62,15 +60,17 @@ const HomePage = () => {
           />
           <FlipCard
             title="MIX & MATCH"
-            description="Don't settle for just one tamale filling, mix & match tamales and enjoy all your favorites,add salsaverde and sour cream."
+            description="Craving more than just one flavor? Mix & match tamales your way — and level it up with fresh salsa verde and sour cream on the side."
             image={weddingPic}
             direction="right"
           />
 
           <FlipCard
             title="DRINKS"
-            description="Make it a combo, add real fruits waters : watermelon, jamaica, pineapple, melon and orchata. 
-            we also offer Atole: Champurrado and Atole de arroz "
+            description="Make it a full meal — pair your tamales with our refreshing aguas frescas made from real fruit: Watermelon, Jamaica, Pineapple, Cantaloupe, and Horchata.
+Warm up with our traditional Atole: Champurrado or Atole de Arroz.
+
+"
             image={corporatePic}
             direction="left"
           />
