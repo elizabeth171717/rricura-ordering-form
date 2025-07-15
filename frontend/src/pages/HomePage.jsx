@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTruck } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
 import FlipCard from "../components/FlipCard";
 import holidayPic from "../assets/holiday.jpg";
 import corporatePic from "../assets/sandia.jpg";
@@ -13,15 +17,34 @@ const HomePage = () => {
     <div className="homepage">
       <Navigation />
       <div className="hero-section">
-        <h2>
-          Order authentic Mexican tamales for your next event — from intimate
-          gatherings of 12 to large parties of 1000 and more !!!
-        </h2>
-
-        <div className="hero-CTA">
-          <Link to="/CateringMenu" className="home-btn">
-            ORDER NOW
-          </Link>
+        <div className="hero-intro">
+          <div className="hero-boxes">
+            <div className="h-box">
+              <span>
+                <FontAwesomeIcon icon={faTruck} />
+              </span>
+              <p>DELIVERY ONLY</p>
+            </div>
+            <div className="h-box">
+              <FontAwesomeIcon icon={faCalendarDays} />
+              <p>2 DAYS ADVANCED NOTICED</p>
+            </div>
+            <div className="h-box">
+              <FontAwesomeIcon icon={faBan} />
+              <p>CLOSE SUNDAYS</p>
+            </div>
+          </div>
+          <div className="hero-title">
+            <h2>
+              Order authentic MEXICAN TAMALES for your next event — from
+              intimate gatherings of 12 to large parties of 1000 or more !!!
+            </h2>
+          </div>
+          <div className="hero-CTA">
+            <Link to="/CateringMenu" className="home-btn">
+              ORDER NOW 🫔
+            </Link>
+          </div>
         </div>
       </div>
 

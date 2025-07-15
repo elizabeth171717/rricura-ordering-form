@@ -453,19 +453,51 @@ footer{
 
 }
 
+.hero-title{
+  
+  padding: .50rem 0;
+}
+
+.hero-CTA{
+  
+  padding: .25rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+
 .home-btn{
   padding: .50rem;
   border: 3px solid white;
   border-radius: 6px;
   font-weight: bold;
   color: white;
-  margin-bottom: 1rem;
+
 }
 
 .home-btn:hover{
   border: black;
 }
 
+.hero-boxes{
+  
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+ 
+}
+
+.h-box{
+  border: 1px solid  #9D0759;
+  color: black;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  padding: .25rem;
+  align-items: center;
+  justify-content: center;
+}
 .info-section{
   padding: 2rem 1rem;
   display: flex;
