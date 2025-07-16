@@ -444,18 +444,20 @@ footer{
 
 /************HOME PAGE***********/
 .hero-section{
-  background-color: #9D0759;
-  color: white;
+  border:10px solid #9D0759;
+
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 
+ background-image: url(../public/tamalebox.jpg);
+ background-size: 20%;
+ background-repeat: no-repeat;
+ background-position: right bottom;
 }
 
 .hero-title{
-  
-  padding: .50rem 0;
+  text-shadow: 5px 5px 15px rgba(255, 255, 255);
 }
 
 .hero-CTA{
@@ -467,11 +469,11 @@ footer{
 
 .home-btn{
   padding: 1rem;
-  
+  margin-top: 1rem;
   border-radius: 6px;
   font-weight: bold;
-  background-color: white;
-color: #9D0759;
+ color: white;
+background-color: #9D0759;
 }
 
 .home-btn:hover{
@@ -480,15 +482,16 @@ background-color:black;
 
 .hero-boxes{
   
-  background-color: white;
+  background-color: #9D0759;
   display: flex;
   justify-content: space-between;
  
 }
 
 .h-box{
-  border: 1px solid  #9D0759;
-  color: black;
+  border: 1px solid  white;
+  color: white;
+
   flex: 1;
   display: flex;
   flex-direction: column;
