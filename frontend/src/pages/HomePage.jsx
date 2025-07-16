@@ -10,7 +10,7 @@ import holidayPic from "../assets/holiday.jpg";
 import corporatePic from "../assets/watermelon.jpg";
 import FamilyPic from "../assets/esquite.jpg";
 import weddingPic from "../assets/mix.jpg";
-
+import Flag from "../assets/mexicoflag.png";
 import Footer from "../components/Footer";
 
 const HomePage = () => {
@@ -21,9 +21,12 @@ const HomePage = () => {
         <div className="hero-intro">
           <div className="hero-title">
             <h2>
-              Order authentic MEXICAN TAMALES 🫔 for your next event 🎉— from
-              intimate gatherings of 12 to large parties of 1000 or more !!!
+              Order authentic MEXICAN TAMALES 🫔 for your next event 🪅— from
+              intimate gatherings of 12 to large parties of 1000 or more !!!{" "}
             </h2>
+          </div>
+          <div className="banner-img">
+            <img src={Flag} />
           </div>
           <div className="hero-CTA">
             <Link to="/CateringMenu" className="home-btn">
