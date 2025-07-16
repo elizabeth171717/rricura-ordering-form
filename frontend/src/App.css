@@ -39,6 +39,8 @@ h3{
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 1rem .50rem;
+  
+  border-bottom:5px solid #333;
 }
 
 .logo{
@@ -441,7 +443,6 @@ footer{
 
 /************HOME PAGE***********/
 .hero-section{
-  border-top:10px solid #333;
 
   padding: 2rem 1rem;
   display: flex;
@@ -451,6 +452,13 @@ footer{
  background-size: 150px;
  background-repeat: no-repeat;
  background-position: right bottom;
+}
+
+@media (min-width:45rem) {
+  .hero-section{
+    margin: 0 auto;
+ width: 50%;}
+
 }
 
 .hero-title{

@@ -21,7 +21,7 @@ const HomePage = () => {
         <div className="hero-intro">
           <div className="hero-title">
             <h2>
-              Order authentic MEXICAN TAMALES 🫔 for your next event 🪅— from
+              We cater authentic MEXICAN TAMALES 🫔 for all events 🪅— from
               intimate gatherings of 12 to large parties of 1000 or more !!!{" "}
             </h2>
           </div>
