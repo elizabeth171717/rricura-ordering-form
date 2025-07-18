@@ -1,4 +1,6 @@
 import React from "react";
+import { Helmet } from "react-helmet";
+
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,13 +18,21 @@ import Footer from "../components/Footer";
 const HomePage = () => {
   return (
     <div className="homepage">
+      <Helmet>
+        <title>Rricura Tamales | Authentic Mexican Tamale Catering</title>
+        <meta
+          name="description"
+          content="We cater authentic MEXICAN TAMALES 🫔 for all events 🪅— from intimate gatherings of 12 to large parties of 1000 or more! ORDER NOW."
+        />
+      </Helmet>
       <Navigation />
       <div className="hero-section">
         <div className="hero-intro">
           <div className="hero-title">
             <h2>
-              We cater authentic MEXICAN TAMALES 🫔 for all events 🪅— from
-              intimate gatherings of 12 to large parties of 1000 or more !!!{" "}
+              We cater authentic MEXICAN TAMALES 🫔 for all events 🪅 — from
+              intimate gatherings of 12 to large celebrations of 1,000+ guests.
+              Always handcrafted, always delicious😋
             </h2>
           </div>
           <div className="banner-img">

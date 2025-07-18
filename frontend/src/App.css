@@ -448,7 +448,7 @@ footer{
   display: flex;
   flex-direction: column;
 
- background-image: url(../public/tamalebox.jpg);
+ background-image: url(../tamalebox.jpg);
  background-size: 150px;
  background-repeat: no-repeat;
  background-position: right bottom;
@@ -529,7 +529,7 @@ background-color:#333;
 .cards{
   width: 100%;
   overflow-x: hidden; /* 💥 Prevents horizontal scroll during animation */
- background-image: url(../public/bg.png);
+ background-image: url(../bg.png);
  
  padding: 5rem 0;
   display: flex;
