@@ -10,6 +10,8 @@ import PromoCode from "../components/PromoCode";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
+import { pushToDataLayer } from "../analytics/gtmEvents";
+
 const CateringMenu = () => {
   const navigate = useNavigate();
   const [selectedTamales, setSelectedTamales] = useState([]);
@@ -67,6 +69,28 @@ const CateringMenu = () => {
     localStorage.setItem("menuSubtotal", subtotal.toFixed(2)); // 👈 right here
     localStorage.setItem("promoCode", promoCode); // ✅ add this
     localStorage.setItem("menuDiscount", discount.toFixed(2)); // ✅ add this
+
+    // ✅ Create the combined items array
+    const allItems = [
+      ...validTamales,
+      ...validDrinks,
+      ...validAppetizers,
+      ...validSides,
+    ].map((item) => ({
+      item_id: item.id,
+      item_name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
+    // ✅ Push add_to_cart event to dataLayer with all items
+    pushToDataLayer("add_to_cart", {
+      ecommerce: {
+        currency: "USD",
+        value: subtotal, // subtotal of the cart
+        items: allItems,
+      },
+    });
 
     navigate("/checkout");
   };
