@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
-
 import { useNavigate, useLocation } from "react-router-dom";
-import { pushToDataLayer } from "../analytics/gtmEvents"; // ✅ import the function
+import { pushToDataLayer } from "../analytics/gtmEvents"; // ✅ correct import
 
 const ThankYouPage = () => {
   const location = useLocation();
-
-  // Get orderData from location.state
-  const { orderData } = location.state || {};
+  const { orderData } = location.state || {}; // ✅ pulls orderData safely
 
   const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ✅ Fire GTM Purchase Event only if orderData is present
     if (orderData) {
+      // ✅ GTM purchase event
       pushToDataLayer("purchase", {
         transaction_id: orderData.orderNumber,
         ecommerce: {
@@ -34,22 +31,19 @@ const ThankYouPage = () => {
       console.log("✅ GTM Purchase Event pushed:", orderData);
     }
 
-    // Show the thank you message after 1 second
     const messageTimer = setTimeout(() => {
       setShowMessage(true);
     }, 1000);
 
-    // Redirect to homepage after 6 seconds
     const redirectTimer = setTimeout(() => {
       navigate("/");
     }, 6000);
 
-    // Cleanup timers on unmount
     return () => {
       clearTimeout(messageTimer);
       clearTimeout(redirectTimer);
     };
-  }, [navigate]);
+  }, [navigate, orderData]); // ✅ include orderData in deps to avoid warning
 
   const handleManualRedirect = () => {
     navigate("/");
