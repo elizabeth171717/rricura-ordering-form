@@ -1,5 +1,3 @@
-
-
 // /src/analytics/gtmEvents.js
 
 export const pushToDataLayer = (eventName, data) => {
@@ -9,3 +7,4 @@ export const pushToDataLayer = (eventName, data) => {
     ...data
   });
 };
+

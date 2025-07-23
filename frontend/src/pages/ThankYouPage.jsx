@@ -1,11 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { useNavigate, useLocation } from "react-router-dom";
+import { pushToDataLayer } from "../analytics/gtmEvents"; // ✅ import the function
 
 const ThankYouPage = () => {
+  const location = useLocation();
+
+  // Get orderData from location.state
+  const { orderData } = location.state || {};
+
   const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // ✅ Fire GTM Purchase Event only if orderData is present
+    if (orderData) {
+      pushToDataLayer("purchase", {
+        transaction_id: orderData.orderNumber,
+        ecommerce: {
+          currency: "USD",
+          value: orderData.total,
+          tax: orderData.tax,
+          shipping: orderData.deliveryAddress?.fee || 0,
+          items: orderData.items.map((item) => ({
+            item_id: item.id,
+            item_name: item.name,
+            price: item.basePrice,
+            quantity: item.quantity,
+          })),
+        },
+      });
+
+      console.log("✅ GTM Purchase Event pushed:", orderData);
+    }
+
     // Show the thank you message after 1 second
     const messageTimer = setTimeout(() => {
       setShowMessage(true);

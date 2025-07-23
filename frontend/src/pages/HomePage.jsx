@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-
+import { faHandPointDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,15 +30,19 @@ const HomePage = () => {
         <div className="hero-intro">
           <div className="hero-title">
             <h2>
-              We cater authentic MEXICAN TAMALES 🫔 for all events 🪅 — from
-              intimate gatherings of 12 to large celebrations of 1,000+ guests.
-              Always handcrafted, always delicious😋
+              We cater authentic MEXICAN TAMALES 🫔in ATL for all events 🪅 —
+              from intimate gatherings of 12 to large celebrations of 1,000+
+              guests. Always handcrafted, always delicious😋
             </h2>
           </div>
           <div className="banner-img">
             <img src={Flag} />
           </div>
           <div className="hero-CTA">
+            <FontAwesomeIcon
+              icon={faHandPointDown}
+              className="bouncing-pointer"
+            />
             <Link to="/CateringMenu" className="home-btn">
               ORDER NOW
             </Link>

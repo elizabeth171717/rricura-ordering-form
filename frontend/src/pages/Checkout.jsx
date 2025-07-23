@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
 import Terms from "../components/Terms";
 import TipSelector from "../components/TipSelector";
+import { pushToDataLayer } from "../analytics/gtmEvents"; // make sure this import is at the top
 
 import SuccessModal from "../components/SuccessModal";
 
@@ -124,6 +125,15 @@ const Checkout = () => {
       deliveryTime: selectedTime,
       deliveryAddress: deliveryInfo, // ✅ Correct and clean
     };
+
+    // ✅ Fire the begin_checkout GTM event!
+    pushToDataLayer("begin_checkout", {
+      ecommerce: {
+        currency: "USD",
+        value: total,
+        items: allItems,
+      },
+    });
 
     navigate("/payment-page", {
       state: { orderData },
