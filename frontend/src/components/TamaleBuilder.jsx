@@ -13,7 +13,7 @@ import greenSauceImg from "../assets/greensauce.jpeg";
 import redSauceImg from "../assets/salsaroja.jpg";
 import tomateSauceImg from "../assets/tomatesauce.jpg";
 import blackBeanImg from "../assets/blackbean.jpg";
-
+import { pushToDataLayer } from "../analytics/gtmEvents";
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
   { name: "Pork", value: "Pork", img: pulledPorkImg },
@@ -350,7 +350,7 @@ const TamaleBuilder = () => {
                 : ""
             }`}
           </p>
-          <p>Price per tamale: ${selected.price.toFixed(2)}</p>
+
           <p>Total: ${subtotal}</p>
 
           <button
@@ -361,12 +361,27 @@ const TamaleBuilder = () => {
                 quantity: totalTamales,
               };
 
+              // your existing logic
               const existing =
                 JSON.parse(localStorage.getItem("tamaleCart")) || [];
-              localStorage.setItem(
-                "tamaleCart",
-                JSON.stringify([...existing, newItem])
-              );
+              const updatedCart = [...existing, newItem];
+              localStorage.setItem("tamaleCart", JSON.stringify(updatedCart));
+
+              // ✅ Send GA4 add_to_cart event
+              pushToDataLayer("add_to_cart", {
+                ecommerce: {
+                  currency: "USD",
+                  value: parseFloat(subtotal), // total for this add
+                  items: updatedCart.map((item) => ({
+                    item_name: item.filling,
+                    item_category: "Tamales",
+                    price: item.price,
+                    quantity: item.quantity,
+                    wrapper: item.wrapper || "N/A",
+                    sauce: item.sauce || "None",
+                  })),
+                },
+              });
 
               setShowPopup(true);
               setTimeout(() => setShowPopup(false), 2500); // hide after 2.5 seconds
