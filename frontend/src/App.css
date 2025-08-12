@@ -34,37 +34,156 @@ h3{
 /*navigation*/
 
 
-.navigation{
+
+  .navigation {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1000;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 1rem .50rem;
-  
-  border-bottom:5px solid #333;
+ flex-wrap: wrap;
+ justify-content: space-between;
+  padding:  1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+align-items: center;
 }
 
 .logo{
-width: 170px;
+width: 180px;
+
 }
+
 
 
 .icons-container{
  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  
+ gap: 1rem;
+ 
 }
 
-.icon-container a{
-font-size: 1.50rem;
+.big-screen{
+  font-weight: bold;
+  display: none;
 }
 
-.location{
-display: flex;
-  justify-content: center;
+@media (min-width:45rem) {
+  .big-screen{
+
+  display: block;
+  text-decoration: underline;
+}
+}
+
+.cart-icon-container {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color:#ce4c93;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 1000;
+  transition: right 0.3s ease-in-out;
+  padding: 1rem;
+}
+
+.cart-drawer.open {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: .50rem;
+  margin-bottom: 1rem;
+}
+
+.close-x {
+  font-size: 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  color: #333;
+}
+
+.close-btn {
+  font-size: 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-item {
+  display: flex;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.cart-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.cart-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: #eee;
+  text-align: center;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.cart-btn.primary {
+  background: #d62828;
+  color: white;
+}
+
+.cart-badge {
+  background: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.25rem;
+}
+
+
+.cart-item-details button{
+  width: 40%;
+  padding: .25rem;
+
 }
 
      /*back  button*/
@@ -194,43 +313,6 @@ margin-right: 5px;
   max-height: 50vh;
   overflow-y: auto;
 }
-
-/*side options*/
-
-.side-options {
- 
-  display: flex;
-  margin: 2rem 0;
-  flex-wrap: wrap;
-  gap: 1rem ;
-  justify-content: center;
-}
-
-.side-options > div {
-  width: 150px;
-  min-height: 150px; /* optional: ensures small cards aren’t too short */
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 0.5rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
- 
-}
-
-.side-options img {
-  width: 100%;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-/*side options*/
 
 
 
@@ -443,31 +525,26 @@ footer{
 
 /************HOME PAGE***********/
 .hero-section{
+background-image: url("hero-bg.png");
 
   padding: 2rem 1rem;
   display: flex;
-  flex-direction: column;
-
- background-image: url(../tamalebox.jpg);
- background-size: 150px;
- background-repeat: no-repeat;
- background-position: right bottom;
+ align-items: center;
+color:white; /* Makes the fill of the text transparent */
+  justify-content: space-around;
+gap: 1rem;
+flex-wrap: wrap;
 }
 
 
-
-@media (min-width:45rem) {
-  .hero-section{
-    margin: 0 auto;
- width: 50%;}
-
-}
 
 .hero-title {
   opacity: 0;
   transform: translateX(-50px);
   animation: slideInLeft 0.8s ease-out forwards;
   animation-delay: 0.2s; /* optional delay */
+background-color:#b40967;
+padding: .50rem;
 }
 
 @keyframes slideInLeft {
@@ -507,138 +584,183 @@ footer{
 
 
 .home-btn{
-  display: block;
-  
+ color:#9D0759;
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 6px;
   font-weight: bold;
- color: white;
-background-color: #9D0759;
+
+ font-weight: bolder;
+background-color: white;
 }
 
 .home-btn:hover{
 background-color:#333;
 }
 
-.hero-boxes{
-  margin: 1rem 0;
-  background-color: #333;
+.tamales-intro{
+  margin: 3rem 0;
+  text-align: center;
   display: flex;
-  justify-content: space-between;
- 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  padding: 1rem .25rem;
 }
 
-.h-box{
-  border: 1px solid  white;
-  color: white;
+
+.tamale-boxes{
+
+  display: flex;
+ flex-direction: column;
+align-items: center;
+
+  gap: 2rem;
+}
+
+@media (min-width:45rem) {
+  .tamale-boxes{
+flex-direction: row;
+width: 80%;
+gap: 3rem;
+}
+
+}
+
+/* ONLINE ORDERING -SELECTED ITEMS /SELECTED TAMALE*/
+
+.other-options{
+  margin: 1rem;
+
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.selected-summary{
+ 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+ width: 100%;
+ max-width: 500px;
+}
+
+/*Tamale Builder*/
+.tamale-builder-img, .product-img{
+  width: 100%;
+  height: 200px;
+object-fit: cover;
+}
+
+.step-container{
+  padding:1rem;
+
+}
+
+.selected-option{
 
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: .25rem;
-  padding: .50rem.25rem;
-  
-  text-align: center;
-}
-.info-section{
-  padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-.section-title{
-  text-align: center;
-}
-
-
-.banner-img{
-  width: 100%;
- 
-}
-
-.banner-img img{
-  object-fit: contain;
-  width: 70px;
-}
-
-.cards{
-  width: 100%;
-  overflow-x: hidden; /* 💥 Prevents horizontal scroll during animation */
- background-image: url(../bg.png);
- 
- padding: 5rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-}
-
-.flip-card {
-  width: 100%;
-  height: 400px;
-  perspective: 1000px;
-  margin: 1rem auto;
- 
- 
- 
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  border-radius: 12px;
-box-shadow: 4px 4px 3px rgb(82, 81, 79);
-}
-
-.flip-card:hover .flip-card-inner,
-.flip-card:active .flip-card-inner {
-  transform: rotateY(180deg);
- 
-}
-
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
-  color: white;
- box-shadow: 4px 4px 3px rgb(82, 81, 79);
+  margin:1rem 0;
 }
 
-.flip-card-front {
-  background-size: cover;
-  background-position: center;
-
+.selected-option h4, p{
+ font-weight: bold;
+ margin: .50rem 0;
 }
 
-.flip-card-front h1 {
-  background-color: rgba(71, 68, 68, 0.6);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+.selected-option  button{
+  width: 80%;
+  padding: .25rem;
 }
 
-.flip-card-back {
-  background-color: #9D0759;
-  transform: rotateY(180deg);
-  text-align: center;
+/*grid-container for drinks, apps and sides*/
+.grid-container{
+  margin: 2rem 0;
+}
+
+/*Select filing*/
+.grid{
+  display: flex;
+
+ justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+
+}
+.option-card{
+  border: 3px solid  #9D0759;
+ text-align: center;
+ cursor: pointer;
+width: 100%;
+
 }
 
 
 @media (min-width:45rem) {
-  .flip-card {
-  width: 60%;
+
+  .option-card{
   
-  height: 400px;
- 
+width: 200px;
+
 }
+}
+
+
+
+.grid p{
+  font-weight: bold;
+  color: #9D0759;
+  font-size: 1.50rem;
+margin: .50rem 0;
+}
+
+/*selcet wrapper*/
+
+.selected-option{
+  
+  border: 1px solid #9D0759;
+ width: 30%;
+}
+
+.selected-option img{
+  width: 100%;
+  object-fit: cover;
+}
+
+.selected-tamale-img{
+  width: 100%;
+  max-width: 300px;
+}
+
+.sides-btn{
+ padding: .25rem;
+ width: 90%;
+}
+
+.cart-popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 9999;
+  font-weight: bold;
+  animation: fadeInOut 2.5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
 }

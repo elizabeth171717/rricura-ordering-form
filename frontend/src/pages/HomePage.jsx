@@ -4,15 +4,13 @@ import { faHandPointDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTruck } from "@fortawesome/free-solid-svg-icons";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
-import { faBan } from "@fortawesome/free-solid-svg-icons";
-import FlipCard from "../components/FlipCard";
-import holidayPic from "../assets/holiday.jpg";
-import corporatePic from "../assets/watermelon.jpg";
-import FamilyPic from "../assets/esquite.jpg";
-import weddingPic from "../assets/mix.jpg";
-import Flag from "../assets/mexicoflag.png";
+import { faTiktok } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import ORDERRAJAS from "../assets/ORDERRAJAS.png";
+import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
+import Corporate from "../assets/corporate.jpg";
+
 import Footer from "../components/Footer";
 
 const HomePage = () => {
@@ -27,78 +25,77 @@ const HomePage = () => {
       </Helmet>
       <Navigation />
       <div className="hero-section">
-        <div className="hero-intro">
-          <div className="hero-title">
+        <div className="icons-container">
+          <a
+            href="https://www.facebook.com/profile.php?id=61566890440038"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faFacebook}
+              style={{ fontSize: "1.50rem", color: "white" }}
+            />
+          </a>
+          <a
+            href="https://www.instagram.com/r_ricura/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faInstagram}
+              style={{ fontSize: "1.50rem", color: "white" }}
+            />
+          </a>
+          <a
+            href="https://www.tiktok.com/@rricuratamales?_t=ZP-8y5G5NDSIQw&_r=1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faTiktok}
+              style={{ fontSize: "1.50rem", color: "white" }}
+            />
+          </a>
+        </div>
+
+        <div className="hero-title">
+          <h2>ORDER AUTHENTIC 🫔 MEXICAN TAMALES FOR YOUR NEXT EVENT</h2>
+        </div>
+        <div className="hero-btn">
+          <FontAwesomeIcon
+            icon={faHandPointDown}
+            className="bouncing-pointer"
+            style={{ color: "#9D0759" }}
+          />
+          <Link to="/OnlineOrdering" className="home-btn">
+            START YOU ORDER
+          </Link>
+        </div>
+      </div>
+      <section className="tamales-intro">
+        <div className="tamales-banner">
+          <div className="section-title">
             <h2>
-              We cater authentic MEXICAN TAMALES 🫔in ATL for all events 🪅 —
-              from intimate gatherings of 12 to large celebrations of 1,000+
-              guests. Always handcrafted, always delicious😋
+              Enjoy our delicious Tamales with Family, Coworkers and Friends
             </h2>
           </div>
           <div className="banner-img">
-            <img src={Flag} />
+            <img src={Corporate} />
           </div>
-          <div className="hero-CTA">
-            <FontAwesomeIcon
-              icon={faHandPointDown}
-              className="bouncing-pointer"
-            />
-            <Link to="/CateringMenu" className="home-btn">
-              ORDER NOW
+        </div>
+        <div className="tamale-boxes">
+          <div className="tamale-box">
+            <Link to="/OnlineOrdering">
+              <img src={ORDERCHICKEN} />
+            </Link>
+          </div>
+          <div className="tamale-box">
+            <Link to="/OnlineOrdering">
+              <img src={ORDERRAJAS} />
             </Link>
           </div>
         </div>
-      </div>
-      <div className="hero-boxes">
-        <div className="h-box">
-          <span>
-            <FontAwesomeIcon icon={faTruck} />
-          </span>
-          <p>Delivery only</p>
-        </div>
-        <div className="h-box">
-          <FontAwesomeIcon icon={faCalendarDays} />
-          <p>2 days advanced notice</p>
-        </div>
-        <div className="h-box">
-          <FontAwesomeIcon icon={faBan} />
-          <p>Closed Sundays</p>
-        </div>
-      </div>
-
-      <div className="info-section">
-        <div className="cards">
-          <FlipCard
-            title="TAMALES"
-            description="Handcrafted using family recipes. No shortcuts — just flavor. Sold  by Dozen(12 tamales).
-          We offer chicken, pork, rajas, sweet, veggie and even vegan tamales."
-            image={holidayPic}
-            direction="left"
-          />
-          <FlipCard
-            title="MIX & MATCH"
-            description="Craving more than just one flavor? Mix & match tamales your way — and level it up with fresh salsa verde and sour cream on the side."
-            image={weddingPic}
-            direction="right"
-          />
-
-          <FlipCard
-            title="DRINKS"
-            description="Make it a full meal — pair your tamales with our refreshing aguas frescas made from real fruit: Watermelon, Jamaica, Pineapple, Cantaloupe, and Horchata.
-Warm up with our traditional Atole: Champurrado or Atole de Arroz.
-
-"
-            image={corporatePic}
-            direction="left"
-          />
-          <FlipCard
-            title="MORE"
-            description="Try our delicios  Esquites, elotes and Soups: chicken, black bean and fideo."
-            image={FamilyPic}
-            direction="right"
-          />
-        </div>
-      </div>
+      </section>
       <Footer />
     </div>
   );

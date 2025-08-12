@@ -1,5 +1,7 @@
-import { useState } from "react";
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navigation from "./Navigation";
+import PeopleCount from "./PeopleCount";
 import pina from "../assets/pina.jpg";
 import jamaica from "../assets/jamaica.jpg";
 import melon from "../assets/melon.png";
@@ -7,67 +9,97 @@ import sandia from "../assets/sandia.jpg";
 import sodas from "../assets/sodas.jpg";
 import water from "../assets/bottlewater.jpg";
 import champurrado from "../assets/champurrado.jpg";
+import Footer from "./Footer";
 
 const drinkOptions = [
-  { name: "Agua De Pina", image: pina, basePrice: 48, unit: "dozen" },
-  { name: "Agua de Jamaica", image: jamaica, basePrice: 48, unit: "dozen" },
-  { name: "Agua de Melon", image: melon, basePrice: 48, unit: "dozen" },
-  { name: "Agua de Sandia", image: sandia, basePrice: 48, unit: "dozen" },
-  { name: "Soft Drinks", image: sodas, basePrice: 36, unit: "dozen" },
-  { name: "Bottle Water", image: water, basePrice: 36, unit: "dozen" },
-  { name: "Champurrado", image: champurrado, basePrice: 48, unit: "dozen" },
+  { name: "Agua De Piña", img: pina, basePrice: 4 },
+  { name: "Agua de Jamaica", img: jamaica, basePrice: 4 },
+  { name: "Agua de Melón", img: melon, basePrice: 4 },
+  { name: "Agua de Sandía", img: sandia, basePrice: 4 },
+  { name: "Soft Drinks", img: sodas, basePrice: 3 },
+  { name: "Bottle Water", img: water, basePrice: 3 },
+  { name: "Champurrado", img: champurrado, basePrice: 4 },
 ];
 
-function DrinkSection({ onUpdate }) {
-  const [selectedDrinks, setSelectedDrinks] = useState(
-    drinkOptions.map((t) => ({ ...t, quantity: 0 }))
-  );
+const DrinkSection = () => {
+  const navigate = useNavigate();
+  const [totalDrinks, setTotalDrinks] = useState(null);
+  const [selectedDrink, setSelectedDrink] = useState(null);
 
-  const handleQuantityChange = (index, value) => {
-    const updated = [...selectedDrinks];
-    updated[index].quantity = Number(value);
-    setSelectedDrinks(updated);
+  const [showPopup, setShowPopup] = useState(false);
 
-    // ✅ Update parent with only selected tamales
-    if (onUpdate) {
-      onUpdate(updated.filter((t) => t.quantity > 0));
-    }
+  const isReady = selectedDrink && totalDrinks && totalDrinks >= 1;
+
+  const subtotal = isReady
+    ? (selectedDrink.basePrice * totalDrinks).toFixed(2)
+    : null;
+
+  const addToCart = () => {
+    if (!isReady) return;
+    const newItem = {
+      type: "drink",
+      ...selectedDrink,
+      quantity: totalDrinks,
+      price: selectedDrink.basePrice,
+      img: selectedDrink.img,
+    };
+
+    const existing = JSON.parse(localStorage.getItem("tamaleCart")) || [];
+    localStorage.setItem("tamaleCart", JSON.stringify([...existing, newItem]));
+
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2500);
   };
 
   return (
-    <div className="drinks-section">
-      <h2>DRINKS ✨</h2>
-      <div className="options">
-        {selectedDrinks.map((tamale, index) => (
-          <div key={tamale.name} className="tamale-card">
-            <img src={tamale.image} alt={tamale.name} />
-            <div className="tamale-descrition">
-              <h3>{tamale.name.replace(/([A-Z])/g, " $1").trim()}</h3>
-              <p>Sold by dozen - ${tamale.basePrice} per dozen</p>
-            </div>
-            <div className="tamale-quantity">
-              <select
-                value={tamale.quantity || ""}
-                onChange={(e) =>
-                  handleQuantityChange(index, Number(e.target.value))
-                }
+    <div className="drinks-container">
+      <Navigation />
+      <div className="step-container">
+        <span onClick={() => navigate(-1)} className="back-button">
+          ⬅ Back to Tamales
+        </span>
+        <h2>🥤 Drinks</h2>
+
+        {/* Quantity Picker */}
+        <PeopleCount setPeople={setTotalDrinks} value={totalDrinks} />
+        <div className="grid-container">
+          {/* Drink Selection */}
+          <h2>Choose Your Drink:</h2>
+          <div className="grid">
+            {drinkOptions.map((drink) => (
+              <div
+                key={drink.name}
+                className={`option-card ${
+                  selectedDrink?.name === drink.name ? "selected" : ""
+                }`}
+                onClick={() => setSelectedDrink(drink)}
               >
-                <option value="" disabled>
-                  Select
-                </option>
-                <option value={0}>Remove</option> {/* Add this line */}
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                  <option key={num} value={num}>
-                    {num} Dozen{num > 1 ? "s" : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <img src={drink.img} alt={drink.name} className="product-img" />
+                <p>{drink.name}</p>
+                <p>${drink.basePrice}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        {/* Summary + Add to Cart */}
+        {isReady && (
+          <>
+            <img
+              src={selectedDrink.img}
+              alt={selectedDrink.name}
+              className="selected-tamale-img"
+            />
+            <p>
+              {totalDrinks} {selectedDrink.name} — ${subtotal}
+            </p>
+            <button onClick={addToCart}>Add to Cart</button>
+            {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+          </>
+        )}
       </div>
+      <Footer />
     </div>
   );
-}
+};
 
 export default DrinkSection;

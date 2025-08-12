@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import Navigation from "../components/Navigation";
 import LoadingOverlay from "../components/LoadingOverlay";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "../stripe";
@@ -44,6 +44,7 @@ const PaymentPage = () => {
 
   return (
     <div className="paymentPage-container">
+      <Navigation />
       <Link to="/">← Go back to order form</Link>
       <h2>Complete Your Payment</h2>
       {/* 🔥 Display the total to be paid */}

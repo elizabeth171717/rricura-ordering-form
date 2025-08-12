@@ -43,7 +43,7 @@ const CheckoutForm = ({ orderData, navigate }) => {
           paymentIntentId: paymentIntent.id,
           orderData,
         });
-        localStorage.removeItem("cartItems");
+        localStorage.removeItem("tamaleCart");
 
         navigate("/thank-you", { state: { orderData } });
       } catch (error) {

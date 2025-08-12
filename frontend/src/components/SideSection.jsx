@@ -1,69 +1,131 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import salsaverde from "../assets/salsaverde.jpg";
 import sourcream from "../assets/sourcream.jpg";
+import Navigation from "./Navigation";
+import Footer from "./Footer";
+import { Link } from "react-router-dom";
 
-const sideOptions = [
+const sides = [
   {
-    name: "Salsa verde",
-    image: salsaverde,
+    type: "side",
+
     options: [
-      { size: "Small", basePrice: 6 },
-      { size: "Large", basePrice: 12 },
+      {
+        name: " Small Green Sauce",
+        size: "Small",
+        price: 5,
+        img: salsaverde,
+        description: "Perfect for 1-2 people, tangy & fresh.",
+      },
+      {
+        name: "Medium Green Sauce",
+        size: "Medium",
+        price: 8,
+        img: salsaverde,
+        description: "Great for family meals, zesty & flavorful.",
+      },
+      {
+        name: "Large Green Sauce",
+        size: "Large",
+        price: 15,
+        img: salsaverde,
+        description: "Party size, bold and vibrant flavor.",
+      },
     ],
   },
   {
-    name: "Sour cream",
-    image: sourcream,
+    type: "side",
+
     options: [
-      { size: "Small", basePrice: 6 },
-      { size: "Large", basePrice: 12 },
+      {
+        name: "Small Sour Cream",
+        size: "Small",
+        price: 5,
+        img: sourcream,
+        description: "Smooth, creamy, perfect dollop for a meal.",
+      },
+      {
+        name: "Medium Sour Cream",
+        size: "Medium",
+        price: 8,
+        img: sourcream,
+        description: "Enough for a family table.",
+      },
+      {
+        name: "Large Sour Cream",
+        size: "Large",
+        price: 15,
+        img: sourcream,
+        description: "Ideal for events or big gatherings.",
+      },
     ],
   },
 ];
 
-function SideSection({ onUpdate }) {
-  const [selectedSides, setSelectedSides] = useState(() => {
-    return sideOptions.flatMap((item) =>
-      item.options.map((opt) => ({
-        name: item.name,
-        image: item.image,
-        size: opt.size,
-        basePrice: opt.basePrice,
-        quantity: 0,
-        unit: "x",
-      }))
-    );
-  });
+const SidesSection = () => {
+  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
-  const toggleSelection = (index) => {
-    const updated = [...selectedSides];
-    updated[index].quantity = updated[index].quantity === 0 ? 1 : 0;
-    setSelectedSides(updated);
+  const addToCart = (side, option) => {
+    const newItem = {
+      type: "side",
+      name: option.name,
+      size: option.size,
+      price: option.price,
+      img: option.img,
+      description: option.description,
+      quantity: 1, // fixed at 1 because size is the selection
+    };
 
-    const filtered = updated.filter((s) => s.quantity > 0);
-    if (onUpdate) onUpdate(filtered);
+    const existing = JSON.parse(localStorage.getItem("tamaleCart")) || [];
+    localStorage.setItem("tamaleCart", JSON.stringify([...existing, newItem]));
+
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2000);
   };
 
   return (
-    <div className="Sides-section">
-      <h2>SIDES ✨</h2>
-      <div className="side-options">
-        {selectedSides.map((item, index) => (
-          <div key={`${item.name}-${item.size}`}>
-            <img src={item.image} alt={item.name} />
-            <h3>
-              {item.name} ({item.size})
-            </h3>
-            <p>${item.basePrice} each</p>
-            <button onClick={() => toggleSelection(index)}>
-              {item.quantity > 0 ? "Remove" : "Add"}
-            </button>
+    <div className="side-container">
+      <Navigation />
+      <div className="step-container">
+        <span onClick={() => navigate(-1)} className="back-button">
+          ⬅ Back to Tamales
+        </span>
+        <h2>Tamales are better with 🥣 SALSA VERDE & SOUR CREAM</h2>
+
+        {sides.map((side) => (
+          <div key={side.name}>
+            <h2>{side.name}</h2>
+            <div className="grid">
+              {side.options.map((option) => (
+                <div key={option.size} className="option-card">
+                  <img
+                    src={option.img}
+                    alt={`${side.name} - ${option.size}`}
+                    className="tamale-builder-img"
+                  />
+                  <button
+                    onClick={() => addToCart(side, option)}
+                    className="sides-btn"
+                  >
+                    ADD TO CART
+                  </button>
+                  <p>
+                    {option.size} - ${option.price}
+                  </p>
+                  <small>{option.description}</small>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
+
+        {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+        <Footer />
       </div>
     </div>
   );
-}
+};
 
-export default SideSection;
+export default SidesSection;

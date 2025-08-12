@@ -9,75 +9,53 @@ import Footer from "../components/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
 import Terms from "../components/Terms";
 import TipSelector from "../components/TipSelector";
-import { pushToDataLayer } from "../analytics/gtmEvents"; // make sure this import is at the top
-
 import SuccessModal from "../components/SuccessModal";
+import { pushToDataLayer } from "../analytics/gtmEvents";
 
 const Checkout = () => {
-  // ✅ Preload Stripe as soon as this page loads
-  useEffect(() => {
-    stripePromise.then(() => {
-      console.log("✅ Stripe.js has started downloading in the background");
-    });
-  }, []);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const [storedSubtotal, setStoredSubtotal] = useState(0);
+
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
-  const [deliveryInfo, setDeliveryInfo] = useState(null); // includes fee, address, etc.
-
+  const [deliveryInfo, setDeliveryInfo] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedTip, setSelectedTip] = useState(null);
+  const [selectedTip, setSelectedTip] = useState(0);
 
   const taxRate = 0.08;
-  const navigate = useNavigate();
 
-  // Grab selected items from localStorage
-  const selectedTamales = JSON.parse(
-    localStorage.getItem("selectedTamales") || "[]"
-  );
-  const selectedDrinks = JSON.parse(
-    localStorage.getItem("selectedDrinks") || "[]"
-  );
-  const selectedAppetizers = JSON.parse(
-    localStorage.getItem("selectedAppetizers") || "[]"
-  );
-  const selectedSides = JSON.parse(
-    localStorage.getItem("selectedSides") || "[]"
-  );
+  // Load Stripe on mount
+  useEffect(() => {
+    stripePromise.then(() => {
+      console.log("✅ Stripe.js has started downloading in the background");
+    });
+  }, []);
 
-  const allItems = [
-    ...selectedTamales,
-    ...selectedDrinks,
-    ...selectedAppetizers,
-    ...selectedSides,
-  ];
-  console.log("🧪 Items being submitted:", allItems);
-  // Calculate subtotal
-  const storedSubtotal = parseFloat(localStorage.getItem("menuSubtotal") || 0);
-  const discount = parseFloat(localStorage.getItem("menuDiscount") || 0);
-  const promoCode = localStorage.getItem("promoCode") || "";
-  const discountedSubtotal = storedSubtotal - discount;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  // Calculate tax and total
+  // 🛒 Load cart items and calculate subtotal
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem("tamaleCart")) || [];
+    setCartItems(savedCart);
+    const subtotal = savedCart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    setStoredSubtotal(subtotal);
+  }, []);
 
-  const tax = discountedSubtotal * taxRate;
+  const tax = storedSubtotal * taxRate;
+  const deliveryFee = deliveryInfo?.fee || 0;
+  const total = storedSubtotal + tax + deliveryFee + (selectedTip || 0);
 
-  const safeTip = isNaN(selectedTip) ? 0 : selectedTip;
-
-  const total =
-    discountedSubtotal +
-    tax +
-    (discountedSubtotal > 0 ? safeTip : 0) +
-    (deliveryInfo?.fee || 0);
-
-  // Generate order number
   const generateOrderNumber = () => {
     const timestamp = Date.now();
     const randomString = Math.random()
@@ -87,10 +65,7 @@ const Checkout = () => {
     return `TML-${timestamp}-${randomString}`;
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    // Validate that at least one tamale is selected
-
     e.preventDefault();
     if (isSubmitting) return;
 
@@ -106,38 +81,63 @@ const Checkout = () => {
       return;
     }
 
+    if (cartItems.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
     const orderNumber = generateOrderNumber();
     setIsSubmitting(true);
 
     const orderData = {
       orderNumber,
-      items: allItems.filter((item) => item.quantity > 0),
-      subtotal: discountedSubtotal, // 👈 rename key here
+      items: cartItems,
+      subtotal: storedSubtotal,
       tax,
-      discountAmount: discount, // ✅
-      appliedPromoCode: promoCode, // ✅
-      tip: selectedTip || 0, // default to 0 if none selected
+      tip: selectedTip || 0,
+      deliveryFee,
       total,
       customerName,
       customerEmail,
       customerPhone,
       deliveryDate: selectedDate.toDateString(),
       deliveryTime: selectedTime,
-      deliveryAddress: deliveryInfo, // ✅ Correct and clean
+      deliveryAddress: deliveryInfo,
     };
 
-    // ✅ Fire the begin_checkout GTM event!
+    // GTM event
     pushToDataLayer("begin_checkout", {
       ecommerce: {
         currency: "USD",
         value: total,
-        items: allItems,
+        items: cartItems.map((item) => ({
+          item_name: item.filling,
+          price: item.price,
+          quantity: item.quantity,
+        })),
       },
     });
 
-    navigate("/payment-page", {
-      state: { orderData },
-    });
+    navigate("/payment-page", { state: { orderData } });
+  };
+
+  const getItemDescription = (item) => {
+    // If it's a tamale with filling
+    if (item.filling) {
+      let description = `${item.filling} tamale`;
+      if (item.wrapper) description += ` - ${item.wrapper}`;
+      if (item.sauce && item.sauce !== "None")
+        description += ` - ${item.sauce} sauce`;
+      if (item.vegOil) description += " - Veggie Oil";
+      if (item.fruit) description += " - with Fruit";
+      return description;
+    }
+
+    // If it's a side, drink, appetizer, etc.
+    if (item.name) return item.name;
+
+    // Fallback if neither exists
+    return "Custom item";
   };
 
   return (
@@ -154,31 +154,13 @@ const Checkout = () => {
           <div className="left">
             <div className="selected-items">
               <h2>Order Summary 🤤</h2>
-              {allItems.map((item, i) => (
+              {cartItems.map((item, i) => (
                 <p key={i}>
-                  {item.quantity} {item.size || item.unit || "x"} {item.name} –
-                  ${(item.basePrice * item.quantity).toFixed(2)}
+                  {item.quantity} {getItemDescription(item)} – $
+                  {(item.price * item.quantity).toFixed(2)}
                 </p>
               ))}
-
-              {/* Show original subtotal */}
               <h2>Subtotal: ${storedSubtotal.toFixed(2)}</h2>
-
-              {discount > 0 && promoCode && (
-                <>
-                  <h3 style={{ color: "green" }}>
-                    Promo discount applied: -${discount.toFixed(2)} ({promoCode}
-                    )
-                  </h3>
-
-                  <h2>
-                    <strong>
-                      Total after discount: $
-                      {(storedSubtotal - discount).toFixed(2)}
-                    </strong>
-                  </h2>
-                </>
-              )}
             </div>
 
             <CostumerInfo
@@ -190,37 +172,27 @@ const Checkout = () => {
               setCustomerPhone={setCustomerPhone}
             />
           </div>
+
           <div className="right">
-            <div>
-              {/* Delivery Date and Time Components */}
-              <DeliveryDateComponent onDateSelect={setSelectedDate} />
-            </div>
-            <div>
-              <DeliveryTimeComponent
-                selectedTime={selectedTime}
-                onTimeSelect={setSelectedTime}
-              />
-            </div>
-
-            <div>
-              {/* Delivery Address Component */}
-
-              <DeliveryForm onFeeCalculated={setDeliveryInfo} />
-            </div>
+            <DeliveryDateComponent onDateSelect={setSelectedDate} />
+            <DeliveryTimeComponent
+              selectedTime={selectedTime}
+              onTimeSelect={setSelectedTime}
+            />
+            <DeliveryForm onFeeCalculated={setDeliveryInfo} />
 
             <div className="price-breakdown">
               <p>
-                <strong>Subtotal: ${discountedSubtotal.toFixed(2)}</strong>
+                <strong>Subtotal: ${storedSubtotal.toFixed(2)}</strong>
               </p>
-
               <p>
                 <strong>Tax: ${tax.toFixed(2)}</strong>
               </p>
               <p>
-                <strong>Delivery Fee: ${deliveryInfo?.fee?.toFixed(2)}</strong>
+                <strong>Delivery Fee: ${deliveryFee.toFixed(2)}</strong>
               </p>
               {selectedTip > 0 && (
-                <p className="summary-line">
+                <p>
                   <strong>Tip: ${selectedTip.toFixed(2)}</strong>
                 </p>
               )}
@@ -229,7 +201,7 @@ const Checkout = () => {
               </h2>
 
               <TipSelector
-                subtotal={discountedSubtotal}
+                subtotal={storedSubtotal}
                 onTipChange={setSelectedTip}
               />
             </div>
@@ -253,14 +225,15 @@ const Checkout = () => {
             <button
               type="submit"
               disabled={
-                isSubmitting || allItems.every((item) => item.quantity === 0)
+                isSubmitting || cartItems.every((item) => item.quantity === 0)
               }
               className={`submit-button ${isSubmitting ? "disabled" : ""}`}
             >
-              {isSubmitting ? "Submitting..." : "Procced to Payment"}
+              {isSubmitting ? "Submitting..." : "Proceed to Payment"}
             </button>
           </div>
         </div>
+
         {showModal && <SuccessModal onClose={() => setShowModal(false)} />}
         {showTerms && <Terms onClose={() => setShowTerms(false)} />}
       </form>

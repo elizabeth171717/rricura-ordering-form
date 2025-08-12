@@ -1,38 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import blackBean from "../assets/blackbeansoup.jpg";
-import chickenSoup from "../assets/chickensoup.jpg";
 
+import esquite from "../assets/esquite.jpg";
 import PeopleCount from "./PeopleCount";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 
-const appetizerOptions = [
-  { name: "Black Bean Soup", img: blackBean, basePrice: 4 },
-  { name: "Chicken Soup", img: chickenSoup, basePrice: 4 },
-];
+const antojosOptions = [{ name: "Esquite", img: esquite, basePrice: 4 }];
 
-const AppetizerSection = () => {
+const AntojosSection = () => {
   const navigate = useNavigate();
-  const [totalAppetizers, setTotalAppetizers] = useState(null);
-  const [selectedAppetizer, setSelectedAppetizer] = useState(null);
+  const [totalAntojos, setTotalAntojos] = useState(null);
+  const [selectedAntojo, setSelectedAntojo] = useState(null);
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const isReady = selectedAppetizer && totalAppetizers && totalAppetizers >= 1;
+  const isReady = selectedAntojo && totalAntojos && totalAntojos >= 1;
 
   const subtotal = isReady
-    ? (selectedAppetizer.basePrice * totalAppetizers).toFixed(2)
+    ? (selectedAntojo.basePrice * totalAntojos).toFixed(2)
     : null;
 
   const addToCart = () => {
     if (!isReady) return;
     const newItem = {
-      type: "appetizer",
-      ...selectedAppetizer,
-      quantity: totalAppetizers,
-      price: selectedAppetizer.basePrice,
-      img: selectedAppetizer.img,
+      type: "antojos",
+      ...selectedAntojo,
+      quantity: totalAntojos,
+      price: selectedAntojo.basePrice,
+      img: selectedAntojo.img,
     };
 
     const existing = JSON.parse(localStorage.getItem("tamaleCart")) || [];
@@ -49,29 +45,29 @@ const AppetizerSection = () => {
         <span onClick={() => navigate(-1)} className="back-button">
           ⬅ Back to Tamales
         </span>
-        <h2>🍲 Soups</h2>
+        <h2> 🌽 Antojitos</h2>
 
         {/* Quantity Picker */}
-        <PeopleCount setPeople={setTotalAppetizers} value={totalAppetizers} />
+        <PeopleCount setPeople={setTotalAntojos} value={totalAntojos} />
         <div className="grid-container">
           {/* Drink Selection */}
-          <h2>Choose Your Soup:</h2>
+
           <div className="grid">
-            {appetizerOptions.map((appetizer) => (
+            {antojosOptions.map((antojo) => (
               <div
-                key={appetizer.name}
+                key={antojo.name}
                 className={`option-card ${
-                  selectedAppetizer?.name === appetizer.name ? "selected" : ""
+                  selectedAntojo?.name === antojo.name ? "selected" : ""
                 }`}
-                onClick={() => setSelectedAppetizer(appetizer)}
+                onClick={() => setSelectedAntojo(antojo)}
               >
                 <img
-                  src={appetizer.img}
-                  alt={appetizer.name}
+                  src={antojo.img}
+                  alt={antojo.name}
                   className="product-img"
                 />
-                <p>{appetizer.name}</p>
-                <p>${appetizer.basePrice}</p>
+                <p>{antojo.name}</p>
+                <p>${antojo.basePrice}</p>
               </div>
             ))}
           </div>
@@ -80,12 +76,12 @@ const AppetizerSection = () => {
         {isReady && (
           <>
             <img
-              src={selectedAppetizer.img}
-              alt={selectedAppetizer.name}
+              src={selectedAntojo.img}
+              alt={selectedAntojo.name}
               className="selected-tamale-img"
             />
             <p>
-              {totalAppetizers} {selectedAppetizer.name} — ${subtotal}
+              {totalAntojos} {selectedAntojo.name} — ${subtotal}
             </p>
             <button onClick={addToCart}>Add to Cart</button>
             {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
@@ -97,4 +93,4 @@ const AppetizerSection = () => {
   );
 };
 
-export default AppetizerSection;
+export default AntojosSection;
