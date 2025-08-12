@@ -76,7 +76,6 @@ const DrinkSection = () => {
               >
                 <img src={drink.img} alt={drink.name} className="product-img" />
                 <p>{drink.name}</p>
-                <p>${drink.basePrice}</p>
               </div>
             ))}
           </div>

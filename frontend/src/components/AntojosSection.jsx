@@ -67,7 +67,6 @@ const AntojosSection = () => {
                   className="product-img"
                 />
                 <p>{antojo.name}</p>
-                <p>${antojo.basePrice}</p>
               </div>
             ))}
           </div>

@@ -71,7 +71,6 @@ const AppetizerSection = () => {
                   className="product-img"
                 />
                 <p>{appetizer.name}</p>
-                <p>${appetizer.basePrice}</p>
               </div>
             ))}
           </div>
