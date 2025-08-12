@@ -10,7 +10,7 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
 import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
 import Corporate from "../assets/corporate.jpg";
-
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import Footer from "../components/Footer";
 
 const HomePage = () => {
@@ -43,6 +43,16 @@ const HomePage = () => {
           >
             <FontAwesomeIcon
               icon={faInstagram}
+              style={{ fontSize: "1.50rem", color: "white" }}
+            />
+          </a>
+          <a
+            href="https://x.com/Rricuratamales"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faTwitter}
               style={{ fontSize: "1.50rem", color: "white" }}
             />
           </a>

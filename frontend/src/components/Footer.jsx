@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,6 +26,13 @@ const Footer = () => {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon icon={faInstagram} style={{ fontSize: "1.50rem" }} />
+        </a>
+        <a
+          href="https://x.com/Rricuratamales"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon icon={faTwitter} style={{ fontSize: "1.50rem" }} />
         </a>
         <a
           href="https://www.tiktok.com/@rricuratamales?_t=ZP-8y5G5NDSIQw&_r=1"
