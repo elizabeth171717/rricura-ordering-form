@@ -19,9 +19,9 @@ const Navigation = () => {
         <img className="logo" src="/logo.png" alt="Logo" />
 
         <div className="icons-container">
-          <a href="/OnlineOrdering" className="nav-link big-screen">
+          <Link to="/OnlineOrdering" className="nav-link big-screen">
             ORDER ONLINE
-          </a>
+          </Link>
           <a href="/" className="nav-link">
             <FontAwesomeIcon icon={faHome} style={{ fontSize: "1.5rem" }} />
           </a>

@@ -4,7 +4,6 @@ import salsaverde from "../assets/salsaverde.jpg";
 import sourcream from "../assets/sourcream.jpg";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
-import { Link } from "react-router-dom";
 
 const sides = [
   {
@@ -92,7 +91,7 @@ const SidesSection = () => {
         <span onClick={() => navigate(-1)} className="back-button">
           ⬅ Back to Tamales
         </span>
-        <h2>Tamales are better with 🥣 SALSA VERDE & SOUR CREAM</h2>
+        <h2>🥣 SALSA VERDE & SOUR CREAM</h2>
 
         {sides.map((side) => (
           <div key={side.name}>
