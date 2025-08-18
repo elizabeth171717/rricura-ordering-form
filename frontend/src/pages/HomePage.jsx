@@ -8,6 +8,7 @@ import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
+
 import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
 import Corporate from "../assets/corporate.jpg";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -106,6 +107,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import {
   useStripe,
   useElements,
@@ -6,6 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
+import { CartContext } from "../Cartcontext/CartContext";
 
 console.log("📦 Backend URL:", BACKEND_URL);
 
@@ -17,6 +18,8 @@ const CheckoutForm = ({ orderData, navigate }) => {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const { clearCart } = useContext(CartContext); // ⬅️ now you have clearCart
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +46,8 @@ const CheckoutForm = ({ orderData, navigate }) => {
           paymentIntentId: paymentIntent.id,
           orderData,
         });
-        localStorage.removeItem("tamaleCart");
+
+        clearCart();
 
         navigate("/thank-you", { state: { orderData } });
       } catch (error) {

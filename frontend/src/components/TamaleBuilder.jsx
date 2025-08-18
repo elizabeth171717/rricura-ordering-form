@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import tamalePrices from "./tamalePrices";
 import PeopleCount from "./PeopleCount";
@@ -13,7 +13,11 @@ import greenSauceImg from "../assets/greensauce.jpeg";
 import redSauceImg from "../assets/salsaroja.jpg";
 import tomateSauceImg from "../assets/tomatesauce.jpg";
 import blackBeanImg from "../assets/blackbean.jpg";
-import { pushToDataLayer } from "../analytics/gtmEvents";
+
+// Cart Context
+
+import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
+
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
   { name: "Pork", value: "Pork", img: pulledPorkImg },
@@ -40,6 +44,8 @@ const sauces = [
 
 const TamaleBuilder = () => {
   const [showPopup, setShowPopup] = useState(false);
+
+  const { addToCart: addToCartContext } = useContext(CartContext);
 
   const [totalTamales, setTotalTamales] = useState(null);
   const [filling, setFilling] = useState(null);
@@ -152,6 +158,22 @@ const TamaleBuilder = () => {
     totalTamales &&
     totalTamales >= 12;
 
+  const handleAddToCart = () => {
+    if (!isReady) return;
+
+    const newItem = {
+      type: "tamale",
+      ...selected,
+      quantity: totalTamales,
+    };
+
+    // Add to context (which automatically updates localStorage)
+    addToCartContext(newItem);
+
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2500);
+  };
+
   return (
     <div className="step-container">
       <div className="other-options">
@@ -168,7 +190,8 @@ const TamaleBuilder = () => {
           🌽 Antojos
         </Link>
       </div>
-      <h2>🫔 Build your TAMALE 😋</h2>
+
+      <h2> Build your TAMALE 🫔</h2>
       <PeopleCount setPeople={setTotalTamales} value={totalTamales} />
 
       <div className="selected-summary">
@@ -229,7 +252,7 @@ const TamaleBuilder = () => {
 
       {!filling && (
         <>
-          <h2>Choose Filling:</h2>
+          <h2>Choose Tamale Filling:</h2>
           <div className="grid">
             {fillings.map((item) => (
               <div
@@ -237,11 +260,7 @@ const TamaleBuilder = () => {
                 className="option-card"
                 onClick={() => setFilling(item)}
               >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="tamale-builder-img"
-                />
+                <img src={item.img} alt={item.name} className="product-img" />
                 <p>{item.name}</p>
               </div>
             ))}
@@ -317,11 +336,7 @@ const TamaleBuilder = () => {
                   className="option-card"
                   onClick={() => setSauce(item)}
                 >
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="tamale-builder-img"
-                  />
+                  <img src={item.img} alt={item.name} className="grid-img" />
                   <p>{item.name}</p>
                 </div>
               ))}
@@ -353,42 +368,7 @@ const TamaleBuilder = () => {
 
           <p>Total: ${subtotal}</p>
 
-          <button
-            onClick={() => {
-              const newItem = {
-                type: "tamale",
-                ...selected,
-                quantity: totalTamales,
-              };
-
-              // your existing logic
-              const existing =
-                JSON.parse(localStorage.getItem("tamaleCart")) || [];
-              const updatedCart = [...existing, newItem];
-              localStorage.setItem("tamaleCart", JSON.stringify(updatedCart));
-
-              // ✅ Send GA4 add_to_cart event
-              pushToDataLayer("add_to_cart", {
-                ecommerce: {
-                  currency: "USD",
-                  value: parseFloat(subtotal), // total for this add
-                  items: updatedCart.map((item) => ({
-                    item_name: item.filling,
-                    item_category: "Tamales",
-                    price: item.price,
-                    quantity: item.quantity,
-                    wrapper: item.wrapper || "N/A",
-                    sauce: item.sauce || "None",
-                  })),
-                },
-              });
-
-              setShowPopup(true);
-              setTimeout(() => setShowPopup(false), 2500); // hide after 2.5 seconds
-            }}
-          >
-            ADD TO CART
-          </button>
+          <button onClick={handleAddToCart}>ADD TO CART</button>
         </>
       )}
       {showPopup && <div className="cart-popup">✅ Added to cart!</div>}

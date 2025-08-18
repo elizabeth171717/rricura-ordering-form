@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import salsaverde from "../assets/salsaverde.jpg";
 import sourcream from "../assets/sourcream.jpg";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
+import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
 
 const sides = [
   {
@@ -64,9 +65,12 @@ const sides = [
 
 const SidesSection = () => {
   const navigate = useNavigate();
+  const { addToCart: addToCartContext } = useContext(CartContext);
+
   const [showPopup, setShowPopup] = useState(false);
 
-  const addToCart = (side, option) => {
+  // ✅ Fixed handleAddToCart using CartContext
+  const handleAddToCart = (option) => {
     const newItem = {
       type: "side",
       name: option.name,
@@ -74,12 +78,12 @@ const SidesSection = () => {
       price: option.price,
       img: option.img,
       description: option.description,
-      quantity: 1, // fixed at 1 because size is the selection
+      quantity: 1, // each side selection = one item
     };
 
-    const existing = JSON.parse(localStorage.getItem("tamaleCart")) || [];
-    localStorage.setItem("tamaleCart", JSON.stringify([...existing, newItem]));
+    addToCartContext(newItem); // push to global cart context
 
+    // Show success popup
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2000);
   };
@@ -105,7 +109,7 @@ const SidesSection = () => {
                     className="tamale-builder-img"
                   />
                   <button
-                    onClick={() => addToCart(side, option)}
+                    onClick={() => handleAddToCart(option)}
                     className="sides-btn"
                   >
                     ADD TO CART

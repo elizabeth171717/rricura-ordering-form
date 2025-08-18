@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import blackBean from "../assets/blackbeansoup.jpg";
 import chickenSoup from "../assets/chickensoup.jpg";
@@ -7,6 +7,9 @@ import PeopleCount from "./PeopleCount";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 
+// Cart Context
+import { CartContext } from "../Cartcontext/CartContext";
+
 const appetizerOptions = [
   { name: "Black Bean Soup", img: blackBean, basePrice: 4 },
   { name: "Chicken Soup", img: chickenSoup, basePrice: 4 },
@@ -14,6 +17,7 @@ const appetizerOptions = [
 
 const AppetizerSection = () => {
   const navigate = useNavigate();
+  const { addToCart: addToCartContext } = useContext(CartContext);
   const [totalAppetizers, setTotalAppetizers] = useState(null);
   const [selectedAppetizer, setSelectedAppetizer] = useState(null);
 
@@ -25,8 +29,9 @@ const AppetizerSection = () => {
     ? (selectedAppetizer.basePrice * totalAppetizers).toFixed(2)
     : null;
 
-  const addToCart = () => {
+  const handleAddToCart = () => {
     if (!isReady) return;
+
     const newItem = {
       type: "appetizer",
       ...selectedAppetizer,
@@ -35,8 +40,7 @@ const AppetizerSection = () => {
       img: selectedAppetizer.img,
     };
 
-    const existing = JSON.parse(localStorage.getItem("tamaleCart")) || [];
-    localStorage.setItem("tamaleCart", JSON.stringify([...existing, newItem]));
+    addToCartContext(newItem);
 
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2500);
@@ -86,7 +90,7 @@ const AppetizerSection = () => {
             <p>
               {totalAppetizers} {selectedAppetizer.name} — ${subtotal}
             </p>
-            <button onClick={addToCart}>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
             {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
           </>
         )}

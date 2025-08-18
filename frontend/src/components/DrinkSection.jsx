@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 import PeopleCount from "./PeopleCount";
+import Footer from "./Footer";
+
+// Drink images
 import pina from "../assets/pina.jpg";
 import jamaica from "../assets/jamaica.jpg";
 import melon from "../assets/melon.png";
@@ -9,7 +12,9 @@ import sandia from "../assets/sandia.jpg";
 import sodas from "../assets/sodas.jpg";
 import water from "../assets/bottlewater.jpg";
 import champurrado from "../assets/champurrado.jpg";
-import Footer from "./Footer";
+
+// Cart Context
+import { CartContext } from "../Cartcontext/CartContext";
 
 const drinkOptions = [
   { name: "Agua De Piña", img: pina, basePrice: 4 },
@@ -23,19 +28,20 @@ const drinkOptions = [
 
 const DrinkSection = () => {
   const navigate = useNavigate();
+  const { addToCart: addToCartContext } = useContext(CartContext);
+
   const [totalDrinks, setTotalDrinks] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
-
   const [showPopup, setShowPopup] = useState(false);
 
   const isReady = selectedDrink && totalDrinks && totalDrinks >= 1;
-
   const subtotal = isReady
     ? (selectedDrink.basePrice * totalDrinks).toFixed(2)
     : null;
 
-  const addToCart = () => {
+  const handleAddToCart = () => {
     if (!isReady) return;
+
     const newItem = {
       type: "drink",
       ...selectedDrink,
@@ -44,8 +50,7 @@ const DrinkSection = () => {
       img: selectedDrink.img,
     };
 
-    const existing = JSON.parse(localStorage.getItem("tamaleCart")) || [];
-    localStorage.setItem("tamaleCart", JSON.stringify([...existing, newItem]));
+    addToCartContext(newItem);
 
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2500);
@@ -62,24 +67,24 @@ const DrinkSection = () => {
 
         {/* Quantity Picker */}
         <PeopleCount setPeople={setTotalDrinks} value={totalDrinks} />
-        <div className="grid-container">
-          {/* Drink Selection */}
-          <h2>Choose Your Drink:</h2>
-          <div className="grid">
-            {drinkOptions.map((drink) => (
-              <div
-                key={drink.name}
-                className={`option-card ${
-                  selectedDrink?.name === drink.name ? "selected" : ""
-                }`}
-                onClick={() => setSelectedDrink(drink)}
-              >
-                <img src={drink.img} alt={drink.name} className="product-img" />
-                <p>{drink.name}</p>
-              </div>
-            ))}
-          </div>
+
+        {/* Drink Selection */}
+        <h2>Choose Your Drink:</h2>
+        <div className="grid">
+          {drinkOptions.map((drink) => (
+            <div
+              key={drink.name}
+              className={`option-card ${
+                selectedDrink?.name === drink.name ? "selected" : ""
+              }`}
+              onClick={() => setSelectedDrink(drink)}
+            >
+              <img src={drink.img} alt={drink.name} className="product-img" />
+              <p>{drink.name}</p>
+            </div>
+          ))}
         </div>
+
         {/* Summary + Add to Cart */}
         {isReady && (
           <>
@@ -91,7 +96,7 @@ const DrinkSection = () => {
             <p>
               {totalDrinks} {selectedDrink.name} — ${subtotal}
             </p>
-            <button onClick={addToCart}>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
             {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
           </>
         )}

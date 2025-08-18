@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from "../Cartcontext/CartContext";
 
 const CartDrawer = ({ isOpen, onClose }) => {
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("tamaleCart")) || [];
-    setCartItems(savedCart);
-  }, [isOpen]);
-
-  const handleRemove = (indexToRemove) => {
-    const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
-    setCartItems(updatedCart);
-    localStorage.setItem("tamaleCart", JSON.stringify(updatedCart));
-  };
+  const { cartItems, removeFromCart } = useContext(CartContext);
 
   const calculateSubtotal = () =>
     cartItems
@@ -70,7 +60,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     <strong>Item Total:</strong> $
                     {(item.price * item.quantity).toFixed(2)}
                   </p>
-                  <button onClick={() => handleRemove(index)}>❌ Remove</button>
+
+                  <button onClick={() => removeFromCart(index)}>
+                    ❌ Remove
+                  </button>
                 </div>
               </div>
             ))}
@@ -79,7 +72,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
           <div className="cart-summary">
             <h3>Subtotal: ${calculateSubtotal()}</h3>
             <div className="cart-actions">
-              <Link to="/" className="cart-btn" onClick={onClose}>
+              <Link to="/OnlineOrdering" className="cart-btn" onClick={onClose}>
                 ⬅ Keep Shopping
               </Link>
               <Link

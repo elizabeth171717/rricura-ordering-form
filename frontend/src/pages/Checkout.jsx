@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { stripePromise } from "../stripe";
 import DeliveryDateComponent from "../components/DeliveryDate";
@@ -11,11 +11,12 @@ import Terms from "../components/Terms";
 import TipSelector from "../components/TipSelector";
 import SuccessModal from "../components/SuccessModal";
 import { pushToDataLayer } from "../analytics/gtmEvents";
+import { CartContext } from "../Cartcontext/CartContext";
+// Cart Context
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
-  const [storedSubtotal, setStoredSubtotal] = useState(0);
+  const { cartItems, cartTotal } = useContext(CartContext);
 
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
@@ -30,31 +31,16 @@ const Checkout = () => {
 
   const taxRate = 0.08;
 
-  // Load Stripe on mount
   useEffect(() => {
     stripePromise.then(() => {
       console.log("✅ Stripe.js has started downloading in the background");
     });
-  }, []);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // 🛒 Load cart items and calculate subtotal
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("tamaleCart")) || [];
-    setCartItems(savedCart);
-    const subtotal = savedCart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
-    setStoredSubtotal(subtotal);
-  }, []);
-
-  const tax = storedSubtotal * taxRate;
+  const tax = cartTotal * taxRate;
   const deliveryFee = deliveryInfo?.fee || 0;
-  const total = storedSubtotal + tax + deliveryFee + (selectedTip || 0);
+  const total = cartTotal + tax + deliveryFee + (selectedTip || 0);
 
   const generateOrderNumber = () => {
     const timestamp = Date.now();
@@ -92,7 +78,7 @@ const Checkout = () => {
     const orderData = {
       orderNumber,
       items: cartItems,
-      subtotal: storedSubtotal,
+      subtotal: cartTotal,
       tax,
       tip: selectedTip || 0,
       deliveryFee,
@@ -105,13 +91,14 @@ const Checkout = () => {
       deliveryAddress: deliveryInfo,
     };
 
-    // GTM event
+    // ✅ GA4 begin_checkout
     pushToDataLayer("begin_checkout", {
       ecommerce: {
         currency: "USD",
         value: total,
         items: cartItems.map((item) => ({
-          item_name: item.filling,
+          item_name: item.name || item.filling,
+          item_category: item.type,
           price: item.price,
           quantity: item.quantity,
         })),
@@ -122,7 +109,6 @@ const Checkout = () => {
   };
 
   const getItemDescription = (item) => {
-    // If it's a tamale with filling
     if (item.filling) {
       let description = `${item.filling} tamale`;
       if (item.wrapper) description += ` - ${item.wrapper}`;
@@ -132,11 +118,7 @@ const Checkout = () => {
       if (item.fruit) description += " - with Fruit";
       return description;
     }
-
-    // If it's a side, drink, appetizer, etc.
     if (item.name) return item.name;
-
-    // Fallback if neither exists
     return "Custom item";
   };
 
@@ -145,7 +127,7 @@ const Checkout = () => {
       <Navigation />
       <form onSubmit={handleSubmit} className="checkout-form">
         <span onClick={() => navigate(-1)} className="back-button">
-          ⬅ Back to Menu
+          ⬅ Back
         </span>
 
         <h2>CHECK OUT</h2>
@@ -160,7 +142,7 @@ const Checkout = () => {
                   {(item.price * item.quantity).toFixed(2)}
                 </p>
               ))}
-              <h2>Subtotal: ${storedSubtotal.toFixed(2)}</h2>
+              <h2>Subtotal: ${cartTotal.toFixed(2)}</h2>
             </div>
 
             <CostumerInfo
@@ -183,7 +165,7 @@ const Checkout = () => {
 
             <div className="price-breakdown">
               <p>
-                <strong>Subtotal: ${storedSubtotal.toFixed(2)}</strong>
+                <strong>Subtotal: ${cartTotal.toFixed(2)}</strong>
               </p>
               <p>
                 <strong>Tax: ${tax.toFixed(2)}</strong>
@@ -200,10 +182,7 @@ const Checkout = () => {
                 <strong>Total: ${total.toFixed(2)}</strong>
               </h2>
 
-              <TipSelector
-                subtotal={storedSubtotal}
-                onTipChange={setSelectedTip}
-              />
+              <TipSelector subtotal={cartTotal} onTipChange={setSelectedTip} />
             </div>
 
             <div>

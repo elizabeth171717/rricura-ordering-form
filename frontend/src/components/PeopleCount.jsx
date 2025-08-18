@@ -53,7 +53,7 @@ const PeopleCount = ({ setPeople, value }) => {
     <div className="select-container">
       <div className="select-number">
         <label style={{ display: "block", marginBottom: "8px" }}>
-          Select an option:
+          How many would you like:
         </label>
         <select
           value={dropdownValue}

@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
+import { CartContext } from "../Cartcontext/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import CartDrawer from "./CartDrawer";
 
 const Navigation = () => {
-  const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("tamaleCart")) || [];
-    setCartItems(savedCart);
-  }, [isCartOpen]);
+  const { cartCount } = useContext(CartContext); // comes straight from context
 
   return (
     <>
       <div className="navigation">
-        <img className="logo" src="/logo.png" alt="Logo" />
-
+        <Link to="/">
+          <img className="logo" src="/logo.png" alt="Logo" />
+        </Link>
         <div className="icons-container">
           <Link to="/OnlineOrdering" className="nav-link big-screen">
             ORDER ONLINE
           </Link>
-          <a href="/" className="nav-link">
+
+          <Link to="/" className="nav-link">
             <FontAwesomeIcon icon={faHome} style={{ fontSize: "1.5rem" }} />
-          </a>
+          </Link>
 
           <div
             className="nav-cart-link"
@@ -36,9 +34,7 @@ const Navigation = () => {
                 icon={faShoppingCart}
                 style={{ fontSize: "1.5rem" }}
               />
-              {cartItems.length > 0 && (
-                <span className="cart-badge">{cartItems.length}</span>
-              )}
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </div>
           </div>
         </div>
