@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import tamalePrices from "./tamalePrices";
 import PeopleCount from "./PeopleCount";
 import pulledChickenImg from "../assets/pulledchicken.jpg";
@@ -13,7 +14,7 @@ import greenSauceImg from "../assets/greensauce.jpeg";
 import redSauceImg from "../assets/salsaroja.jpg";
 import tomateSauceImg from "../assets/tomatesauce.jpg";
 import blackBeanImg from "../assets/blackbean.jpg";
-
+import salsaVerde from "../assets/salsaverde.jpg";
 // Cart Context
 
 import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
@@ -44,7 +45,9 @@ const sauces = [
 
 const TamaleBuilder = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState("basic"); // "basic" or "salsa"
 
+  const navigate = useNavigate();
   const { addToCart: addToCartContext } = useContext(CartContext);
 
   const [totalTamales, setTotalTamales] = useState(null);
@@ -170,9 +173,25 @@ const TamaleBuilder = () => {
     // Add to context (which automatically updates localStorage)
     addToCartContext(newItem);
 
-    setShowPopup(true);
-    setTimeout(() => setShowPopup(false), 2500);
+    if (newItem.filling?.toLowerCase() !== "sweet tamale") {
+      setPopupType("salsa");
+      setShowPopup(true);
+    } else {
+      setPopupType("basic");
+      setShowPopup(true);
+    }
   };
+
+  // auto-hide popup after 10 seconds
+  useEffect(() => {
+    if (showPopup) {
+      const timer = setTimeout(() => {
+        setShowPopup(false);
+      }, 10000); // 10 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup]);
 
   return (
     <div className="step-container">
@@ -276,7 +295,7 @@ const TamaleBuilder = () => {
               checked={useVegOil}
               onChange={() => setUseVegOil(!useVegOil)}
             />
-            Make with Veggie Oil (+$1)
+            Make with Veggie Oil
           </label>
         )}
 
@@ -287,7 +306,7 @@ const TamaleBuilder = () => {
             checked={addFruit}
             onChange={() => setAddFruit(!addFruit)}
           />
-          Add Fruit (+$1)
+          Add Fruit
         </label>
       )}
 
@@ -301,7 +320,7 @@ const TamaleBuilder = () => {
         ].includes(filling.value) &&
         !wrapper && (
           <>
-            <h3>Choose Wrapper:</h3>
+            <h3 className="option-name">Choose Wrapper:</h3>
             <div className="grid">
               {wrappers.map((item) => (
                 <div
@@ -328,7 +347,7 @@ const TamaleBuilder = () => {
         wrapper &&
         !sauce && (
           <>
-            <h3>Choose Sauce:</h3>
+            <h3 className="option-name">Choose Sauce:</h3>
             <div className="grid">
               {sauces.map((item) => (
                 <div
@@ -371,7 +390,40 @@ const TamaleBuilder = () => {
           <button onClick={handleAddToCart}>ADD TO CART</button>
         </>
       )}
-      {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+      {showPopup && (
+        <div className="cart-popup">
+          <button className="popup-close" onClick={() => setShowPopup(false)}>
+            ✕
+          </button>
+          <div className="popup-content">
+            <h3>✅ Added to Cart!</h3>
+
+            {popupType === "salsa" ? (
+              <>
+                <p>Tamales are even better with salsa. Want to add some?</p>
+                <img
+                  src={salsaVerde}
+                  alt="Tamale with Salsa"
+                  className="popup-image"
+                />
+                <div className="popup-actions">
+                  <button
+                    onClick={() => {
+                      navigate("/sides");
+                      setShowPopup(false);
+                    }}
+                    className="add-salsa-btn"
+                  >
+                    Add Salsa
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p>Your sweet tamale was added 🎉</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

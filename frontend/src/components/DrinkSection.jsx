@@ -67,24 +67,24 @@ const DrinkSection = () => {
 
         {/* Quantity Picker */}
         <PeopleCount setPeople={setTotalDrinks} value={totalDrinks} />
-
-        {/* Drink Selection */}
-        <h2>Choose Your Drink:</h2>
-        <div className="grid">
-          {drinkOptions.map((drink) => (
-            <div
-              key={drink.name}
-              className={`option-card ${
-                selectedDrink?.name === drink.name ? "selected" : ""
-              }`}
-              onClick={() => setSelectedDrink(drink)}
-            >
-              <img src={drink.img} alt={drink.name} className="product-img" />
-              <p>{drink.name}</p>
-            </div>
-          ))}
+        <div className="grid-container">
+          {/* Drink Selection */}
+          <h2>Choose Your Drink:</h2>
+          <div className="grid">
+            {drinkOptions.map((drink) => (
+              <div
+                key={drink.name}
+                className={`option-card ${
+                  selectedDrink?.name === drink.name ? "selected" : ""
+                }`}
+                onClick={() => setSelectedDrink(drink)}
+              >
+                <img src={drink.img} alt={drink.name} className="product-img" />
+                <p>{drink.name}</p>
+              </div>
+            ))}
+          </div>
         </div>
-
         {/* Summary + Add to Cart */}
         {isReady && (
           <>

@@ -12,21 +12,21 @@ const sides = [
 
     options: [
       {
-        name: " Small Green Sauce",
+        name: " Green Sauce",
         size: "Small",
         price: 5,
         img: salsaverde,
         description: "Perfect for 12-20 tamales.",
       },
       {
-        name: "Medium Green Sauce",
+        name: " Green Sauce",
         size: "Medium",
         price: 8,
         img: salsaverde,
         description: "Perfect for 21-40 tamales.",
       },
       {
-        name: "Large Green Sauce",
+        name: "Green Sauce",
         size: "Large",
         price: 15,
         img: salsaverde,
@@ -39,21 +39,21 @@ const sides = [
 
     options: [
       {
-        name: "Small Sour Cream",
+        name: "Sour Cream",
         size: "Small",
         price: 5,
         img: sourcream,
         description: "Perfect for 12-20 tamales.",
       },
       {
-        name: "Medium Sour Cream",
+        name: "Sour Cream",
         size: "Medium",
         price: 8,
         img: sourcream,
         description: "Perfect for 21-40 tamales .",
       },
       {
-        name: "Large Sour Cream",
+        name: "Sour Cream",
         size: "Large",
         price: 15,
         img: sourcream,
@@ -117,7 +117,7 @@ const SidesSection = () => {
                   <p>
                     {option.size} - ${option.price}
                   </p>
-                  <p>{option.description}</p>
+                  <h4>{option.description}</h4>
                 </div>
               ))}
             </div>

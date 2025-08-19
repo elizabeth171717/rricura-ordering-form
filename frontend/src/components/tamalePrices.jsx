@@ -1,11 +1,16 @@
 // tamalePrices.js
 import bananaLeafChicken from "../assets/bananaleafchicken.jpg";
-import bananaLeafPork from "../assets/bananaleafpork.jpg";
+import bananaLeafTomChicken from "../assets/family.jpg";
+
+import bananaLeafPork from "../assets/porkbanana.jpg";
 import rajasTamale from "../assets/rajas.jpg";
-import rajasBanana from "../assets/rajasbanana.jpg";
-import chickenCornHusk from "../assets/holiday.jpg";
+import rajasBanana from "../assets/porkbanana.jpg";
+import chickenCornHusk from "../assets/chickentamale.jpg";
+import chickenTomCornHusk from "../assets/holiday.jpg";
 import chickenCornGreen from "../assets/chickengreencorn.jpg";
 import porkCornHusk from "../assets/pork.jpg";
+import porkCornTomHusk from "../assets/bulk2.jpg";
+import porkRedCornHusk from "../assets/corporate.jpg";
 import sweetTamale from "../assets/sweettamale.png";
 import chipilinTamale from "../assets/chipilintamale.jpg";
 import chipilinBanana from "../assets/chipilinbanana.jpg";
@@ -38,7 +43,7 @@ const tamalePrices = [
     wrapper: "Corn Husk",
     sauce: "Tomato",
     price: 4.0,
-    img: chickenCornHusk,
+    img: chickenTomCornHusk,
   },
   {
     id: "pork-cornHusk-green",
@@ -54,7 +59,7 @@ const tamalePrices = [
     wrapper: "Corn Husk",
     sauce: "Red",
     price: 4.0,
-    img: porkCornHusk,
+    img: porkRedCornHusk,
   },
   {
     id: "pork-cornHusk-tomato",
@@ -62,7 +67,7 @@ const tamalePrices = [
     wrapper: "Corn Husk",
     sauce: "Tomato",
     price: 4.0,
-    img: porkCornHusk,
+    img: porkCornTomHusk,
   },
   {
     id: "chicken-banana-green",
@@ -86,7 +91,7 @@ const tamalePrices = [
     wrapper: "Banana Leaf",
     sauce: "Tomato",
     price: 6.0,
-    img: bananaLeafChicken,
+    img: bananaLeafTomChicken,
   },
   {
     id: "pork-banana-green",

@@ -663,6 +663,13 @@ object-fit: cover;
 
 }
 
+.option-name{
+  background-color: #9D0759;
+  color: white;
+  margin: 1rem 0;
+  padding: .50rem 0;
+}
+
 .selected-option{
 
   flex: 1;
@@ -735,6 +742,16 @@ margin: .50rem 0;
  width: 30%;
 }
 
+.option-card:hover {
+  transform: scale(1.05);
+}
+
+.option-card.selected {
+  border: 3px solid #ff5722; /* bright highlight */
+  box-shadow: 0 0 12px rgba(255, 87, 34, 0.7);
+  background-color: rgba(255, 87, 34, 0.1); /* light background */
+}
+
 .selected-option img{
   width: 100%;
   object-fit: cover;
@@ -750,23 +767,64 @@ margin: .50rem 0;
  width: 90%;
 }
 
+
+
+
 .cart-popup {
   position: fixed;
-  bottom: 20px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  z-index: 9999;
-  font-weight: bold;
-  animation: fadeInOut 2.5s ease-in-out;
+  transform: translate(-50%, -50%); /* centers horizontally & vertically */
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+  z-index: 1000;
+  animation: fadeInUp 0.3s ease;
+  max-width: 280px;
+  
 }
 
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
-  90% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+.popup-close {
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+}
+
+.popup-content {
+  text-align: center;
+
+   /* NEW: push content down so title isn’t under the X */
+  padding-top: 1rem;
+}
+
+.popup-image {
+  width: 100%;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+
+.popup-actions {
+  margin-top: 0.5rem;
+}
+
+.add-salsa-btn {
+  background: #e63946;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
