@@ -8,7 +8,7 @@ import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
-
+import myVideo from "../assets/ordervideo.mp4";
 import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
 import Corporate from "../assets/corporate.jpg";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -84,23 +84,32 @@ const HomePage = () => {
         </div>
       </div>
       <section className="tamales-intro">
-        <div className="tamales-banner">
-          <div className="section-title">
-            <h2>
-              Enjoy our delicious Tamales with Family, Coworkers and Friends
-            </h2>
+        <div className="full image">
+          <img src={Corporate} />
+        </div>
+        <div className="split video">
+          <div className="container text-container">
+            <h1 className="big-text">HOW TO ORDER</h1>
           </div>
-          <div className="banner-img">
-            <img src={Corporate} />
+          <div className="container  graphic-container">
+            <video width="100%" height="auto" controls>
+              <source src={myVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
-        <div className="tamale-boxes">
-          <div className="tamale-box">
+        <div className="full">
+          <h1 className="full-text">
+            Enjoy our delicious Tamales with Family, Coworkers and Friends
+          </h1>
+        </div>
+        <div className="split">
+          <div className="container  graphic-container">
             <Link to="/OnlineOrdering">
               <img src={ORDERCHICKEN} />
             </Link>
           </div>
-          <div className="tamale-box">
+          <div className="container  graphic-container">
             <Link to="/OnlineOrdering">
               <img src={ORDERRAJAS} />
             </Link>
