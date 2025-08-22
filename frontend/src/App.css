@@ -531,7 +531,7 @@ footer{
 .hero-section{
 background-image: url("/hero-bg.png");
 
-  padding: 2rem 1rem;
+  padding:0 1rem;
   display: flex;
  align-items: center;
 color:white; /* Makes the fill of the text transparent */
@@ -547,8 +547,9 @@ flex-wrap: wrap;
   transform: translateX(-50px);
   animation: slideInLeft 0.8s ease-out forwards;
   animation-delay: 0.2s; /* optional delay */
-background-color:#b40967;
-padding: .50rem;
+background-color:#dd1985;
+padding: 1rem;
+margin-top: 2rem;
 }
 
 @keyframes slideInLeft {
@@ -558,16 +559,6 @@ padding: .50rem;
   }
 }
 
-
-
-
-.hero-CTA{
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  align-items: flex-start;
-}
 .bouncing-pointer {
   font-size: 2.5rem;
   margin-left: 10%;
@@ -590,7 +581,7 @@ padding: .50rem;
 .home-btn{
  color:#9D0759;
   padding: 1rem;
-  margin-top: 1rem;
+  margin:1rem 0;
   border-radius: 6px;
   font-weight: bold;
 
@@ -602,20 +593,33 @@ background-color: white;
 background-color:#333;
 }
 
+.hero-img{
+  margin-top: 1rem;
+}
+
+
+@media (min-width:45rem) {
+  
+.hero-title {
+  
+margin-top: 4rem;
+}
+
+}
 /**********************home sections start**********************/
 
 .tamales-intro{
-  margin: 3rem 0;
+  margin: 7rem 0;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5rem;
-  padding: 1rem .50rem;
+  gap: 7rem;
+  padding: 1rem .25rem;
 }
 
-.big-text{
+.text-container{
   color: white;
 }
 
@@ -631,7 +635,7 @@ background-color:#333;
   display: flex;
  flex-direction: column;
 align-items: center;
-
+justify-content: center;
   gap: 2rem;
   padding: 2rem 1rem;
 }
@@ -651,6 +655,13 @@ background-color: #9D0759;
 }
 
 
+.highlight {
+  background-color:#9D0759;
+  color: white;
+  padding: 0.2em 0.4em;
+  border-radius: 6px; /* optional rounded corners */
+  margin: .25rem;
+}
 
 @media (min-width:45rem) {
 
@@ -694,6 +705,41 @@ padding: 1rem;
 
 }
 
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* small screens default 2 columns */
+  gap: 10px; /* space between images */
+  padding: 10px;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px; /* optional rounded corners */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* optional shadow */
+}
+
+/* Medium screens (tablet, >=768px) → 3 columns */
+@media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Large screens (desktop, >=1024px) → 4 columns */
+@media (min-width: 1024px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+
+
+
+/**********************HOME PAGE FIFNISHES************************/
 /* ONLINE ORDERING -SELECTED ITEMS /SELECTED TAMALE*/
 
 .other-options{
