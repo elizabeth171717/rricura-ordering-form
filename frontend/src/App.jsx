@@ -1,5 +1,6 @@
 import "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import "./App.css";
 
 // Pages
@@ -22,7 +23,7 @@ import { CartProvider } from "./Cartcontext/CartProvider";
 function App() {
   return (
     <CartProvider>
-      <Router>
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<HomePage />} />
 
@@ -35,7 +36,7 @@ function App() {
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/payment-page" element={<PaymentPage />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </CartProvider>
   );
 }
