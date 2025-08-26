@@ -12,6 +12,7 @@ const sides = [
 
     options: [
       {
+        id: "smallgreensauce",
         name: " Green Sauce",
         size: "Small",
         price: 5,
@@ -19,6 +20,7 @@ const sides = [
         description: "Perfect for 12-20 tamales.",
       },
       {
+        id: "mediumgreensauce",
         name: " Green Sauce",
         size: "Medium",
         price: 8,
@@ -26,6 +28,7 @@ const sides = [
         description: "Perfect for 21-40 tamales.",
       },
       {
+        id: "largegreensauce",
         name: "Green Sauce",
         size: "Large",
         price: 15,
@@ -39,6 +42,7 @@ const sides = [
 
     options: [
       {
+        id: "smallsourcream",
         name: "Sour Cream",
         size: "Small",
         price: 5,
@@ -46,6 +50,7 @@ const sides = [
         description: "Perfect for 12-20 tamales.",
       },
       {
+        id: "mediumsourcream",
         name: "Sour Cream",
         size: "Medium",
         price: 8,
@@ -53,6 +58,7 @@ const sides = [
         description: "Perfect for 21-40 tamales .",
       },
       {
+        id: "largesourcream",
         name: "Sour Cream",
         size: "Large",
         price: 15,

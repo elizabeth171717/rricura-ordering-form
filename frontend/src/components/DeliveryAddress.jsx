@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
-
 console.log("📦 Backend URL:", BACKEND_URL);
 const client = import.meta.env.VITE_CLIENT;
 
@@ -111,7 +110,7 @@ export default function DeliveryForm({ onFeeCalculated }) {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 space-y-4">
+    <div className="delivery-info">
       <h3>Enter Your Delivery Address</h3>
 
       <input

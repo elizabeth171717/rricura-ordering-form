@@ -93,14 +93,15 @@ const Checkout = () => {
 
     // ✅ GA4 begin_checkout
     pushToDataLayer("begin_checkout", {
+      event: "begin_checkout",
       ecommerce: {
         currency: "USD",
-        value: total,
+        value: total, // total order value (quantity × basePrice)
         items: cartItems.map((item) => ({
-          item_name: item.name || item.filling,
-          item_category: item.type,
-          price: item.price,
-          quantity: item.quantity,
+          item_name: item.name || item.filling, // ✅ same naming as add_to_cart
+          item_category: item.type, // ✅ same
+          price: item.price, // ✅ already your calculated order price
+          quantity: item.quantity, // ✅ same
         })),
       },
     });
@@ -120,6 +121,33 @@ const Checkout = () => {
     }
     if (item.name) return item.name;
     return "Custom item";
+  };
+
+  const handleFeeCalculated = (info) => {
+    setDeliveryInfo(info);
+
+    if (info) {
+      // ✅ GA4 add_shipping_info
+      pushToDataLayer("add_shipping_info", {
+        event: "add_shipping_info",
+        ecommerce: {
+          currency: "USD",
+          value: cartTotal + info.fee, // subtotal + delivery fee
+          shipping_tier:
+            info.fee === 5 ? "Standard (0-7 miles)" : "Extended (7-12 miles)",
+          items: cartItems.map((item) => ({
+            item_id: item.id,
+            item_name: item.name || item.filling,
+            item_category: item.type,
+            price: item.price,
+            quantity: item.quantity,
+            wrapper: item.wrapper || undefined,
+            sauce: item.sauce || undefined,
+            size: item.size || undefined,
+          })),
+        },
+      });
+    }
   };
 
   return (
@@ -161,7 +189,7 @@ const Checkout = () => {
               selectedTime={selectedTime}
               onTimeSelect={setSelectedTime}
             />
-            <DeliveryForm onFeeCalculated={setDeliveryInfo} />
+            <DeliveryForm onFeeCalculated={handleFeeCalculated} />
 
             <div className="price-breakdown">
               <p>

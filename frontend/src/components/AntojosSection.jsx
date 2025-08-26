@@ -9,7 +9,9 @@ import Footer from "./Footer";
 // Cart Context
 import { CartContext } from "../Cartcontext/CartContext";
 
-const antojosOptions = [{ name: "Esquite", img: esquite, basePrice: 4 }];
+const antojosOptions = [
+  { id: "esquite", name: "Esquite", img: esquite, basePrice: 4 },
+];
 
 const AntojosSection = () => {
   const navigate = useNavigate();

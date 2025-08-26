@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CartContext } from "./CartContext";
+import { pushToDataLayer } from "../analytics/gtmEvents";
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
@@ -13,15 +14,14 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (newItem) => {
     setCartItems((prev) => [...prev, newItem]);
-    // ✅ Fire GA4 event here for ALL items
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    pushToDataLayer("add_to_cart", {
       event: "add_to_cart",
       ecommerce: {
         currency: "USD",
         value: newItem.price * newItem.quantity,
         items: [
           {
+            item_id: newItem.id,
             item_name: newItem.name || newItem.filling,
             item_category: newItem.type,
             price: newItem.price,

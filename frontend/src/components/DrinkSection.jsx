@@ -17,13 +17,13 @@ import champurrado from "../assets/champurrado.jpg";
 import { CartContext } from "../Cartcontext/CartContext";
 
 const drinkOptions = [
-  { name: "Agua De Piña", img: pina, basePrice: 4 },
-  { name: "Agua de Jamaica", img: jamaica, basePrice: 4 },
-  { name: "Agua de Melón", img: melon, basePrice: 4 },
-  { name: "Agua de Sandía", img: sandia, basePrice: 4 },
-  { name: "Soft Drinks", img: sodas, basePrice: 3 },
-  { name: "Bottle Water", img: water, basePrice: 3 },
-  { name: "Champurrado", img: champurrado, basePrice: 4 },
+  { id: "aguadepina", name: "Agua De Piña", img: pina, basePrice: 4 },
+  { id: "aguadejamaica", name: "Agua de Jamaica", img: jamaica, basePrice: 4 },
+  { id: "aguademelon", name: "Agua de Melón", img: melon, basePrice: 4 },
+  { id: "aguadesandia", name: "Agua de Sandía", img: sandia, basePrice: 4 },
+  { id: "softdrinks", name: "Soft Drinks", img: sodas, basePrice: 3 },
+  { id: "bottlewater", name: "Bottle Water", img: water, basePrice: 3 },
+  { id: "champurrado", name: "Champurrado", img: champurrado, basePrice: 4 },
 ];
 
 const DrinkSection = () => {

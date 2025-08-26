@@ -11,19 +11,25 @@ const ThankYouPage = () => {
 
   useEffect(() => {
     if (orderData) {
-      // ✅ GTM purchase event
       pushToDataLayer("purchase", {
+        event: "purchase",
         transaction_id: orderData.orderNumber,
         ecommerce: {
           currency: "USD",
-          value: orderData.total,
+          value: orderData.total, // full order total
+          delivery_fee: orderData.deliveryFee,
+          tip: orderData.tip,
           tax: orderData.tax,
           shipping: orderData.deliveryAddress?.fee || 0,
           items: orderData.items.map((item) => ({
             item_id: item.id,
-            item_name: item.name,
-            price: item.basePrice,
+            item_name: item.name || item.filling,
+            item_category: item.type,
+            price: item.price, // match add_to_cart
             quantity: item.quantity,
+            wrapper: item.wrapper || undefined,
+            sauce: item.sauce || undefined,
+            size: item.size || undefined,
           })),
         },
       });

@@ -11,8 +11,13 @@ import Footer from "./Footer";
 import { CartContext } from "../Cartcontext/CartContext";
 
 const appetizerOptions = [
-  { name: "Black Bean Soup", img: blackBean, basePrice: 4 },
-  { name: "Chicken Soup", img: chickenSoup, basePrice: 4 },
+  {
+    id: "blackbeabsoup",
+    name: "Black Bean Soup",
+    img: blackBean,
+    basePrice: 4,
+  },
+  { id: "chickensoup", name: "Chicken Soup", img: chickenSoup, basePrice: 4 },
 ];
 
 const AppetizerSection = () => {
