@@ -106,6 +106,26 @@ const Checkout = () => {
       },
     });
 
+    // ✅ GA4 add_payment_info (right before sending them to Stripe)
+    pushToDataLayer("add_payment_info", {
+      event: "add_payment_info",
+      ecommerce: {
+        currency: "USD",
+        value: total,
+        payment_type: "Stripe Card", // 👈 You can hardcode or make dynamic if you add PayPal, etc.
+        items: cartItems.map((item) => ({
+          item_id: item.id,
+          item_name: item.name || item.filling,
+          item_category: item.type,
+          price: item.price,
+          quantity: item.quantity,
+          wrapper: item.wrapper || undefined,
+          sauce: item.sauce || undefined,
+          size: item.size || undefined,
+        })),
+      },
+    });
+
     navigate("/payment-page", { state: { orderData } });
   };
 
