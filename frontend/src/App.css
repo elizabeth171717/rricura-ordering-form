@@ -530,8 +530,9 @@ footer{
 /**************************************************************HOME PAGE***********/
 .hero-section{
 background-image: url("/hero-bg.png");
-
-  padding:0 1rem;
+ padding-left: 1rem;
+  padding-right:1rem;
+  padding-top: 1rem;
   display: flex;
  align-items: center;
 color:white; /* Makes the fill of the text transparent */
@@ -547,7 +548,7 @@ flex-wrap: wrap;
   transform: translateX(-50px);
   animation: slideInLeft 0.8s ease-out forwards;
   animation-delay: 0.2s; /* optional delay */
-background-color:#dd1985;
+background-color: #9D0759;
 padding: 1rem;
 margin-top: 2rem;
 }
@@ -616,17 +617,16 @@ margin-top: 4rem;
   justify-content: center;
   align-items: center;
   gap: 7rem;
-  padding: 1rem .25rem;
+  
 }
 
-.text-container{
-  color: white;
-}
+
 
 .full{
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 4rem 1rem;
 }
 
 
@@ -640,9 +640,16 @@ justify-content: center;
   padding: 2rem 1rem;
 }
 
-.video{
- 
+.full-graphic{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+ .colored-bg{
 background-color: #9D0759;
+color: white;
 
 }
 
@@ -665,38 +672,26 @@ background-color: #9D0759;
 
 @media (min-width:45rem) {
 
-.big-text, .full-text{
- font-size: 2.5rem;
-
-}
-
-
-
-.full img{
-  width: 70%;
-}
 
   .split{
 flex-direction: row;
 gap: 2rem;
   }
-.container{
-  flex: 1;
-}
 
 .container{
   flex: 1;
 }
 
-
-.graphic-container img{
-padding: 1rem;
+.container{
+  flex: 1;
 }
+
+
 
 
 .graphic-container video {
 
-  width: 60%;   /* make video responsive */
+  width: 40%;   /* make video responsive */
   height: auto;  /* let it fill the container */
   object-fit: cover; /* keeps aspect ratio */
   border-radius: 12px; /* optional, just for style */
