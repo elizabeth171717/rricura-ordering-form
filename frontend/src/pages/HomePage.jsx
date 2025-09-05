@@ -120,17 +120,12 @@ const HomePage = () => {
         </section>
         <section className="contaniner video-section">
           <div className="text-container">
-            <h2>How to Order Catering</h2>
-            <p>
-              We require a 2-day advance notice for all catering orders.
-              Ordering is simple:
-            </p>
+            <h2>HOW TO ORDER CATERING</h2>
+
             <div className="list">
-              <p>✅Choose Tamale quantity.</p>
-              <p>✅Choose Tamale filling.</p>
-              <p>✅Choose Tamale Wrapper.</p>
-              <p>✅Choose Tamale Sauce.</p>
-              <p>✅Enter delivery details. </p>
+              <p>✅ Choose your tamale flavors & quantity..</p>
+              <p>✅ Select your delivery date and time.</p>
+              <p>✅ We prepare your order fresh and deliver it hot & ready.</p>
             </div>
           </div>
           <div className="graphic-container">

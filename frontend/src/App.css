@@ -541,10 +541,8 @@ footer{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+gap: 1rem;
 }
-
-
 
 h2{
   text-align: center;
@@ -558,9 +556,6 @@ display: flex;
 flex-direction: column;
 
 }
-
-
-
 
 .hero-title {
   opacity: 0;
@@ -649,10 +644,24 @@ justify-content: center;
   margin: .25rem;
 }
 
-@media (min-width:45rem) {
 
-section div{
+/***************MEDIA QUERY******************/
+@media (min-width:50rem) {
+  
+.sections-container{
+  
+  gap: 10rem;
+}
+
+
+.text-container{
   flex: 1;
+padding: 3rem;
+}
+
+.graphic-container{
+  flex: 1;
+
 }
 
 .hero-section{
@@ -660,10 +669,10 @@ section div{
 flex-direction: row;
 }
 
-.text-container{
-  padding: 5rem 3rem
-
+.hero-section .text-container{
+padding: 5rem 2rem;
 }
+
 
 
 .hero-section .graphic-container{
@@ -676,19 +685,12 @@ align-items: flex-end;
 
 /************about-section***************/
 .about-section{
-width: 60%;
+  width: 80%;
 margin: 0 auto;
+  display: flex;
+  justify-content: center;
+gap: 1rem;
 
-}
-
-.about-section .graphic-container{
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
-.about-section .graphic-container img{
-width: 40%;
 }
 
 /************video-section***************/
