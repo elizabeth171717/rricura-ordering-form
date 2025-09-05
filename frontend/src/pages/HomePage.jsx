@@ -97,7 +97,7 @@ const HomePage = () => {
           <div className="graphic-container">
             {" "}
             <div className="hero-img">
-              <img src={TamalesTray} />
+              <img src={TamalesTray} alt="tray of tamales in corn husks" />
             </div>
           </div>
         </section>
@@ -114,7 +114,10 @@ const HomePage = () => {
           </div>
           <div className="graphic-container">
             <Link to="/OnlineOrdering">
-              <img src={ORDERCHICKEN} />
+              <img
+                src={ORDERCHICKEN}
+                alt="chicken tamales with red sauce in the making"
+              />
             </Link>
           </div>
         </section>
@@ -147,14 +150,26 @@ const HomePage = () => {
           </div>
           <div className="graphic-container">
             <div className="gallery">
-              <img src={ImgGallery1} />
-              <img src={ImgGallery2} />
-              <img src={ImgGallery3} />
-              <img src={ImgGallery4} />
-              <img src={ImgGallery5} />
-              <img src={ImgGallery6} />
-              <img src={ImgGallery7} />
-              <img src={ImgGallery8} />
+              <img
+                src={ImgGallery1}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
+              <img src={ImgGallery2} alt="Banana leaf tamale" />
+              <img src={ImgGallery3} alt="Black bean tamales in a plate" />
+              <img
+                src={ImgGallery4}
+                alt="single corn husk tamales in a plate"
+              />
+              <img src={ImgGallery5} alt="Single banan leaf tamale i a plate" />
+              <img src={ImgGallery6} alt="Bulk of red sweet tamales" />
+              <img
+                src={ImgGallery7}
+                alt="Rajas tamales , cheese and pepper in corn husk"
+              />
+              <img
+                src={ImgGallery8}
+                alt="Chicken tamales with red sauce in corn husk on the make"
+              />
             </div>
           </div>
         </section>
@@ -179,7 +194,10 @@ const HomePage = () => {
           </div>
           <div className="graphic-container">
             <Link to="/OnlineOrdering">
-              <img src={ORDERRAJAS} />
+              <img
+                src={ORDERRAJAS}
+                alt="Rajas tamales , cheese and pepper in corn husk on the make"
+              />
             </Link>
           </div>
         </section>

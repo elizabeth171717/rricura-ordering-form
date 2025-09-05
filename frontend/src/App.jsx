@@ -23,7 +23,7 @@ import { CartProvider } from "./Cartcontext/CartProvider";
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<HomePage />} />
 
