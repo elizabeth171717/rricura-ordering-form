@@ -87,7 +87,7 @@ const HomePage = () => {
               <FontAwesomeIcon
                 icon={faHandPointDown}
                 className="bouncing-pointer"
-                style={{ color: "#9D0759" }}
+                style={{ color: "#c0b9bd" }}
               />
               <Link to="/OnlineOrdering" className="home-btn">
                 START YOU ORDER

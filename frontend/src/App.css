@@ -551,7 +551,8 @@ h2{
 
 /************HERO-SECTION***************/
 .hero-section{
-background-image: url("/hero-bg.png");
+
+background-color:#9D0759; /* or brand color */
 display: flex;
 flex-direction: column;
 
@@ -562,8 +563,8 @@ flex-direction: column;
   transform: translateX(-50px);
   animation: slideInLeft 0.8s ease-out forwards;
   animation-delay: 0.2s; /* optional delay */
-background-color: #9D0759;
-color: white;
+background-color: white;
+color:#9D0759 ;
 padding: 1rem;
 margin: 3rem 0;
 
