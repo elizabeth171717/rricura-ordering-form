@@ -63,7 +63,7 @@ width: 180px;
  display: flex;
   justify-content: center;
   align-items: center;
- gap: 1.25rem;
+ gap: 1.50rem;
  
 }
 
@@ -175,7 +175,7 @@ width: 180px;
 }
 
 .cart-badge {
-  background: red;
+  background: #9D0759;
   color: white;
   border-radius: 50%;
   font-size: 0.75rem;
@@ -566,7 +566,7 @@ flex-direction: column;
 background-color: white;
 color:#9D0759 ;
 padding: 2rem;
-margin: 1rem 0;
+
 border-radius: 50%;
 }
 
@@ -600,13 +600,13 @@ border-radius: 50%;
 
 .home-btn{
   display: inline-block;
- color:#9D0759;
+color: white;
   padding: 1rem;
 
   border-radius: 6px;
   font-weight: bold;
 text-align: center;
-background-color: white;
+text-decoration:underline;
 }
 
 /************VIDEO-SECTION***************/

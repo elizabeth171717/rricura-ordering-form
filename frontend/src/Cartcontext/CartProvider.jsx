@@ -8,6 +8,9 @@ export const CartProvider = ({ children }) => {
     return stored ? JSON.parse(stored) : [];
   });
 
+  const [coupon, setCoupon] = useState(null); // ✅ coupon state
+  const [isFirstPurchase, setIsFirstPurchase] = useState(true); // ✅ flip false after checkout
+
   useEffect(() => {
     localStorage.setItem("tamaleCart", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -57,6 +60,11 @@ export const CartProvider = ({ children }) => {
     0
   );
 
+  // ✅ discount + final total
+  const discount =
+    coupon === "WELCOME10" && isFirstPurchase ? cartTotal * 0.1 : 0;
+  const finalCartTotal = cartTotal - discount;
+
   return (
     <CartContext.Provider
       value={{
@@ -67,6 +75,12 @@ export const CartProvider = ({ children }) => {
         clearCart,
         cartCount,
         cartTotal,
+        coupon,
+        setCoupon,
+        isFirstPurchase,
+        setIsFirstPurchase,
+        discount, // discount on items
+        finalCartTotal,
       }}
     >
       {children}

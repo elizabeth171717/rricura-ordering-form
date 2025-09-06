@@ -16,7 +16,9 @@ import { CartContext } from "../Cartcontext/CartContext";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cartItems, cartTotal } = useContext(CartContext);
+  const { cartItems, cartTotal, discount, finalCartTotal, coupon, setCoupon } =
+    useContext(CartContext);
+  const [couponInput, setCouponInput] = useState("");
 
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
@@ -28,6 +30,7 @@ const Checkout = () => {
   const [showTerms, setShowTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedTip, setSelectedTip] = useState(0);
+  const [couponError, setCouponError] = useState("");
 
   const taxRate = 0.08;
 
@@ -38,9 +41,9 @@ const Checkout = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const tax = cartTotal * taxRate;
+  const tax = finalCartTotal * taxRate;
   const deliveryFee = deliveryInfo?.fee || 0;
-  const total = cartTotal + tax + deliveryFee + (selectedTip || 0);
+  const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
 
   const generateOrderNumber = () => {
     const timestamp = Date.now();
@@ -78,7 +81,9 @@ const Checkout = () => {
     const orderData = {
       orderNumber,
       items: cartItems,
-      subtotal: cartTotal,
+      subtotal: finalCartTotal,
+      discount, // amount discounted
+      coupon,
       tax,
       tip: selectedTip || 0,
       deliveryFee,
@@ -170,6 +175,19 @@ const Checkout = () => {
     }
   };
 
+  const applyCoupon = () => {
+    if (couponInput === "FIRST10") {
+      setCoupon("FIRST10");
+      setCouponError(""); // clear error if valid
+    } else {
+      setCoupon(null);
+      setCouponError("Invalid code 😢");
+
+      // Auto-clear after 3 seconds
+      setTimeout(() => setCouponError(""), 3000);
+    }
+  };
+
   return (
     <div className="checkout-page">
       <Navigation />
@@ -191,6 +209,40 @@ const Checkout = () => {
                 </p>
               ))}
               <h2>Subtotal: ${cartTotal.toFixed(2)}</h2>
+
+              {/* ✅ Promo Code Section */}
+
+              {/* ✅ Promo Code Section */}
+              <div className="promo-code">
+                <input
+                  type="text"
+                  placeholder="Promo code"
+                  value={couponInput}
+                  onChange={(e) => setCouponInput(e.target.value)}
+                />
+                <button type="button" onClick={applyCoupon}>
+                  Apply
+                </button>
+              </div>
+
+              {/* ✅ Discount message if valid */}
+              {discount > 0 && (
+                <p className="discount-msg" style={{ color: "green" }}>
+                  Discount: -${discount.toFixed(2)}
+                </p>
+              )}
+
+              {/* ✅ Discounted subtotal if coupon applied */}
+              {coupon === "WELCOME10" && discount > 0 && (
+                <h2>Discounted Subtotal: ${finalCartTotal.toFixed(2)}</h2>
+              )}
+
+              {/* ✅ Error message if invalid */}
+              {couponError && (
+                <p className="error-msg" style={{ color: "red" }}>
+                  {couponError}
+                </p>
+              )}
             </div>
 
             <CostumerInfo
@@ -213,7 +265,7 @@ const Checkout = () => {
 
             <div className="price-breakdown">
               <p>
-                <strong>Subtotal: ${cartTotal.toFixed(2)}</strong>
+                <strong>Subtotal: ${finalCartTotal.toFixed(2)}</strong>
               </p>
               <p>
                 <strong>Tax: ${tax.toFixed(2)}</strong>
@@ -230,7 +282,10 @@ const Checkout = () => {
                 <strong>Total: ${total.toFixed(2)}</strong>
               </h2>
 
-              <TipSelector subtotal={cartTotal} onTipChange={setSelectedTip} />
+              <TipSelector
+                subtotal={finalCartTotal}
+                onTipChange={setSelectedTip}
+              />
             </div>
 
             <div>
