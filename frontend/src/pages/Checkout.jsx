@@ -233,7 +233,7 @@ const Checkout = () => {
               )}
 
               {/* ✅ Discounted subtotal if coupon applied */}
-              {coupon === "WELCOME10" && discount > 0 && (
+              {coupon === "FIRST10" && discount > 0 && (
                 <h2>Discounted Subtotal: ${finalCartTotal.toFixed(2)}</h2>
               )}
 

@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
 
   // ✅ discount + final total
   const discount =
-    coupon === "WELCOME10" && isFirstPurchase ? cartTotal * 0.1 : 0;
+    coupon === "FIRST10" && isFirstPurchase ? cartTotal * 0.1 : 0;
   const finalCartTotal = cartTotal - discount;
 
   return (
