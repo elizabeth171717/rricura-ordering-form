@@ -89,6 +89,9 @@ const HomePage = () => {
                 className="bouncing-pointer"
                 style={{ color: "white" }}
               />
+              <Link to="/menu" className="home-btn">
+                Menu
+              </Link>
               <Link to="/OnlineOrdering" className="home-btn">
                 ORDER NOW
               </Link>

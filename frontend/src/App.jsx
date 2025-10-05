@@ -10,7 +10,7 @@ import Checkout from "./pages/Checkout";
 import ThankYouPage from "./pages/ThankYouPage";
 import PaymentPage from "./pages/PaymentPage";
 import OnlineOrdering from "./pages/OnlineOrdering";
-
+import Menu from "./pages/Menu";
 // Sections
 import DrinkSection from "./components/DrinkSection";
 import AppetizerSection from "./components/AppetizerSection";
@@ -26,7 +26,7 @@ function App() {
       <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<HomePage />} />
-
+          <Route path="/menu" element={<Menu />} />
           <Route path="/OnlineOrdering" element={<OnlineOrdering />} />
           <Route path="/drinks" element={<DrinkSection />} />
           <Route path="/appetizers" element={<AppetizerSection />} />
