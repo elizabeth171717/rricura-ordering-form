@@ -67,7 +67,7 @@ function Menu() {
   return (
     <div className="menu-container">
       <Navigation />
-      <div style={{ marginTop: "2rem", padding: "1rem" }}>
+      <div style={{ marginTop: "1rem" }}>
         {/* Sections */}
         {menu.sections.map((section) => {
           // Show only visible items
@@ -82,14 +82,7 @@ function Menu() {
               key={section.id || section._id}
               style={{ marginBottom: "3rem" }}
             >
-              <h1
-                style={{
-                  borderBottom: "2px solid #ddd",
-                  marginBottom: "1rem",
-                  paddingBottom: "0.5rem",
-                  textTransform: "capitalize",
-                }}
-              >
+              <h1 style={{ marginBottom: "1rem", textAlign: "center" }}>
                 {section.section}
               </h1>
 
@@ -100,7 +93,7 @@ function Menu() {
                     key={item.id || item._id}
                     style={{
                       border: "1px solid #ccc",
-                      padding: "1rem",
+
                       borderRadius: "10px",
                       textAlign: "center",
                       opacity: item.available ? 1 : 0.6, // dim unavailable items
@@ -121,8 +114,14 @@ function Menu() {
                       />
                     )}
 
-                    <h3 style={{ marginBottom: "0.5rem" }}>{item.name}</h3>
-                    <p style={{ marginBottom: "0.5rem", fontSize: "1rem" }}>
+                    <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
+                    <p
+                      style={{
+                        marginBottom: "0.5rem",
+                        fontSize: "1rem",
+                        color: "grey",
+                      }}
+                    >
                       {item.description}
                     </p>
 
@@ -137,33 +136,6 @@ function Menu() {
                       >
                         ❌ Unavailable
                       </p>
-                    )}
-
-                    {/* Modifiers */}
-                    {item.modifiers && item.modifiers.length > 0 && (
-                      <div
-                        style={{
-                          marginTop: "0.5rem",
-                          textAlign: "left",
-                        }}
-                      >
-                        <p
-                          style={{
-                            fontWeight: "bold",
-                            marginBottom: "0.3rem",
-                          }}
-                        >
-                          Options:
-                        </p>
-                        <ul style={{ paddingLeft: "1rem", margin: 0 }}>
-                          {item.modifiers.map((mod) => (
-                            <li key={mod.id}>
-                              {mod.name}
-                              {mod.price > 0 && ` ($${mod.price.toFixed(2)})`}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
                     )}
                   </div>
                 ))}
