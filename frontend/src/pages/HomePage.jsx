@@ -90,7 +90,7 @@ const HomePage = () => {
                 style={{ color: "white" }}
               />
               <Link to="/menu" className="home-btn">
-                Menu
+                MENU
               </Link>
               <Link to="/OnlineOrdering" className="home-btn">
                 ORDER NOW

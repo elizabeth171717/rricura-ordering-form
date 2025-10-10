@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { BACKEND_URL } from "../constants/constants";
 const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
+import "../MenuGrid.css";
 
 function Menu() {
   const [menu, setMenu] = useState(null);
@@ -93,13 +94,7 @@ function Menu() {
               </h1>
 
               {/* Items inside section */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                  gap: "1.5rem",
-                }}
-              >
+              <div className="menu-grid">
                 {visibleItems.map((item) => (
                   <div
                     key={item.id || item._id}
