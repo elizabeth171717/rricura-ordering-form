@@ -11,6 +11,7 @@ import ThankYouPage from "./pages/ThankYouPage";
 import PaymentPage from "./pages/PaymentPage";
 import OnlineOrdering from "./pages/OnlineOrdering";
 import Menu from "./pages/Menu";
+import DigitalMenu from "./pages/DigitalMenu";
 // Sections
 import DrinkSection from "./components/DrinkSection";
 import AppetizerSection from "./components/AppetizerSection";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Checkout" element={<Checkout />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/payment-page" element={<PaymentPage />} />
+          <Route path="/digital-menu" element={<DigitalMenu />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>

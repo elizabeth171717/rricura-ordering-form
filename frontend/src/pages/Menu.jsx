@@ -68,14 +68,10 @@ function Menu() {
     <div className="menu-container">
       <Navigation />
       <div style={{ marginTop: "1rem" }}>
-        {/* Sections */}
         {menu.sections.map((section) => {
-          // Show only visible items
-          const visibleItems = (section.items || []).filter(
+          const visibleUngroupedItems = (section.items || []).filter(
             (item) => item.visible !== false
           );
-
-          if (visibleItems.length === 0) return null;
 
           return (
             <div
@@ -86,60 +82,126 @@ function Menu() {
                 {section.section}
               </h1>
 
-              {/* Items inside section */}
-              <div className="menu-grid">
-                {visibleItems.map((item) => (
-                  <div
-                    key={item.id || item._id}
-                    style={{
-                      border: "1px solid #ccc",
+              {/* 👇 Render Groups (NEW) */}
+              {section.groups &&
+                section.groups.length > 0 &&
+                section.groups.map((group) => {
+                  const visibleGroupItems = (group.items || []).filter(
+                    (item) => item.visible !== false
+                  );
+                  if (visibleGroupItems.length === 0) return null;
 
-                      borderRadius: "10px",
-                      textAlign: "center",
-                      opacity: item.available ? 1 : 0.6, // dim unavailable items
-                    }}
-                  >
-                    {/* Dish image */}
-                    {item.image && (
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        style={{
-                          width: "100%",
-                          height: "150px",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                          marginBottom: "0.8rem",
-                        }}
-                      />
-                    )}
-
-                    <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
-                    <p
-                      style={{
-                        marginBottom: "0.5rem",
-                        fontSize: "1rem",
-                        color: "grey",
-                      }}
+                  return (
+                    <div
+                      key={group.id || group._id}
+                      style={{ marginBottom: "2rem" }}
                     >
-                      {item.description}
-                    </p>
-
-                    {/* 👇 Show “Unavailable” label if not available */}
-                    {!item.available && (
-                      <p
+                      <h3
                         style={{
-                          color: "red",
+                          fontSize: "1.2rem",
                           fontWeight: "bold",
-                          marginTop: "0.5rem",
+                          marginBottom: "0.5rem",
+                          textAlign: "center",
+                          textTransform: "capitalize",
                         }}
                       >
-                        ❌ Unavailable
+                        {group.groupName}
+                      </h3>
+                      <div className="menu-grid">
+                        {visibleGroupItems.map((item) => (
+                          <div
+                            key={item.id || item._id}
+                            style={{
+                              border: "1px solid #ccc",
+                              borderRadius: "10px",
+                              textAlign: "center",
+                              opacity: item.available ? 1 : 0.6,
+                            }}
+                          >
+                            {item.image && (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                style={{
+                                  width: "100%",
+                                  height: "150px",
+                                  objectFit: "cover",
+                                  borderRadius: "8px",
+                                  marginBottom: "0.8rem",
+                                }}
+                              />
+                            )}
+                            <p style={{ marginBottom: "0.5rem" }}>
+                              {item.name}
+                            </p>
+                            <p
+                              style={{ marginBottom: "0.5rem", color: "grey" }}
+                            >
+                              {item.description}
+                            </p>
+                            {!item.available && (
+                              <p
+                                style={{
+                                  color: "red",
+                                  fontWeight: "bold",
+                                  marginTop: "0.5rem",
+                                }}
+                              >
+                                ❌ Unavailable
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+
+              {/* 👇 Render ungrouped items as before */}
+              {visibleUngroupedItems.length > 0 && (
+                <div className="menu-grid">
+                  {visibleUngroupedItems.map((item) => (
+                    <div
+                      key={item.id || item._id}
+                      style={{
+                        border: "1px solid #ccc",
+                        borderRadius: "10px",
+                        textAlign: "center",
+                        opacity: item.available ? 1 : 0.6,
+                      }}
+                    >
+                      {item.image && (
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          style={{
+                            width: "100%",
+                            height: "150px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                            marginBottom: "0.8rem",
+                          }}
+                        />
+                      )}
+                      <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
+                      <p style={{ marginBottom: "0.5rem", color: "grey" }}>
+                        {item.description}
                       </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+                      {!item.available && (
+                        <p
+                          style={{
+                            color: "red",
+                            fontWeight: "bold",
+                            marginTop: "0.5rem",
+                          }}
+                        >
+                          ❌ Unavailable
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           );
         })}
