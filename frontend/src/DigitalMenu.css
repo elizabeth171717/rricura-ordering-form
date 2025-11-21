@@ -12,6 +12,10 @@
    padding: 1rem;
 }
 
+.menu-section-title{
+    text-align: center;
+}
+
 
 .cards-container{
     display: flex;

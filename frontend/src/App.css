@@ -821,6 +821,8 @@ object-fit: cover;
 /*grid-container for drinks, apps and sides*/
 .grid-container{
   margin: 2rem 0;
+ 
+
 }
 
 /*Select filing*/
@@ -956,3 +958,50 @@ margin: .50rem 0;
     transform: translateY(0);
   }
 }
+
+/* Container: quantity + add button side-by-side */
+.add-section {
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+/* Quantity buttons row */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Quantity buttons styling */
+.quantity-controls button {
+  background: #9D0759;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Quantity number */
+.quantity-controls span {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Add to Cart button */
+.add-btn {
+  background: #000;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap; /* prevents wrapping */
+}
+

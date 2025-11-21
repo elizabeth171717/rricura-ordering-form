@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import tamalePrices from "./tamalePrices";
 import PeopleCount from "./PeopleCount";
 import pulledChickenImg from "../assets/pulledchicken.jpg";
 import pulledPorkImg from "../assets/pulledpork.jpg";
@@ -18,18 +17,20 @@ import salsaVerde from "../assets/salsaverde.jpg";
 // Cart Context
 
 import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
+import { BACKEND_URL } from "../constants/constants";
+const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
 
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
   { name: "Pork", value: "Pork", img: pulledPorkImg },
   {
-    name: "Rajas (pepper & cheese)",
-    value: "Rajas (pepper & cheese)",
+    name: "Rajas",
+    value: "Rajas",
     img: rajasTamaleImg,
   },
   { name: "Chipilin", value: "Chipilin", img: chipillinImg },
   { name: "Black Bean", value: "Black Bean", img: blackBeanImg },
-  { name: "Sweet", value: "Sweet Tamale", img: sweetTamaleImg },
+  { name: "Sweet", value: "Sweet", img: sweetTamaleImg },
 ];
 
 const wrappers = [
@@ -54,8 +55,26 @@ const TamaleBuilder = () => {
   const [filling, setFilling] = useState(null);
   const [wrapper, setWrapper] = useState(null);
   const [sauce, setSauce] = useState(null);
-  const [useVegOil, setUseVegOil] = useState(false);
-  const [addFruit, setAddFruit] = useState(false);
+
+  // ✅ Universal Menu data (replaces tamalePrices)
+  const [menuData, setMenuData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Use your existing Universal Menu fetch pattern
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const data = await res.json();
+        setMenuData(data);
+      } catch (err) {
+        console.error("Failed to fetch menu:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMenu();
+  }, []);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("tamaleBuilderSelections"));
@@ -68,8 +87,6 @@ const TamaleBuilder = () => {
       if (sauc) setSauce(sauc);
       if (typeof saved.totalTamales === "number")
         setTotalTamales(saved.totalTamales);
-      if (typeof saved.useVegOil === "boolean") setUseVegOil(saved.useVegOil);
-      if (typeof saved.addFruit === "boolean") setAddFruit(saved.addFruit);
     }
   }, []);
 
@@ -81,59 +98,78 @@ const TamaleBuilder = () => {
         wrapper: wrapper?.value || null,
         sauce: sauce?.value || null,
         totalTamales,
-        useVegOil,
-        addFruit,
       })
     );
-  }, [filling, wrapper, sauce, totalTamales, useVegOil, addFruit]);
-
-  // ✅ Fixed clearing logic
-  useEffect(() => {
-    if (!filling) return;
-    if (filling.value === "Sweet Tamale") {
-      setWrapper(null);
-      setSauce(null);
-    } else if (filling.value === "Chipilin" || filling.value === "Black Bean") {
-      setSauce(null);
-    }
-  }, [filling]);
+  }, [filling, wrapper, sauce, totalTamales]);
 
   useEffect(() => {
     if (totalTamales === 0) {
       setFilling(null);
       setWrapper(null);
       setSauce(null);
-      setUseVegOil(false);
-      setAddFruit(false);
     }
   }, [totalTamales]);
 
+  // 🧮 Calculate selected item based on Universal Menu using customProperties
   const selected = useMemo(() => {
-    const assumedWrapper = (() => {
-      if (filling?.value === "Sweet Tamale") return "Corn Husk";
-      return wrapper?.value;
-    })();
+    if (!menuData || !filling) return null;
 
-    const assumedSauce = (() => {
-      if (
-        filling?.value === "Sweet Tamale" ||
-        filling?.value === "Chipilin" ||
-        filling?.value === "Black Bean"
-      )
-        return "None";
-      return sauce?.value || "None";
-    })();
+    // flatten items from sections -> groups -> items (same shape Menu.jsx uses)
+    const allItems =
+      menuData?.sections?.flatMap((section) =>
+        (section.groups || []).flatMap((group) => group.items || [])
+      ) || [];
 
-    return tamalePrices.find((item) => {
-      return (
-        item.filling === filling?.value &&
-        item.wrapper === assumedWrapper &&
-        item.sauce === assumedSauce &&
-        (typeof item.vegOil === "undefined" || item.vegOil === useVegOil) &&
-        (typeof item.fruit === "undefined" || item.fruit === addFruit)
+    // helper to get a customProperty value (case-insensitive key)
+    const getProp = (item, key) => {
+      const arr = item.customProperties || [];
+      const found = arr.find(
+        (p) =>
+          String(p.key).trim().toLowerCase() ===
+          String(key).trim().toLowerCase()
       );
+      return found?.value;
+    };
+
+    const assumedWrapper =
+      filling.value === "Sweet" ? "Corn Husk" : wrapper?.value;
+    const assumedSauce = ["Sweet", "Chipilin", "Black Bean"].includes(
+      filling.value
+    )
+      ? "None"
+      : sauce?.value || "None";
+
+    // find match by comparing the customProperties (Filling, Wrapper, Sauce)
+    return allItems.find((item) => {
+      if (!item) return false;
+
+      const itemFilling = getProp(item, "Filling") || item.filling;
+      const itemWrapper = getProp(item, "Wrapper") || item.wrapper;
+      const itemSauce = getProp(item, "Sauce") || item.sauce;
+
+      // normalize to strings for robust comparison
+      const norm = (v) =>
+        v === undefined || v === null ? "" : String(v).trim();
+
+      const fillA = norm(itemFilling).toLowerCase();
+      const fillB = norm(filling.value).toLowerCase();
+
+      // ✅ Fix: allow partial/loose matches (Chipilin vs Chipilín, Black Bean vs Black Beans)
+      if (!fillA.includes(fillB) && !fillB.includes(fillA)) return false;
+
+      if (
+        norm(itemWrapper).toLowerCase() !== norm(assumedWrapper).toLowerCase()
+      )
+        return false;
+
+      // treat "None" specially when sauce is absent
+      const itemSauceNorm = norm(itemSauce).toLowerCase();
+      const assumedSauceNorm = norm(assumedSauce).toLowerCase();
+      if (itemSauceNorm !== assumedSauceNorm) return false;
+
+      return true;
     });
-  }, [filling, wrapper, sauce, useVegOil, addFruit]);
+  }, [menuData, filling, wrapper, sauce]);
 
   const subtotal =
     selected?.price && totalTamales
@@ -142,16 +178,20 @@ const TamaleBuilder = () => {
 
   const hasAllRequiredSelections = (() => {
     if (!filling) return false;
-    if (["Chicken", "Pork"].includes(filling.value)) {
-      return wrapper && sauce;
+
+    switch (filling.value) {
+      case "Sweet":
+        return true; // auto-ready
+      case "Chipilin":
+      case "Black Bean":
+        return !!wrapper; // only wrapper required
+      case "Chicken":
+      case "Pork":
+      case "Rajas":
+        return wrapper && sauce; // both needed
+      default:
+        return false;
     }
-    if (filling.value === "Chipilin") {
-      return wrapper !== null; // Chipilin requires wrapper
-    }
-    if (filling.value === "Black Bean") {
-      return wrapper !== null; // Chipilin requires wrapper
-    }
-    return true;
   })();
 
   const isReady =
@@ -162,24 +202,50 @@ const TamaleBuilder = () => {
     totalTamales >= 12;
 
   const handleAddToCart = () => {
-    if (!isReady) return;
+    if (!isReady || !selected) return;
 
+    // Extract clean properties from your builder
+    const fillingValue =
+      filling?.value ||
+      selected.customProperties?.find((p) => p.key.toLowerCase() === "filling")
+        ?.value ||
+      selected.name;
+
+    const wrapperValue =
+      wrapper?.value ||
+      selected.customProperties?.find((p) => p.key.toLowerCase() === "wrapper")
+        ?.value ||
+      "";
+
+    const sauceValue =
+      sauce?.value ||
+      selected.customProperties?.find((p) => p.key.toLowerCase() === "sauce")
+        ?.value ||
+      "";
+
+    // ✅ Combine both selected item data and your builder selections
     const newItem = {
       type: "tamale",
-      ...selected,
+      name: selected.name,
+      img: selected.image,
+      price: selected.price,
       quantity: totalTamales,
+      filling: fillingValue,
+      wrapper: wrapperValue,
+      sauce: sauceValue,
+      customProperties: selected.customProperties || [],
     };
 
-    // Add to context (which automatically updates localStorage)
+    // Add to global cart context
     addToCartContext(newItem);
 
+    // ✅ Popup handling
     if (newItem.filling?.toLowerCase() !== "sweet tamale") {
       setPopupType("salsa");
-      setShowPopup(true);
     } else {
       setPopupType("basic");
-      setShowPopup(true);
     }
+    setShowPopup(true);
   };
 
   // auto-hide popup after 10 seconds
@@ -192,7 +258,9 @@ const TamaleBuilder = () => {
       return () => clearTimeout(timer);
     }
   }, [showPopup]);
-
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading menu...</p>;
+  }
   return (
     <div className="step-container">
       <div className="other-options">
@@ -202,9 +270,7 @@ const TamaleBuilder = () => {
         <Link to="/sides" className="category-link">
           🥣 Sides
         </Link>
-        <Link to="/appetizers" className="category-link">
-          🍲 Soups
-        </Link>
+
         <Link to="/antojos" className="category-link">
           🌽 Antojos
         </Link>
@@ -228,8 +294,6 @@ const TamaleBuilder = () => {
                 setFilling(null);
                 setWrapper(null);
                 setSauce(null);
-                setUseVegOil(false);
-                setAddFruit(false);
               }}
             >
               🖊️ Edit
@@ -288,36 +352,9 @@ const TamaleBuilder = () => {
       )}
 
       {filling &&
-        ["Rajas (pepper & cheese)", "Chipilin"].includes(filling.value) && (
-          <label>
-            <input
-              type="checkbox"
-              checked={useVegOil}
-              onChange={() => setUseVegOil(!useVegOil)}
-            />
-            Make with Veggie Oil
-          </label>
-        )}
-
-      {filling && filling.value === "Sweet Tamale" && (
-        <label>
-          <input
-            type="checkbox"
-            checked={addFruit}
-            onChange={() => setAddFruit(!addFruit)}
-          />
-          Add Fruit
-        </label>
-      )}
-
-      {filling &&
-        [
-          "Chicken",
-          "Pork",
-          "Rajas (pepper & cheese)",
-          "Chipilin",
-          "Black Bean",
-        ].includes(filling.value) &&
+        ["Chicken", "Pork", "Rajas", "Chipilin", "Black Bean"].includes(
+          filling.value
+        ) &&
         !wrapper && (
           <>
             <h3 className="option-name">Choose Wrapper:</h3>
@@ -341,9 +378,7 @@ const TamaleBuilder = () => {
         )}
 
       {filling &&
-        ["Chicken", "Pork", "Rajas (pepper & cheese)"].includes(
-          filling.value
-        ) &&
+        ["Chicken", "Pork", "Rajas"].includes(filling.value) &&
         wrapper &&
         !sauce && (
           <>
@@ -367,29 +402,47 @@ const TamaleBuilder = () => {
         <>
           <h2>Summary:</h2>
 
-          {selected.img && (
+          {selected.image && (
             <img
-              src={selected.img}
-              alt="Preview"
+              src={selected.image}
+              alt={selected.name || "Preview"}
               className="selected-tamale-img"
             />
           )}
 
           <p>
-            {`${totalTamales} ${selected.filling} tamales in ${
-              selected.wrapper || "default wrapper"
-            }${
-              selected.sauce && selected.sauce !== "None"
-                ? ` with ${selected.sauce} sauce`
-                : ""
-            }`}
+            {(() => {
+              // Helper: safely find a property by key in customProperties
+              const getProp = (key) => {
+                const found = selected?.customProperties?.find(
+                  (p) => p.key?.toLowerCase() === key.toLowerCase()
+                );
+                return found?.value || "";
+              };
+
+              // 🧠 Prefer state values first, fallback to customProperties
+              const fillingValue =
+                filling?.value || getProp("Filling") || selected?.name || "";
+              const wrapperValue =
+                wrapper?.value || getProp("Wrapper") || "corn husk";
+              const sauceValue = sauce?.value || getProp("Sauce") || "";
+
+              // 🧩 Build readable text
+              let description = `${totalTamales} ${fillingValue} tamales in ${wrapperValue}`;
+              if (sauceValue && sauceValue !== "None") {
+                description += ` with ${sauceValue} sauce`;
+              }
+
+              return description;
+            })()}
           </p>
 
-          <p>Total: ${subtotal}</p>
+          <p>Subtotal: ${subtotal}</p>
 
           <button onClick={handleAddToCart}>ADD TO CART</button>
         </>
       )}
+
       {showPopup && (
         <div className="cart-popup">
           <button className="popup-close" onClick={() => setShowPopup(false)}>

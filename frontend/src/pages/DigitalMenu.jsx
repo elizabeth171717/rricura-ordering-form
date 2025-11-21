@@ -127,7 +127,10 @@ function DigitalMenu() {
       {/* LEFT COLUMN - Tamales */}
       <div className="left-column">
         <div className="column-title">
-          <h1>Tamales</h1>
+          {/* 👇 Section name */}
+          {tamalesSection?.section && (
+            <h1 className="menu-section-title">{tamalesSection.section}</h1>
+          )}
         </div>
         <div className="corn-husk-section">
           <h3>CORN HUSK TAMALES $4.00 </h3>
@@ -175,7 +178,10 @@ function DigitalMenu() {
 
       {/* CENTER COLUMN - Drinks */}
       <div className="center-column">
-        <h1>Drinks</h1>
+        {/* 👇 Section name */}
+        {drinksSection?.section && (
+          <h1 className="menu-section-title">{drinksSection.section}</h1>
+        )}
         <h3>Aguas Frescas $4.00</h3>
         {/* 🟩 RENDER ONLY THIS GROUP'S ITEMS HERE */}
         <div className="digital-menu-cards">

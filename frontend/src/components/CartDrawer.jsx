@@ -11,16 +11,36 @@ const CartDrawer = ({ isOpen, onClose }) => {
       .toFixed(2);
 
   const getItemDescription = (item) => {
-    if (item.type === "tamale") {
-      let description = `${item.filling} tamale`;
-      if (item.wrapper) description += ` - ${item.wrapper}`;
-      if (item.sauce && item.sauce !== "None")
-        description += ` - ${item.sauce} sauce`;
-      if (item.vegOil) description += " - Veggie Oil";
-      if (item.fruit) description += " - with Fruit";
+    // ✅ Handle Tamales
+    if (item.type === "tamale" || item.category === "tamale") {
+      const filling =
+        item.filling ||
+        item.customProperties?.find((p) => p.key?.toLowerCase() === "filling")
+          ?.value ||
+        item.name ||
+        "Tamale";
+
+      const wrapper =
+        item.wrapper ||
+        item.customProperties?.find((p) => p.key?.toLowerCase() === "wrapper")
+          ?.value ||
+        "";
+
+      const sauce =
+        item.sauce ||
+        item.customProperties?.find((p) => p.key?.toLowerCase() === "sauce")
+          ?.value ||
+        "";
+
+      // 🧩 Build description
+      let description = `${filling} tamale`;
+      if (wrapper) description += ` in ${wrapper}`;
+      if (sauce && sauce !== "None") description += ` with ${sauce} sauce`;
+
       return description;
     }
-    // For drinks, sides, etc.
+
+    // ✅ Handle sides/drinks/etc
     let description = item.name || "";
     if (item.size) description = `${item.size} ${description}`;
     return description;

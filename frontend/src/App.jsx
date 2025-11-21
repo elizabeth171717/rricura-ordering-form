@@ -14,12 +14,12 @@ import Menu from "./pages/Menu";
 import DigitalMenu from "./pages/DigitalMenu";
 // Sections
 import DrinkSection from "./components/DrinkSection";
-import AppetizerSection from "./components/AppetizerSection";
 import AntojosSection from "./components/AntojosSection";
 import SidesSection from "./components/SideSection";
 
 // Cart Context
 import { CartProvider } from "./Cartcontext/CartProvider";
+import PosTerminal from "./pages/PosTerminal";
 
 function App() {
   return (
@@ -30,13 +30,14 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/OnlineOrdering" element={<OnlineOrdering />} />
           <Route path="/drinks" element={<DrinkSection />} />
-          <Route path="/appetizers" element={<AppetizerSection />} />
+
           <Route path="/sides" element={<SidesSection />} />
           <Route path="/antojos" element={<AntojosSection />} />
           <Route path="/Checkout" element={<Checkout />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/payment-page" element={<PaymentPage />} />
           <Route path="/digital-menu" element={<DigitalMenu />} />
+          <Route path="/PosTerminal" element={<PosTerminal />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>

@@ -60,10 +60,7 @@ const ThankYouPage = () => {
       {showMessage && (
         <div>
           <h3>Thank you for your order!</h3>
-          <p>
-            Your payment was successful. Please check your email for order
-            details.
-          </p>
+          <p>Check your email for order details.</p>
           <button onClick={handleManualRedirect}>Close</button>
         </div>
       )}

@@ -1,138 +1,164 @@
-import { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import salsaverde from "../assets/salsaverde.jpg";
-import sourcream from "../assets/sourcream.jpg";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
-import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
+import { CartContext } from "../Cartcontext/CartContext";
+import { BACKEND_URL } from "../constants/constants";
 
-const sides = [
-  {
-    type: "side",
-
-    options: [
-      {
-        id: "smallgreensauce",
-        name: " Green Sauce",
-        size: "Small",
-        price: 5,
-        img: salsaverde,
-        description: "Perfect for 12-20 tamales.",
-      },
-      {
-        id: "mediumgreensauce",
-        name: " Green Sauce",
-        size: "Medium",
-        price: 8,
-        img: salsaverde,
-        description: "Perfect for 21-40 tamales.",
-      },
-      {
-        id: "largegreensauce",
-        name: "Green Sauce",
-        size: "Large",
-        price: 15,
-        img: salsaverde,
-        description: "Perfect for 41 tamales and more.",
-      },
-    ],
-  },
-  {
-    type: "side",
-
-    options: [
-      {
-        id: "smallsourcream",
-        name: "Sour Cream",
-        size: "Small",
-        price: 5,
-        img: sourcream,
-        description: "Perfect for 12-20 tamales.",
-      },
-      {
-        id: "mediumsourcream",
-        name: "Sour Cream",
-        size: "Medium",
-        price: 8,
-        img: sourcream,
-        description: "Perfect for 21-40 tamales .",
-      },
-      {
-        id: "largesourcream",
-        name: "Sour Cream",
-        size: "Large",
-        price: 15,
-        img: sourcream,
-        description: "Perfect for 41 tamales and more.",
-      },
-    ],
-  },
-];
+const CLIENT_ID = "universalmenu";
 
 const SidesSection = () => {
   const navigate = useNavigate();
-  const { addToCart: addToCartContext } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
 
+  const [menuData, setMenuData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Manual sizing and pricing
+  const sizeOptions = [
+    { label: "Small", price: 5 },
+    { label: "Medium", price: 8 },
+    { label: "Large", price: 12 },
+  ];
+
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [quantities, setQuantities] = useState({});
   const [showPopup, setShowPopup] = useState(false);
 
-  // ✅ Fixed handleAddToCart using CartContext
-  const handleAddToCart = (option) => {
+  // Fetch menu
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const data = await res.json();
+        setMenuData(data);
+      } catch (err) {
+        console.error("Failed to fetch Universal Menu:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMenu();
+  }, []);
+
+  if (loading) return <p style={{ textAlign: "center" }}>Loading sides...</p>;
+
+  const sidesSection = menuData?.sections?.find(
+    (s) => s.section?.toLowerCase() === "sides"
+  );
+
+  if (!sidesSection) return <p>No sides found.</p>;
+
+  const sides = [
+    ...(sidesSection.groups?.flatMap((g) => g.items) || []),
+    ...(sidesSection.items || []),
+  ];
+
+  const handleSelectSize = (sideId, size) => {
+    setSelectedOptions((prev) => ({ ...prev, [sideId]: size }));
+    setQuantities((prev) => ({ ...prev, [sideId]: 1 }));
+  };
+
+  const updateQuantity = (sideId, amount) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [sideId]: Math.max(1, (prev[sideId] || 1) + amount),
+    }));
+  };
+
+  const handleAddToCart = (side) => {
+    const selectedSize = selectedOptions[side.id];
+    const qty = quantities[side.id] || 1;
+
+    if (!selectedSize) return;
+
     const newItem = {
       type: "side",
-      name: option.name,
-      size: option.size,
-      price: option.price,
-      img: option.img,
-      description: option.description,
-      quantity: 1, // each side selection = one item
+      id: `${side.id}-${selectedSize.label}`,
+      name: `${side.name} (${selectedSize.label})`,
+      img: side.image || null,
+      price: selectedSize.price,
+      quantity: qty,
     };
 
-    addToCartContext(newItem); // push to global cart context
+    addToCart(newItem);
 
-    // Show success popup
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2000);
   };
 
   return (
-    <div className="side-container">
+    <div className="sides-container">
       <Navigation />
-      <div className="step-container">
+
+      <div className="grid-container">
         <span onClick={() => navigate(-1)} className="back-button">
           ⬅ Back to Tamales
         </span>
-        <h2>🥣 SALSA VERDE & SOUR CREAM</h2>
 
-        {sides.map((side) => (
-          <div key={side.name}>
-            <h2>{side.name}</h2>
-            <div className="grid">
-              {side.options.map((option) => (
-                <div key={option.size} className="option-card">
+        <h2>🥣 Sides</h2>
+
+        <div className="grid">
+          {sides.map((side) => {
+            const selectedSize = selectedOptions[side.id];
+            const qty = quantities[side.id] || 1;
+
+            return (
+              <div key={side.id} className="sides-card">
+                <h2>{side.name}</h2>
+                {side.image && (
                   <img
-                    src={option.img}
-                    alt={`${side.name} - ${option.size}`}
-                    className="tamale-builder-img"
+                    src={side.image}
+                    alt={side.name}
+                    className="option-card"
                   />
-                  <button
-                    onClick={() => handleAddToCart(option)}
-                    className="sides-btn"
-                  >
-                    ADD TO CART
-                  </button>
-                  <p>
-                    {option.size} - ${option.price}
-                  </p>
-                  <h4>{option.description}</h4>
+                )}
+
+                {/* SIZE OPTIONS PER ITEM */}
+                <div className="options-grid">
+                  {sizeOptions.map((opt) => (
+                    <div
+                      key={opt.label}
+                      className={`option-card ${
+                        selectedSize?.label === opt.label ? "selected" : ""
+                      }`}
+                      onClick={() => handleSelectSize(side.id, opt)}
+                    >
+                      <p>{opt.label}</p>
+                      <p>${opt.price}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
+
+                {/* QUANTITY + ADD BUTTON PER ITEM */}
+                {selectedSize && (
+                  <div className="add-section">
+                    <div className="quantity-controls">
+                      <button onClick={() => updateQuantity(side.id, -1)}>
+                        -
+                      </button>
+                      <span>{qty}</span>
+                      <button onClick={() => updateQuantity(side.id, 1)}>
+                        +
+                      </button>
+                      <button
+                        className="add-btn"
+                        onClick={() => handleAddToCart(side)}
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
 
         {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
-        <Footer />
       </div>
+
+      <Footer />
     </div>
   );
 };
