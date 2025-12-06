@@ -78,6 +78,8 @@ const Checkout = () => {
     const orderNumber = generateOrderNumber();
     setIsSubmitting(true);
 
+    console.log("CHECKOUT deliveryInfo:", deliveryInfo);
+
     const orderData = {
       orderNumber,
       items: cartItems,
