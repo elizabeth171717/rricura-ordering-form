@@ -12,6 +12,7 @@ import TipSelector from "../components/TipSelector";
 import SuccessModal from "../components/SuccessModal";
 import { pushToDataLayer } from "../analytics/gtmEvents";
 import { CartContext } from "../Cartcontext/CartContext";
+import CustomerMessage from "../components/CustomerMessage";
 // Cart Context
 
 const Checkout = () => {
@@ -31,6 +32,7 @@ const Checkout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedTip, setSelectedTip] = useState(0);
   const [couponError, setCouponError] = useState("");
+  const [customerMessage, setCustomerMessage] = useState("");
 
   const taxRate = 0.08;
 
@@ -43,7 +45,11 @@ const Checkout = () => {
 
   const tax = finalCartTotal * taxRate;
   const deliveryFee = deliveryInfo?.fee || 0;
-  const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
+  let total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
+  // 🔥 FORCE TOTAL TO $1 ONLY IF TEST COUPON IS ACTIVE
+  if (coupon === "TEST1DOLLAR") {
+    total = 1;
+  }
 
   const generateOrderNumber = () => {
     const timestamp = Date.now();
@@ -96,6 +102,7 @@ const Checkout = () => {
       deliveryDate: selectedDate.toDateString(),
       deliveryTime: selectedTime,
       deliveryAddress: deliveryInfo,
+      customerMessage: customerMessage,
     };
 
     // ✅ GA4 begin_checkout
@@ -180,12 +187,14 @@ const Checkout = () => {
   const applyCoupon = () => {
     if (couponInput === "FIRST10") {
       setCoupon("FIRST10");
-      setCouponError(""); // clear error if valid
+      setCouponError(""); // valid
+    } else if (couponInput === "TEST1DOLLAR") {
+      setCoupon("TEST1DOLLAR"); // 🔥 force $1 total
+      setCouponError("");
     } else {
       setCoupon(null);
       setCouponError("Invalid code 😢");
 
-      // Auto-clear after 3 seconds
       setTimeout(() => setCouponError(""), 3000);
     }
   };
@@ -287,6 +296,10 @@ const Checkout = () => {
               <TipSelector
                 subtotal={finalCartTotal}
                 onTipChange={setSelectedTip}
+              />
+              <CustomerMessage
+                customerMessage={customerMessage}
+                setCustomerMessage={setCustomerMessage}
               />
             </div>
 

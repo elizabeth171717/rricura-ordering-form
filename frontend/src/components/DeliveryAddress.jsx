@@ -13,7 +13,6 @@ export default function DeliveryForm({ onFeeCalculated }) {
     city: "",
     state: "",
     zip: "",
-    instructions: "",
   });
 
   const [deliveryFee, setDeliveryFee] = useState(null);
@@ -155,15 +154,6 @@ export default function DeliveryForm({ onFeeCalculated }) {
         onChange={handleChange}
         className="w-full border p-2 rounded"
         required
-      />
-
-      <textarea
-        name="instructions"
-        placeholder="Delivery instructions (optional)"
-        value={form.instructions}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        rows={3}
       />
 
       {isLoading && (
