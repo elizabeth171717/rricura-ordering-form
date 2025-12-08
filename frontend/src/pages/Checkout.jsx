@@ -45,11 +45,7 @@ const Checkout = () => {
 
   const tax = finalCartTotal * taxRate;
   const deliveryFee = deliveryInfo?.fee || 0;
-  let total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
-  // 🔥 FORCE TOTAL TO $1 ONLY IF TEST COUPON IS ACTIVE
-  if (coupon === "TEST1DOLLAR") {
-    total = 1;
-  }
+  const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
 
   const generateOrderNumber = () => {
     const timestamp = Date.now();
@@ -187,15 +183,11 @@ const Checkout = () => {
   const applyCoupon = () => {
     if (couponInput === "FIRST10") {
       setCoupon("FIRST10");
-      setCouponError(""); // valid
-    } else if (couponInput === "TEST1DOLLAR") {
-      setCoupon("TEST1DOLLAR"); // 🔥 force $1 total
       setCouponError("");
     } else {
       setCoupon(null);
       setCouponError("Invalid code 😢");
-
-      setTimeout(() => setCouponError(""), 3000);
+      () => setCouponError(""), 3000;
     }
   };
 

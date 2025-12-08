@@ -60,14 +60,11 @@ export const CartProvider = ({ children }) => {
     0
   );
 
-  // ✅ Special testing coupon: force total to $1
-  let discount = coupon === "FIRST10" && isFirstPurchase ? cartTotal * 0.1 : 0;
+  // discount + final total
+  const discount =
+    coupon === "FIRST10" && isFirstPurchase ? cartTotal * 0.1 : 0;
+  const finalCartTotal = cartTotal - discount;
 
-  let finalCartTotal = cartTotal - discount;
-
-  if (coupon === "TEST1DOLLAR") {
-    finalCartTotal = 1;
-  }
   return (
     <CartContext.Provider
       value={{
