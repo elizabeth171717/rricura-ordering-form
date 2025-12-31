@@ -54,7 +54,7 @@ const PeopleCount = ({ setPeople, value }) => {
       <div className="select-number">
         <div className="question">
           <label style={{ display: "block", marginBottom: "8px" }}>
-            <h3> How many would you like:</h3>
+            <p> How many would you like:</p>
           </label>
         </div>
         <div className="number">
@@ -75,7 +75,7 @@ const PeopleCount = ({ setPeople, value }) => {
       <div className="select-number">
         <div className="question">
           <label htmlFor="customTamales">
-            <h3>Or enter a custom number:</h3>
+            <p>Or enter a custom number:</p>
           </label>
         </div>
         <div className="number">

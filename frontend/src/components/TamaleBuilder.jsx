@@ -349,7 +349,8 @@ const TamaleBuilder = () => {
 
       {!filling && (
         <>
-          <h2>Choose Tamale Filling:</h2>
+          <p>BUILD YOUR TAMALE</p>
+          <h3 className="option-name">Choose Tamale Filling:</h3>
           <div className="grid">
             {fillings.map((item) => (
               <div
