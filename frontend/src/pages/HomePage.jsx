@@ -29,7 +29,7 @@ const HomePage = () => {
         <title>Brookhaven & Atlanta Catering | Authentic Mexican Tamales</title>
         <meta
           name="description"
-          content="Rricura Tamales offers authentic Mexican tamale catering in Brookhaven & Atlanta. 
+          content="Mexican tamale catering in Brookhaven & Atlanta. 
           Perfect for family reunions, holidays, and Office Catering. Fresh tamales delivered hot!"
         />
       </Helmet>

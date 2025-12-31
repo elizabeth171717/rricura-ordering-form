@@ -1,10 +1,8 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
 import esquite from "../assets/esquite.jpg";
 import PeopleCount from "./PeopleCount";
-import Navigation from "./Navigation";
-import Footer from "./Footer";
 
 // Cart Context
 import { CartContext } from "../Cartcontext/CartContext";
@@ -14,11 +12,11 @@ const antojosOptions = [
 ];
 
 const AntojosSection = () => {
-  const navigate = useNavigate();
   const { addToCart: addToCartContext } = useContext(CartContext);
   const [totalAntojos, setTotalAntojos] = useState(null);
   const [selectedAntojo, setSelectedAntojo] = useState(null);
-
+  const [showStickySummary, setShowStickySummary] = useState(true);
+  const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
 
   const isReady = selectedAntojo && totalAntojos && totalAntojos >= 1;
@@ -42,17 +40,29 @@ const AntojosSection = () => {
 
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2500);
+    setShowStickySummary(false); // 👈 THIS hides it
+    // reset builder state
+
+    setSelectedAntojo(null);
+    // optional: clear saved selections
   };
+
+  const handleKeepShopping = () => {
+    setShowStickySummary(false);
+    setSelectedAntojo(null);
+
+    navigate("/OnlineOrdering/antojos");
+  };
+
+  useEffect(() => {
+    if (isReady) {
+      setShowStickySummary(true);
+    }
+  }, [isReady]);
 
   return (
     <div className="app-container">
-      <Navigation />
       <div className="step-container">
-        <span onClick={() => navigate(-1)} className="back-button">
-          ⬅ Back to Tamales
-        </span>
-        <h2> 🌽 Antojitos</h2>
-
         {/* Quantity Picker */}
         <PeopleCount setPeople={setTotalAntojos} value={totalAntojos} />
         <div className="grid-container">
@@ -78,22 +88,33 @@ const AntojosSection = () => {
           </div>
         </div>
         {/* Summary + Add to Cart */}
-        {isReady && (
+        {isReady && showStickySummary && (
           <>
-            <img
-              src={selectedAntojo.img}
-              alt={selectedAntojo.name}
-              className="selected-tamale-img"
-            />
-            <p>
-              {totalAntojos} {selectedAntojo.name} — ${subtotal}
-            </p>
-            <button onClick={handleAddToCart}>Add to Cart</button>
-            {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+            <div className="summary-block">
+              <div className="summary-img">
+                <img src={selectedAntojo.img} alt={selectedAntojo.name} />
+              </div>
+              <div className="summary-details">
+                <p>
+                  {totalAntojos} {selectedAntojo.name} — ${subtotal}
+                </p>
+                <button onClick={handleAddToCart} className="add-btn">
+                  Add to Cart
+                </button>
+                <span
+                  onClick={handleKeepShopping}
+                  className="keep-shopping-text"
+                >
+                  Keep shopping
+                </span>
+                {showPopup && (
+                  <div className="cart-popup">✅ Added to cart!</div>
+                )}
+              </div>
+            </div>
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

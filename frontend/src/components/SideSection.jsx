@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import Navigation from "./Navigation";
-import Footer from "./Footer";
+
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
 const CLIENT_ID = "universalmenu";
 
 const SidesSection = () => {
-  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
 
   const [menuData, setMenuData] = useState(null);
@@ -89,15 +86,7 @@ const SidesSection = () => {
 
   return (
     <div className="sides-container">
-      <Navigation />
-
       <div className="grid-container">
-        <span onClick={() => navigate(-1)} className="back-button">
-          ⬅ Back to Tamales
-        </span>
-
-        <h2>🥣 Sides</h2>
-
         <div className="grid">
           {sides.map((side) => {
             const selectedSize = selectedOptions[side.id];
@@ -157,8 +146,6 @@ const SidesSection = () => {
 
         {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
       </div>
-
-      <Footer />
     </div>
   );
 };

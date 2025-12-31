@@ -50,41 +50,51 @@ const PeopleCount = ({ setPeople, value }) => {
   };
 
   return (
-    <div className="select-container">
+    <div className="people-container">
       <div className="select-number">
-        <label style={{ display: "block", marginBottom: "8px" }}>
-          How many would you like:
-        </label>
-        <select
-          value={dropdownValue}
-          onChange={handleDropdownChange}
-          style={{ marginBottom: "12px", padding: "6px" }}
-        >
-          <option value="">Choose</option>
-          {[12, 24, 36, 48, 60, 72, 100].map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
+        <div className="question">
+          <label style={{ display: "block", marginBottom: "8px" }}>
+            <h3> How many would you like:</h3>
+          </label>
+        </div>
+        <div className="number">
+          <select
+            value={dropdownValue}
+            onChange={handleDropdownChange}
+            style={{ marginBottom: "12px", padding: "6px" }}
+          >
+            <option value="">Choose</option>
+            {[12, 24, 36, 48, 60, 72, 100].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-      <div style={{ marginTop: "10px" }}>
-        <label htmlFor="customTamales">Or enter a custom number:</label>
-        <input
-          type="text"
-          inputMode="numeric"
-          placeholder="Minimum 12"
-          id="customTamales"
-          value={inputValue}
-          onChange={handleInputChange}
-          style={{
-            padding: "6px",
-            fontSize: "16px",
-            marginTop: "5px",
-            width: "100%",
-            maxWidth: "250px",
-          }}
-        />
+      <div className="select-number">
+        <div className="question">
+          <label htmlFor="customTamales">
+            <h3>Or enter a custom number:</h3>
+          </label>
+        </div>
+        <div className="number">
+          <input
+            type="text"
+            inputMode="numeric"
+            placeholder="Minimum 12"
+            id="customTamales"
+            value={inputValue}
+            onChange={handleInputChange}
+            style={{
+              padding: "6px",
+              fontSize: "16px",
+              marginTop: "5px",
+              width: "100%",
+              maxWidth: "250px",
+            }}
+          />
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
 import Terms from "../components/Terms";
 import TipSelector from "../components/TipSelector";
-import SuccessModal from "../components/SuccessModal";
+
 import { pushToDataLayer } from "../analytics/gtmEvents";
 import { CartContext } from "../Cartcontext/CartContext";
 import CustomerMessage from "../components/CustomerMessage";
@@ -27,7 +27,7 @@ const Checkout = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [deliveryInfo, setDeliveryInfo] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+
   const [showTerms, setShowTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedTip, setSelectedTip] = useState(0);
@@ -284,7 +284,7 @@ const Checkout = () => {
               <h2>
                 <strong>Total: ${total.toFixed(2)}</strong>
               </h2>
-
+              <br />
               <TipSelector
                 subtotal={finalCartTotal}
                 onTipChange={setSelectedTip}
@@ -323,7 +323,6 @@ const Checkout = () => {
           </div>
         </div>
 
-        {showModal && <SuccessModal onClose={() => setShowModal(false)} />}
         {showTerms && <Terms onClose={() => setShowTerms(false)} />}
       </form>
       <Footer />

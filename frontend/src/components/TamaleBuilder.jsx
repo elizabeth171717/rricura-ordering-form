@@ -47,6 +47,7 @@ const sauces = [
 const TamaleBuilder = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState("basic"); // "basic" or "salsa"
+  const [showStickySummary, setShowStickySummary] = useState(true);
 
   const navigate = useNavigate();
   const { addToCart: addToCartContext } = useContext(CartContext);
@@ -246,7 +247,33 @@ const TamaleBuilder = () => {
       setPopupType("basic");
     }
     setShowPopup(true);
+
+    setShowStickySummary(false); // 👈 THIS hides it
+    // reset builder state
+    setFilling(null);
+    setWrapper(null);
+    setSauce(null);
+    setTotalTamales(null);
+
+    // optional: clear saved selections
+    localStorage.removeItem("tamaleBuilderSelections");
   };
+
+  const handleKeepShopping = () => {
+    setShowStickySummary(false);
+    setFilling(null);
+    setWrapper(null);
+    setSauce(null);
+    setTotalTamales(null);
+    localStorage.removeItem("tamaleBuilderSelections");
+    navigate("/OnlineOrdering");
+  };
+
+  useEffect(() => {
+    if (isReady) {
+      setShowStickySummary(true);
+    }
+  }, [isReady]);
 
   // auto-hide popup after 10 seconds
   useEffect(() => {
@@ -263,20 +290,7 @@ const TamaleBuilder = () => {
   }
   return (
     <div className="step-container">
-      <div className="other-options">
-        <Link to="/drinks" className="category-link">
-          🥤 Drinks
-        </Link>
-        <Link to="/sides" className="category-link">
-          🥣 Sides
-        </Link>
-
-        <Link to="/antojos" className="category-link">
-          🌽 Antojos
-        </Link>
-      </div>
-
-      <h2> Build your TAMALE 🫔</h2>
+      <h2>CATERING MENU</h2>
       <PeopleCount setPeople={setTotalTamales} value={totalTamales} />
 
       <div className="selected-summary">
@@ -397,49 +411,55 @@ const TamaleBuilder = () => {
             </div>
           </>
         )}
-
-      {isReady && (
+      {isReady && showStickySummary && (
         <>
-          <h2>Summary:</h2>
+          <div className="summary-block">
+            <div className="summary-img">
+              {selected.image && (
+                <img src={selected.image} alt={selected.name || "Preview"} />
+              )}
+            </div>
+            <div className="summary-details">
+              <p>
+                {(() => {
+                  // Helper: safely find a property by key in customProperties
+                  const getProp = (key) => {
+                    const found = selected?.customProperties?.find(
+                      (p) => p.key?.toLowerCase() === key.toLowerCase()
+                    );
+                    return found?.value || "";
+                  };
 
-          {selected.image && (
-            <img
-              src={selected.image}
-              alt={selected.name || "Preview"}
-              className="selected-tamale-img"
-            />
-          )}
+                  // 🧠 Prefer state values first, fallback to customProperties
+                  const fillingValue =
+                    filling?.value ||
+                    getProp("Filling") ||
+                    selected?.name ||
+                    "";
+                  const wrapperValue =
+                    wrapper?.value || getProp("Wrapper") || "corn husk";
+                  const sauceValue = sauce?.value || getProp("Sauce") || "";
 
-          <p>
-            {(() => {
-              // Helper: safely find a property by key in customProperties
-              const getProp = (key) => {
-                const found = selected?.customProperties?.find(
-                  (p) => p.key?.toLowerCase() === key.toLowerCase()
-                );
-                return found?.value || "";
-              };
+                  // 🧩 Build readable text
+                  let description = `${totalTamales} ${fillingValue} tamales in ${wrapperValue}`;
+                  if (sauceValue && sauceValue !== "None") {
+                    description += ` with ${sauceValue} sauce`;
+                  }
 
-              // 🧠 Prefer state values first, fallback to customProperties
-              const fillingValue =
-                filling?.value || getProp("Filling") || selected?.name || "";
-              const wrapperValue =
-                wrapper?.value || getProp("Wrapper") || "corn husk";
-              const sauceValue = sauce?.value || getProp("Sauce") || "";
+                  return description;
+                })()}
+              </p>
 
-              // 🧩 Build readable text
-              let description = `${totalTamales} ${fillingValue} tamales in ${wrapperValue}`;
-              if (sauceValue && sauceValue !== "None") {
-                description += ` with ${sauceValue} sauce`;
-              }
+              <p>Subtotal: ${subtotal}</p>
 
-              return description;
-            })()}
-          </p>
-
-          <p>Subtotal: ${subtotal}</p>
-
-          <button onClick={handleAddToCart}>ADD TO CART</button>
+              <button onClick={handleAddToCart} className="add-btn">
+                ADD TO CART
+              </button>
+              <span onClick={handleKeepShopping} className="keep-shopping-text">
+                Keep shopping
+              </span>
+            </div>
+          </div>
         </>
       )}
 
@@ -462,7 +482,7 @@ const TamaleBuilder = () => {
                 <div className="popup-actions">
                   <button
                     onClick={() => {
-                      navigate("/sides");
+                      navigate("/OnlineOrdering/sides");
                       setShowPopup(false);
                     }}
                     className="add-salsa-btn"

@@ -1,8 +1,6 @@
 import { useState, useContext, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import Navigation from "./Navigation";
 import PeopleCount from "./PeopleCount";
-import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../constants/constants";
 const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
 
@@ -29,15 +27,14 @@ const drinkOptions = [
 ];
 
 const DrinkSection = () => {
-  const navigate = useNavigate();
   const { addToCart: addToCartContext } = useContext(CartContext);
-
+  const [showStickySummary, setShowStickySummary] = useState(true);
   const [menuData, setMenuData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedDrink, setSelectedDrink] = useState(null);
   const [totalDrinks, setTotalDrinks] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-
+  const navigate = useNavigate();
   // ✅ Fetch Universal Menu
   useEffect(() => {
     const fetchMenu = async () => {
@@ -94,19 +91,30 @@ const DrinkSection = () => {
 
     addToCartContext(newItem);
     setShowPopup(true);
-    setTimeout(() => setShowPopup(false), 2500);
+    setTimeout(() => setShowPopup(false), 3000);
+    // ✅ CLOSE + RESET
+    setShowStickySummary(false);
+    setSelectedDrink(null);
+    setTotalDrinks(null);
   };
+
+  const handleKeepShopping = () => {
+    setShowStickySummary(false);
+    setSelectedDrink(null);
+    setTotalDrinks(null);
+
+    navigate("/OnlineOrdering/drinks");
+  };
+
+  useEffect(() => {
+    if (isReady) {
+      setShowStickySummary(true);
+    }
+  }, [isReady]);
 
   return (
     <div className="drinks-container">
-      <Navigation />
       <div className="step-container">
-        <span onClick={() => navigate(-1)} className="back-button">
-          ⬅ Back to Tamales
-        </span>
-
-        <h2>🥤 Drinks</h2>
-
         {/* Quantity Picker */}
         <PeopleCount setPeople={setTotalDrinks} value={totalDrinks} />
 
@@ -128,35 +136,46 @@ const DrinkSection = () => {
             ))}
           </div>
         </div>
-        {isReady && selectedFromMenu && (
+        {isReady && selectedFromMenu && showStickySummary && (
           <>
-            {/* ✅ Only use Universal Menu image */}
-            {selectedFromMenu.image && (
-              <img
-                src={selectedFromMenu.image}
-                alt={selectedFromMenu.name}
-                className="selected-tamale-img"
-              />
-            )}
+            <div className="summary-block">
+              <div className="summary-img">
+                {/* ✅ Only use Universal Menu image */}
+                {selectedFromMenu.image && (
+                  <img
+                    src={selectedFromMenu.image}
+                    alt={selectedFromMenu.name}
+                  />
+                )}
+              </div>
+              <div className="summary-details">
+                <p>
+                  {totalDrinks} {selectedFromMenu.name}
+                </p>
 
-            <p>
-              {totalDrinks} {selectedFromMenu.name}
-            </p>
+                {selectedFromMenu.description && (
+                  <p className="description">{selectedFromMenu.description}</p>
+                )}
 
-            {selectedFromMenu.description && (
-              <p className="description">{selectedFromMenu.description}</p>
-            )}
+                <p>Subtotal: ${subtotal}</p>
 
-            <p>Subtotal: ${subtotal}</p>
-
-            <button onClick={handleAddToCart}>Add to Cart</button>
-            {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+                <button onClick={handleAddToCart} className="add-btn">
+                  Add to Cart
+                </button>
+                <span
+                  onClick={handleKeepShopping}
+                  className="keep-shopping-text"
+                >
+                  Keep shopping
+                </span>
+              </div>
+              {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+            </div>
           </>
         )}
 
         {loading && <p>Loading menu...</p>}
       </div>
-      <Footer />
     </div>
   );
 };
