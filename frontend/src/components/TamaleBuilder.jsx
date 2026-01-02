@@ -56,6 +56,8 @@ const TamaleBuilder = () => {
   const [filling, setFilling] = useState(null);
   const [wrapper, setWrapper] = useState(null);
   const [sauce, setSauce] = useState(null);
+  const [activeStep, setActiveStep] = useState("filling");
+  // "filling" | "wrapper" | "sauce" | null
 
   // ✅ Universal Menu data (replaces tamalePrices)
   const [menuData, setMenuData] = useState(null);
@@ -290,9 +292,17 @@ const TamaleBuilder = () => {
   }
   return (
     <div className="step-container">
-      <h2>CATERING MENU</h2>
+      <p
+        style={{
+          color: "#9D0759",
+          fontFamily: "revert-layer",
+          textAlign: "center",
+        }}
+      >
+        CATERING MENU
+      </p>
       <PeopleCount setPeople={setTotalTamales} value={totalTamales} />
-
+      <h2>Build your TAMALE🫔 </h2>
       <div className="selected-summary">
         {filling && (
           <div className="selected-option">
@@ -327,6 +337,7 @@ const TamaleBuilder = () => {
               onClick={() => {
                 setWrapper(null);
                 setSauce(null);
+                setActiveStep("wrapper");
               }}
             >
               🖊️ Edit
@@ -349,14 +360,16 @@ const TamaleBuilder = () => {
 
       {!filling && (
         <>
-          <p>BUILD YOUR TAMALE</p>
           <h3 className="option-name">Choose Tamale Filling:</h3>
           <div className="grid">
             {fillings.map((item) => (
               <div
                 key={item.value}
                 className="option-card"
-                onClick={() => setFilling(item)}
+                onClick={() => {
+                  setFilling(item);
+                  setActiveStep("wrapper");
+                }}
               >
                 <img src={item.img} alt={item.name} className="product-img" />
                 <p>{item.name}</p>
@@ -366,52 +379,65 @@ const TamaleBuilder = () => {
         </>
       )}
 
-      {filling &&
+      {activeStep === "wrapper" &&
+        filling &&
         ["Chicken", "Pork", "Rajas", "Chipilin", "Black Bean"].includes(
           filling.value
-        ) &&
-        !wrapper && (
-          <>
-            <h3 className="option-name">Choose Wrapper:</h3>
-            <div className="grid">
-              {wrappers.map((item) => (
-                <div
-                  key={item.value}
-                  className="option-card"
-                  onClick={() => setWrapper(item)}
-                >
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="tamale-builder-img"
-                  />
-                  <p>{item.name}</p>
-                </div>
-              ))}
+        ) && (
+          <div className="step-popup">
+            <div className="popup-card">
+              <h3>Choose Wrapper</h3>
+
+              <div className="grid">
+                {wrappers.map((item) => (
+                  <div
+                    key={item.value}
+                    className="option-card"
+                    onClick={() => {
+                      setWrapper(item);
+                      setActiveStep(
+                        ["Chicken", "Pork", "Rajas"].includes(filling.value)
+                          ? "sauce"
+                          : null
+                      );
+                    }}
+                  >
+                    <img src={item.img} alt={item.name} />
+                    <p>{item.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </>
+          </div>
         )}
 
-      {filling &&
-        ["Chicken", "Pork", "Rajas"].includes(filling.value) &&
+      {activeStep === "sauce" &&
+        filling &&
         wrapper &&
-        !sauce && (
-          <>
-            <h3 className="option-name">Choose Sauce:</h3>
-            <div className="grid">
-              {sauces.map((item) => (
-                <div
-                  key={item.value}
-                  className="option-card"
-                  onClick={() => setSauce(item)}
-                >
-                  <img src={item.img} alt={item.name} className="grid-img" />
-                  <p>{item.name}</p>
-                </div>
-              ))}
+        ["Chicken", "Pork", "Rajas"].includes(filling.value) && (
+          <div className="step-popup">
+            <div className="popup-card">
+              <h3>Choose Sauce</h3>
+
+              <div className="grid">
+                {sauces.map((item) => (
+                  <div
+                    key={item.value}
+                    className="option-card"
+                    onClick={() => {
+                      setSauce(item);
+                      setActiveStep(null);
+                    }}
+                  >
+                    <img src={item.img} alt={item.name} />
+                    <p>{item.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </>
+          </div>
         )}
+
       {isReady && showStickySummary && (
         <>
           <div className="summary-block">

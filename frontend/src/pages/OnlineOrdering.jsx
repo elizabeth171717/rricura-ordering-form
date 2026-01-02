@@ -10,7 +10,7 @@ const OnlineOrdering = () => {
       {/* 🔁 CATEGORY TOGGLE — ALWAYS VISIBLE */}
       <div className="category-toggle">
         <NavLink
-          to="tamales"
+          to="."
           end
           className={({ isActive }) =>
             isActive ? "category-link active" : "category-link"

@@ -45,12 +45,13 @@ const AntojosSection = () => {
 
     setSelectedAntojo(null);
     // optional: clear saved selections
+    setTotalAntojos(null);
   };
 
   const handleKeepShopping = () => {
     setShowStickySummary(false);
     setSelectedAntojo(null);
-
+    setTotalAntojos(null);
     navigate("/OnlineOrdering/antojos");
   };
 

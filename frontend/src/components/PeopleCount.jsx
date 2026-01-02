@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 const PeopleCount = ({ setPeople, value }) => {
-  const [tamales, setTamales] = useState(value || ""); // final tamale count
+  const [quantity, setQuantity] = useState(value ?? "");
+
   const [dropdownValue, setDropdownValue] = useState("");
   const [inputValue, setInputValue] = useState("");
 
-  // Sync local state with incoming prop changes (like after page load)
   useEffect(() => {
-    if (value !== undefined && value !== null) {
-      setTamales(value);
+    if (value === null) {
+      setQuantity("");
+      setDropdownValue("");
+      setInputValue("");
+      return;
+    }
 
-      // Set dropdown or input accordingly
+    if (value !== undefined) {
+      setQuantity(value);
+
       if ([12, 24, 36, 48, 60, 72, 100].includes(value)) {
         setDropdownValue(value);
         setInputValue("");
@@ -22,18 +28,18 @@ const PeopleCount = ({ setPeople, value }) => {
   }, [value]);
 
   useEffect(() => {
-    if (tamales && tamales >= 12) {
-      setPeople(tamales);
+    if (quantity && quantity >= 12) {
+      setPeople(quantity);
     } else {
-      setPeople(null); // 💥 Invalid entry should clear selection
+      setPeople(null);
     }
-  }, [tamales, setPeople]);
+  }, [quantity, setPeople]);
 
   const handleDropdownChange = (e) => {
     const val = Number(e.target.value);
     setDropdownValue(val);
     setInputValue("");
-    setTamales(val);
+    setQuantity(val);
   };
 
   const handleInputChange = (e) => {
@@ -43,9 +49,9 @@ const PeopleCount = ({ setPeople, value }) => {
 
     const number = Number(val);
     if (!isNaN(number) && number >= 12) {
-      setTamales(number);
+      setQuantity(number);
     } else {
-      setTamales(null); // 💥 Reset when input is invalid or empty
+      setQuantity(null); // 💥 Reset when input is invalid or empty
     }
   };
 
