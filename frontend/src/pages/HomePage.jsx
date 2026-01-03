@@ -29,10 +29,10 @@ const HomePage = () => {
         <title>Brookhaven & Atlanta Catering | Authentic Mexican Tamales</title>
         <meta
           name="description"
-          content="Mexican tamale catering in Brookhaven & Atlanta. 
-          Perfect for family reunions, holidays, and Office Catering. Fresh tamales delivered hot!"
+          content="Rricura Tamales offers authentic Mexican tamale catering in Brookhaven & Atlanta, GA. Perfect for events of all sizes. Order online for fresh, hot tamales delivered to your door."
         />
       </Helmet>
+
       <Navigation />
       <div className="sections-container">
         <section className="contaniner hero-section">
@@ -80,7 +80,7 @@ const HomePage = () => {
               </a>
             </div>
             <div className="hero-title">
-              <h2>Mexican Tamale Catering in Brookhaven & Atlanta</h2>
+              <h2>Tamale Catering in Brookhaven & Atlanta, GA</h2>
             </div>
             <div className="hero-btn">
               <FontAwesomeIcon
@@ -102,16 +102,19 @@ const HomePage = () => {
               <img src={TamalesTray} alt="tray of tamales in corn husks" />
             </div>
           </div>
-        </section>
+        </section>{" "}
+        {/* 🔥 New Local SEO Section (Added for Google) */}
         <section className="contaniner about-section">
           <div className="text-container">
-            <h2>Authentic Mexican Catering for Every Occasion</h2>
-            <p>
-              At Rricura Tamales, we specialize in catering authentic Mexican
-              tamales 🫔for events of all sizes — from intimate family
-              gatherings of 12 to large celebrations with 1000+ guests. Whether
-              it’s a wedding, quinceañera, corporate lunch, or birthday party,
-              we’ll make your event unforgettable.
+            <h2>Authentic Mexican TAMALES Catering for Every Occasion</h2>
+            <p className="paragraph-text">
+              Rricura Tamales proudly offers authentic Mexican tamale catering
+              in Brookhaven, Atlanta, and surrounding areas. We specialize in
+              handmade tamales prepared fresh and delivered hot to your door for
+              family gatherings, office lunches, parties, and special events. We
+              currently serve customers in Brookhaven, North Atlanta, and nearby
+              neighborhoods. We offer Local delivery with advance notice to
+              ensure freshness and quality.
             </p>
           </div>
           <div className="graphic-container">
@@ -126,11 +129,22 @@ const HomePage = () => {
         <section className="contaniner video-section">
           <div className="text-container">
             <h2>HOW TO ORDER CATERING</h2>
-
+            <p className="paragraph-text">
+              Our tamales are perfect for birthdays, holidays, office catering,
+              family events, and weekend gatherings. Customers love our simple
+              online ordering process and reliable local delivery throughout the
+              Atlanta area.
+            </p>
             <div className="list">
-              <p>✅ Choose your tamale flavors & quantity..</p>
-              <p>✅ Select your delivery date and time.</p>
-              <p>✅ We prepare your order fresh and deliver it hot & ready.</p>
+              <p className="paragraph-text">
+                ✅ Choose your tamale flavors & quantity..
+              </p>
+              <p className="paragraph-text">
+                ✅ Select your delivery date and time.
+              </p>
+              <p className="paragraph-text">
+                ✅ We prepare your order fresh and deliver it hot & ready.
+              </p>
             </div>
           </div>
           <div className="graphic-container">
@@ -143,7 +157,7 @@ const HomePage = () => {
         <section className="container">
           <div className="text-container">
             <h2>Our Catering Menu</h2>
-            <p>
+            <p className="paragraph-text">
               We offer traditional tamales: Chicken, Pork, Rajas, Black Beans,
               Chipillin, Sweet and Fruits. As well as specialty Tamales: Vegan .
               Make it a combo, add salsa verde and aguas frescas for the full
@@ -183,15 +197,26 @@ const HomePage = () => {
             <span className="highlight">Friends</span>.
           </h1>
         </section>
-
         <section className="container chooseUs-container">
           <div className="text-container">
             {" "}
             <h2>Why Choose Rricura Tamales for Your Catering?</h2>
+            <p className="paragraph-text">
+              Every order is prepared with care using traditional recipes and
+              quality ingredients. Rricura Tamales is a local, family-run
+              business dedicated to bringing authentic Mexican flavors to the
+              Brookhaven and Atlanta community.
+            </p>
             <div className="list">
-              <p>✅ Authentic homemade Mexican recipes</p>
-              <p>✅ Perfect for groups of 12 to 1000+</p>
-              <p>✅ Fresh, hot, and delivered on time</p>
+              <p className="paragraph-text">
+                ✅ Authentic homemade Mexican recipes
+              </p>
+              <p className="paragraph-text">
+                ✅ Perfect for groups of 12 to 1000+
+              </p>
+              <p className="paragraph-text">
+                ✅ Fresh, hot, and delivered on time
+              </p>
             </div>
           </div>
           <div className="graphic-container">

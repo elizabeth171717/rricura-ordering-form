@@ -108,13 +108,11 @@ const AntojosSection = () => {
                 >
                   Keep shopping
                 </span>
-                {showPopup && (
-                  <div className="cart-popup">✅ Added to cart!</div>
-                )}
               </div>
             </div>
           </>
         )}
+        {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
       </div>
     </div>
   );

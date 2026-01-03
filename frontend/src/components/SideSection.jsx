@@ -103,42 +103,40 @@ const SidesSection = () => {
                   />
                 )}
 
-                {/* SIZE OPTIONS PER ITEM */}
                 <div className="options-grid">
                   {sizeOptions.map((opt) => (
-                    <div
-                      key={opt.label}
-                      className={`option-card ${
-                        selectedSize?.label === opt.label ? "selected" : ""
-                      }`}
-                      onClick={() => handleSelectSize(side.id, opt)}
-                    >
-                      <p>{opt.label}</p>
-                      <p>${opt.price}</p>
+                    <div key={opt.label}>
+                      <div
+                        className={`option-card ${
+                          selectedSize?.label === opt.label ? "selected" : ""
+                        }`}
+                        onClick={() => handleSelectSize(side.id, opt)}
+                      >
+                        <p>{opt.label}</p>
+                        <p>${opt.price}</p>
+                      </div>
+
+                      {/* SHOW CONTROLS DIRECTLY UNDER SELECTED SIZE */}
+                      {selectedSize?.label === opt.label && (
+                        <div className="add-inline">
+                          <button onClick={() => updateQuantity(side.id, -1)}>
+                            -
+                          </button>
+                          <span>{qty}</span>
+                          <button onClick={() => updateQuantity(side.id, 1)}>
+                            +
+                          </button>
+                          <button
+                            className="add-btn"
+                            onClick={() => handleAddToCart(side)}
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
-
-                {/* QUANTITY + ADD BUTTON PER ITEM */}
-                {selectedSize && (
-                  <div className="add-section">
-                    <div className="quantity-controls">
-                      <button onClick={() => updateQuantity(side.id, -1)}>
-                        -
-                      </button>
-                      <span>{qty}</span>
-                      <button onClick={() => updateQuantity(side.id, 1)}>
-                        +
-                      </button>
-                      <button
-                        className="add-btn"
-                        onClick={() => handleAddToCart(side)}
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })}

@@ -169,11 +169,10 @@ const DrinkSection = () => {
                   Keep shopping
                 </span>
               </div>
-              {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
             </div>
           </>
         )}
-
+        {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
         {loading && <p>Loading menu...</p>}
       </div>
     </div>

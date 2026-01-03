@@ -243,11 +243,12 @@ const TamaleBuilder = () => {
     addToCartContext(newItem);
 
     // ✅ Popup handling
-    if (newItem.filling?.toLowerCase() !== "sweet tamale") {
+    if (newItem.filling?.toLowerCase() !== "sweet") {
       setPopupType("salsa");
     } else {
       setPopupType("basic");
     }
+
     setShowPopup(true);
 
     setShowStickySummary(false); // 👈 THIS hides it
@@ -282,7 +283,7 @@ const TamaleBuilder = () => {
     if (showPopup) {
       const timer = setTimeout(() => {
         setShowPopup(false);
-      }, 10000); // 10 seconds
+      }, 5000); // 5 seconds
 
       return () => clearTimeout(timer);
     }
@@ -492,9 +493,6 @@ const TamaleBuilder = () => {
 
       {showPopup && (
         <div className="cart-popup">
-          <button className="popup-close" onClick={() => setShowPopup(false)}>
-            ✕
-          </button>
           <div className="popup-content">
             <h3>✅ Added to Cart!</h3>
 
@@ -515,6 +513,12 @@ const TamaleBuilder = () => {
                     className="add-salsa-btn"
                   >
                     Add Salsa
+                  </button>
+                  <button
+                    className="popup-close"
+                    onClick={() => setShowPopup(false)}
+                  >
+                    Close
                   </button>
                 </div>
               </>
