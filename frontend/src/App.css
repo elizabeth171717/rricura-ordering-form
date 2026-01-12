@@ -45,7 +45,7 @@ flex-direction: column;
 background-color: var(--white);
 color: var(--brand-primary);
 padding: 2rem;
-
+text-align: center;
 border-radius: 50%;
 }
 
@@ -244,15 +244,15 @@ gap: 1rem;
 
 .category-toggle {
   display: flex;
-  gap: 5px;
+  gap: .50rem;
   justify-content: center;
  margin: 1.50rem 0;
   flex-wrap: wrap;
 }
 
 .category-link {
-  padding: 4px 7px;
-  border-radius: 20px;
+  padding: 7px;
+  border-radius: var( --radius-lg);
   text-decoration: none;
   background: #f2f2f2;
   color: var(--text-primary);
@@ -268,8 +268,7 @@ gap: 1rem;
 .ingridient-modal{
   cursor: pointer;
   color: var(--brand-primary);
-  font-weight: bold;
-  margin-left: 1rem;
+  font-size: .50rem;
   text-decoration: underline;
 }
 

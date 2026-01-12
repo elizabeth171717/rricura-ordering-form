@@ -35,3 +35,9 @@ width: 180px;
   color: var(--brand-primary);
   text-decoration: underline;
 }
+
+@media (max-width:45rem) {
+  .order-link-text{
+  display: none;
+}
+}

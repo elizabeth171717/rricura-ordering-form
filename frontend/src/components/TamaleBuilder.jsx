@@ -292,7 +292,6 @@ const TamaleBuilder = () => {
   }
   return (
     <div className="menu-section-container">
-      <h2 className="page-title">CATERING MENU</h2>
       <PeopleCount setPeople={setTotalTamales} value={totalTamales} />
       <h2>
         Build your TAMALE🫔{" "}

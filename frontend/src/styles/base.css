@@ -75,7 +75,7 @@ button:active {
 /* Style for input fields */
      input:not([type="checkbox"]), textarea, select,option {
       width: 100%;
-     padding: .25rem;
+     padding: .50rem .25rem;
       border: 2px solid var(--lightgrey-color);
       border-radius: 8px;
       outline: none;
