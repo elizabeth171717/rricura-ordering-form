@@ -6,11 +6,11 @@ import { BACKEND_URL } from "../constants/constants";
 
 const CLIENT_ID = "universalmenu";
 
-const DrinksSection = () => {
+const SoupsSection = () => {
   const { addToCart: addToCartContext } = useContext(CartContext);
   const [menuData, setMenuData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedDrink, setSelectedDrink] = useState(null);
+  const [selectedSoup, setSelectedSoup] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [showStickySummary, setShowStickySummary] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -33,34 +33,34 @@ const DrinksSection = () => {
   }, []);
 
   // 2️⃣ Get Drinks section
-  const drinksSection = menuData?.sections?.find(
-    (s) => s.section?.toLowerCase() === "drinks"
+  const soupSection = menuData?.sections?.find(
+    (s) => s.section?.toLowerCase() === "soups"
   );
 
   // 3️⃣ Flatten items from Drinks section only
-  const allDrinks = [
-    ...(drinksSection?.groups?.flatMap((g) => g.items) || []),
-    ...(drinksSection?.items || []),
+  const allSoups = [
+    ...(soupSection?.groups?.flatMap((g) => g.items) || []),
+    ...(soupSection?.items || []),
   ];
 
   // 4️⃣ Derived value: isReady
-  const isReady = selectedDrink && quantity && quantity >= 1;
+  const isReady = selectedSoup && quantity && quantity >= 1;
 
   // 5️⃣ Subtotal
-  const subtotal = isReady ? (selectedDrink.price * quantity).toFixed(2) : null;
+  const subtotal = isReady ? (selectedSoup.price * quantity).toFixed(2) : null;
 
   // 6️⃣ Add to cart
   const handleAddToCart = () => {
     if (!isReady) return;
 
     const newItem = {
-      type: "drink",
-      id: selectedDrink.id,
-      name: selectedDrink.name,
-      description: selectedDrink.description,
-      price: selectedDrink.price,
+      type: "soup",
+      id: selectedSoup.id,
+      name: selectedSoup.name,
+      description: selectedSoup.description,
+      price: selectedSoup.price,
       quantity,
-      img: selectedDrink.image || null,
+      img: selectedSoup.image || null,
     };
 
     addToCartContext(newItem);
@@ -68,16 +68,16 @@ const DrinksSection = () => {
     setTimeout(() => setShowPopup(false), 2500);
 
     // Reset selections
-    setSelectedDrink(null);
+    setSelectedSoup(null);
     setQuantity(null);
     setShowStickySummary(false);
   };
 
   const handleKeepShopping = () => {
-    setSelectedDrink(null);
+    setSelectedSoup(null);
     setQuantity(null);
     setShowStickySummary(false);
-    navigate("/OnlineOrdering/drinks");
+    navigate("/OnlineOrdering/soups");
   };
 
   // 7️⃣ Show sticky summary automatically when ready
@@ -87,7 +87,7 @@ const DrinksSection = () => {
     }
   }, [isReady]);
 
-  if (loading) return <p style={{ textAlign: "center" }}>Loading drinks...</p>;
+  if (loading) return <p style={{ textAlign: "center" }}>Loading soups...</p>;
 
   return (
     <div className="menu-section-container">
@@ -97,22 +97,18 @@ const DrinksSection = () => {
       {/* Drinks selection grid */}
       <div className="grid-container">
         <div className="grid">
-          {allDrinks.map((drink) => (
+          {allSoups.map((soup) => (
             <div
-              key={drink.id}
+              key={soup.id}
               className={`option-card ${
-                selectedDrink?.id === drink.id ? "selected" : ""
+                selectedSoup?.id === soup.id ? "selected" : ""
               }`}
-              onClick={() => setSelectedDrink(drink)}
+              onClick={() => setSelectedSoup(soup)}
             >
-              {drink.image && (
-                <img
-                  src={drink.image}
-                  alt={drink.name}
-                  className="product-img"
-                />
+              {soup.image && (
+                <img src={soup.image} alt={soup.name} className="product-img" />
               )}
-              <p>{drink.name}</p>
+              <p>{soup.name}</p>
             </div>
           ))}
         </div>
@@ -122,16 +118,16 @@ const DrinksSection = () => {
       {isReady && showStickySummary && (
         <div className="summary-block">
           <div className="summary-img">
-            {selectedDrink.image && (
-              <img src={selectedDrink.image} alt={selectedDrink.name} />
+            {selectedSoup.image && (
+              <img src={selectedSoup.image} alt={selectedSoup.name} />
             )}
           </div>
           <div className="summary-details">
             <p>
-              {quantity} {selectedDrink.name} — ${subtotal}
+              {quantity} {selectedSoup.name} — ${subtotal}
             </p>
-            {selectedDrink.description && (
-              <p className="description">{selectedDrink.description}</p>
+            {selectedSoup.description && (
+              <p className="description">{selectedSoup.description}</p>
             )}
             <button onClick={handleAddToCart} className="add-btn">
               Add to Cart
@@ -149,4 +145,4 @@ const DrinksSection = () => {
   );
 };
 
-export default DrinksSection;
+export default SoupsSection;

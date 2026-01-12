@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
+import Navigation from "../components/Navbar/Navigation";
+import Footer from "../components/Footer/Footer";
 
 const OnlineOrdering = () => {
   return (
@@ -44,6 +44,14 @@ const OnlineOrdering = () => {
           }
         >
           🌽 Antojos
+        </NavLink>
+        <NavLink
+          to="soups"
+          className={({ isActive }) =>
+            isActive ? "category-link active" : "category-link"
+          }
+        >
+          🌽 Soups
         </NavLink>
       </div>
 

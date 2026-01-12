@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-
+import "./PeopleCount.css";
+import "../../styles/base.css";
 const PeopleCount = ({ setPeople, value }) => {
   const [quantity, setQuantity] = useState(value ?? "");
 
@@ -59,16 +60,12 @@ const PeopleCount = ({ setPeople, value }) => {
     <div className="people-container">
       <div className="select-number">
         <div className="question">
-          <label style={{ display: "block", marginBottom: "8px" }}>
+          <label>
             <p> How many would you like:</p>
           </label>
         </div>
         <div className="number">
-          <select
-            value={dropdownValue}
-            onChange={handleDropdownChange}
-            style={{ marginBottom: "12px", padding: "6px" }}
-          >
+          <select value={dropdownValue} onChange={handleDropdownChange}>
             <option value="">Choose</option>
             {[12, 24, 36, 48, 60, 72, 100].map((num) => (
               <option key={num} value={num}>
@@ -92,13 +89,6 @@ const PeopleCount = ({ setPeople, value }) => {
             id="customTamales"
             value={inputValue}
             onChange={handleInputChange}
-            style={{
-              padding: "6px",
-              fontSize: "16px",
-              marginTop: "5px",
-              width: "100%",
-              maxWidth: "250px",
-            }}
           />
         </div>
       </div>

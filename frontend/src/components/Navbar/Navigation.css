@@ -1,0 +1,37 @@
+
+/*navigation*/
+
+  .navigation {
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 100;
+  display: flex;
+ flex-wrap: wrap;
+ justify-content: space-between;
+  padding: .50rem 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+align-items: center;
+}
+
+.logo{
+width: 180px;
+
+}
+
+
+
+.icons-container{
+ display: flex;
+  justify-content: center;
+  align-items: center;
+ gap: 1.50rem;
+ 
+}
+
+
+.order-link-text{
+  font-weight: bold;
+  color: var(--brand-primary);
+  text-decoration: underline;
+}

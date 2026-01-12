@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-import { CartContext } from "../Cartcontext/CartContext";
+import { CartContext } from "../../Cartcontext/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import CartDrawer from "./CartDrawer";
+import "./Navigation.css";
+import CartDrawer from "../CartDrawer/CartDrawer";
 
 const Navigation = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -16,7 +17,7 @@ const Navigation = () => {
           <img className="logo" src="/logo.png" alt="Logo" />
         </Link>
         <div className="icons-container">
-          <Link to="/OnlineOrdering" className="nav-link big-screen">
+          <Link to="/OnlineOrdering" className="nav-link order-link-text">
             ORDER ONLINE
           </Link>
 

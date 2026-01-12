@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Navigation from "../components/Navigation";
-import { BACKEND_URL } from "../constants/constants";
+import Navigation from "../Navbar/Navigation";
+import { BACKEND_URL } from "../../constants/constants";
 const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
-import "../MenuGrid.css";
+import "./MenuGrid.css";
 
 function Menu() {
   const [menu, setMenu] = useState(null);
@@ -67,20 +67,15 @@ function Menu() {
   return (
     <div className="menu-container">
       <Navigation />
-      <div style={{ marginTop: "1rem" }}>
+      <div className="menu-content">
         {menu.sections.map((section) => {
           const visibleUngroupedItems = (section.items || []).filter(
             (item) => item.visible !== false
           );
 
           return (
-            <div
-              key={section.id || section._id}
-              style={{ marginBottom: "3rem" }}
-            >
-              <h1 style={{ marginBottom: "1rem", textAlign: "center" }}>
-                {section.section}
-              </h1>
+            <div key={section.id || section._id}>
+              <h2 className="section-name">{section.section}</h2>
 
               {/* 👇 Render Groups (NEW) */}
               {section.groups &&
@@ -92,21 +87,8 @@ function Menu() {
                   if (visibleGroupItems.length === 0) return null;
 
                   return (
-                    <div
-                      key={group.id || group._id}
-                      style={{ marginBottom: "2rem" }}
-                    >
-                      <h3
-                        style={{
-                          fontSize: "1.2rem",
-                          fontWeight: "bold",
-                          marginBottom: "0.5rem",
-                          textAlign: "center",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {group.groupName}
-                      </h3>
+                    <div key={group.id || group._id}>
+                      <h3 className="group-name">{group.groupName}</h3>
                       <div className="menu-grid">
                         {visibleGroupItems.map((item) => (
                           <div

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
@@ -85,7 +84,7 @@ const SidesSection = () => {
   };
 
   return (
-    <div className="sides-container">
+    <div className="menu-section-container">
       <div className="grid-container">
         <div className="grid">
           {sides.map((side) => {

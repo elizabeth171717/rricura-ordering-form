@@ -1,4 +1,5 @@
 import React from "react";
+import "./modal.css";
 
 const IngredientsModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -6,6 +7,8 @@ const IngredientsModal = ({ isOpen, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+        <button onClick={onClose}>Close</button>
+
         <div className="Ingridients-container">
           <div className="tamales">
             <h2>Tamales Ingridients</h2>
@@ -22,24 +25,16 @@ const IngredientsModal = ({ isOpen, onClose }) => {
               <strong>Water</strong>
             </p>
             <p>
-              <strong>FILLINGS</strong>
+              <strong> TAMALE FILLINGS:</strong>
             </p>
 
             <p>
-              <strong>Chicken</strong>: Pulled, all white chicken breast with
-              red or green sauce.
+              Chicken, Pork, Rajas: Bell pepper and cheese, Pinto: Black bean,
+              Chipilin, Fruit:grapes,
             </p>
-            <p>
-              <strong>Pork</strong>: Pulled pork with red or green sauce.
-            </p>
-            <p>
-              <strong>Rajas</strong>: Bell pepper and cheese with green sauce.
-            </p>
-
-            <br />
             <p>
               <strong>Vegan Tamales</strong>: Vegetable oil instead of lard
-              filled with vegan cheese, bell pepper and green sauce.
+              filled with vegan cheese, veggables or beans.
             </p>
           </div>
 
@@ -77,8 +72,6 @@ const IngredientsModal = ({ isOpen, onClose }) => {
             </p>
           </div>
         </div>
-
-        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );

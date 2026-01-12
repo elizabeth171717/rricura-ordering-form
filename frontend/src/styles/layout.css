@@ -1,0 +1,294 @@
+.menu-section-container{
+   margin: 2rem 1rem;
+}
+
+/*grid-container for drinks, apps and sides*/
+.grid-container{
+  margin: 2rem 0;
+ 
+}
+
+/*Select menu item*/
+.grid {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+  }
+
+
+/* 📱 Small devices (less than 45rem ≈ 720px) */
+@media (max-width: 45rem) {
+  .grid {
+     display: grid;
+    grid-template-columns: repeat(2, 1fr);
+     gap: 1rem;
+  }
+}
+
+.option-card{
+  border: 3px solid   var(--brand-primary);
+ text-align: center;
+ cursor: pointer;
+width: 100%;
+
+}
+
+
+@media (min-width:45rem) {
+
+  .option-card{
+  width: 200px;
+}
+}
+
+
+
+.grid p{
+  font-weight: bold;
+  color: var(--brand-primary);
+  font-size: 1.50rem;
+margin: .50rem 0;
+}
+
+
+/************ ONLINE ORDERING -SELECTED ITEMS /SELECTED TAMALE only***************/
+
+.selected-summary{
+ 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+ width: 100%;
+ max-width: 500px;
+
+}
+
+/*Tamale Builder*/
+.product-img{
+  width: 100%;
+  height: 200px;
+object-fit: cover;
+}
+
+
+
+.option-name{
+  background-color: var(--brand-primary);
+  color: var(--white);
+  margin: 1rem 0;
+  padding: .50rem 0;
+  text-align: center;
+}
+
+.selected-option{
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+ margin: 1rem 0;
+  padding: 1rem 0;
+}
+
+.selected-option h4, p{
+ font-weight: bold;
+ margin: .50rem 0;
+}
+
+.selected-option  button{
+  width: 80%;
+ 
+}
+/*selcet wrapper*/
+
+.selected-option{
+  
+  border: 1px solid var(--brand-primary);
+ width: 30%;
+}
+
+.option-card:hover {
+  transform: scale(1.05);
+}
+
+.option-card.selected {
+  border: 3px solid #ff5722; /* bright highlight */
+  box-shadow: 0 0 12px rgba(255, 87, 34, 0.7);
+  background-color: rgba(255, 87, 34, 0.1); /* light background */
+}
+
+.selected-option img{
+  width: 100%;
+  object-fit: cover;
+}
+.selected-tamale-img{
+  width: 100px;
+}
+
+/*Dynamic Popup*/
+
+.step-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 14px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+/*Dynamic Popup*/
+/************ ONLINE ORDERING -SELECTED ITEMS /SELECTED TAMALE ENDS***************/
+
+
+
+/*********************************Sides  Section only******************************/
+.sides-card{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.add-inline button {
+  height: 36px;
+}
+
+/*********************************Sides  Section only ENDS******************************/
+
+
+ /************************************SUMMARY BLOCK DETAILS ***********************************/
+
+.summary-block {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: calc(100% - 2rem);
+  max-width: 420px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  padding: 0.75rem;
+  background-color: var(--text-primary);
+  color: var(--white);
+
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+
+  z-index: 999;
+}
+
+
+.summary-block img {
+  max-height: 100px;
+  object-fit: contain;
+}
+
+
+/* Add to Cart button */
+.add-btn {
+
+ padding: 5px ;
+ margin: 1rem 0;
+ 
+}
+
+.keep-shopping-text {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: inherit;
+  font-weight: bold;
+}
+
+
+/************************************SUMMARY BLOCK DETAILS ENDS ***********************************/
+
+
+
+
+/*************AFTER SUMMARY - ADD SALSA POPUP************************/
+.cart-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centers horizontally & vertically */
+  background: var(--white);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+  z-index: 1000;
+  animation: fadeInUp 0.3s ease;
+  max-width: 280px;
+  
+}
+
+.popup-close {
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.popup-content {
+  text-align: center;
+
+   /* NEW: push content down so title isn’t under the X */
+  padding-top: 1rem;
+}
+
+.popup-image {
+  width: 100%;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+
+.popup-actions {
+  margin-top: 0.5rem;
+}
+
+.add-salsa-btn {
+  background: #e63946;
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

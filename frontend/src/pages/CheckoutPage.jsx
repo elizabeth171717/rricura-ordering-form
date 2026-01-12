@@ -4,10 +4,10 @@ import { stripePromise } from "../stripe";
 import DeliveryDateComponent from "../components/DeliveryDate";
 import DeliveryTimeComponent from "../components/DeliveryTime";
 import CostumerInfo from "../components/CostumerInfo";
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
+import Navigation from "../components/Navbar/Navigation";
+import Footer from "../components/Footer/Footer";
 import DeliveryForm from "../components/DeliveryAddress";
-import Terms from "../components/Terms";
+import Terms from "../components/Modal/Terms";
 import TipSelector from "../components/TipSelector";
 
 import { pushToDataLayer } from "../analytics/gtmEvents";
@@ -199,11 +199,11 @@ const Checkout = () => {
           ⬅ Back
         </span>
 
-        <h2>CHECK OUT</h2>
+        <h2 className="page-title">CHECKOUT</h2>
 
         <div className="form-container">
-          <div className="left">
-            <div className="selected-items">
+          <div className="left-container">
+            <div className="subtotal-summary">
               <h2>Order Summary 🤤</h2>
               {cartItems.map((item, i) => (
                 <p key={i}>
@@ -258,7 +258,7 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="right">
+          <div className="right-container">
             <DeliveryDateComponent onDateSelect={setSelectedDate} />
             <DeliveryTimeComponent
               selectedTime={selectedTime}

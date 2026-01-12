@@ -1,19 +1,18 @@
 // src/pages/Terms.jsx
 import React from "react";
-
+import "./modal.css";
 export default function Terms({ onClose }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="terms-container">
-          <h1 className="text-3xl font-bold mb-6">Terms and Conditions</h1>
+          <button onClick={onClose}>Exit</button>
+          <h1>Terms and Conditions</h1>
 
-          <p className="mb-4">Effective Date: [06/01/2025]</p>
+          <p>Effective Date: [06/01/2025]</p>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">
-              1. Order Notice & Confirmation
-            </h2>
+          <section>
+            <h2>1. Order Notice & Confirmation</h2>
             <p>
               All orders must be placed{" "}
               <strong>at least 2 days in advance</strong>. Your order is not
@@ -23,10 +22,8 @@ export default function Terms({ onClose }) {
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">
-              2. Menu & Availability
-            </h2>
+          <section>
+            <h2>2. Menu & Availability</h2>
             <p>
               All menu items are subject to availability. We reserve the right
               to make substitutions or adjustments based on ingredient supply
@@ -35,11 +32,9 @@ export default function Terms({ onClose }) {
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">
-              3. Cancellation & Rescheduling Policy
-            </h2>
-            <ul className="list-disc pl-6">
+          <section>
+            <h2>3. Cancellation & Rescheduling Policy</h2>
+            <ul>
               <li>
                 <strong>Full Refund:</strong> Cancellations made{" "}
                 <strong>48+ hours before delivery</strong> will receive a full
@@ -57,8 +52,8 @@ export default function Terms({ onClose }) {
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">4. Payment Terms</h2>
+          <section>
+            <h2>4. Payment Terms</h2>
             <p>
               Orders must be paid in full at the time of booking. We accept [
               Visa, Mastercard, American Express, Discover, and JCB]. Unpaid
@@ -66,13 +61,13 @@ export default function Terms({ onClose }) {
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">5. Delivery Policy</h2>
+          <section>
+            <h2>5. Delivery Policy</h2>
             <p>
               We deliver from <strong>Brookhaven, GA 30329</strong>. Delivery
               fees may apply based on distance.
             </p>
-            <ul className="list-disc pl-6">
+            <ul>
               <li>
                 If the driver{" "}
                 <strong>fails to deliver on time and doesn’t notify you</strong>
@@ -86,16 +81,14 @@ export default function Terms({ onClose }) {
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">
-              6. Ingredient Information & Allergies
-            </h2>
+          <section>
+            <h2>6. Ingredient Information & Allergies</h2>
             <p>
               Ingredients for tamales are listed on our site or available upon
               request. It is the customer’s responsibility to review this
               information.
             </p>
-            <ul className="list-disc pl-6">
+            <ul>
               <li>
                 <strong>We are not liable</strong> for allergic reactions if
                 ingredients were provided.
@@ -107,10 +100,8 @@ export default function Terms({ onClose }) {
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">
-              7. Customer Responsibilities
-            </h2>
+          <section>
+            <h2>7. Customer Responsibilities</h2>
             <p>
               You must provide accurate contact and delivery details. Someone
               must be present to receive the order at the agreed time. Missed
@@ -118,10 +109,8 @@ export default function Terms({ onClose }) {
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">
-              8. Limitation of Liability
-            </h2>
+          <section>
+            <h2>8. Limitation of Liability</h2>
             <p>
               Once food has been delivered or picked up, we are not liable for
               improper handling or spoilage. We are also not liable for delays
@@ -129,8 +118,8 @@ export default function Terms({ onClose }) {
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">9. Governing Law</h2>
+          <section>
+            <h2>9. Governing Law</h2>
             <p>
               These terms are governed by the laws of the State of Georgia.
               Disputes will be resolved in the courts of [Dekalb County].
@@ -138,13 +127,12 @@ export default function Terms({ onClose }) {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold mb-2">10. Contact Us</h2>
+            <h2>10. Contact Us</h2>
             <p>Questions? Reach out to us:</p>
             <p>Email: [rricura828@gmail.com]</p>
-            <p>Phone: [7708962564]</p>
+
             <p>Rricura Tamales & More – Brookhaven, GA</p>
           </section>
-          <button onClick={onClose}>Exit</button>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Navigation from "../components/Navigation";
-import LoadingOverlay from "../components/LoadingOverlay";
+
+import Navigation from "../components/Navbar/Navigation";
+
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "../stripe";
 import CheckoutForm from "../components/CheckoutForm";
@@ -39,24 +39,36 @@ const PaymentPage = () => {
 
   if (!orderData)
     return <div>Invalid order. Please go back and try again.</div>;
-  if (!clientSecret)
-    return <LoadingOverlay message="Loading secure payment form..." />;
+  if (!clientSecret) {
+    return (
+      <div className="paymentPage-container">
+        <Navigation />
+        <p style={{ textAlign: "center", marginTop: "2rem" }}>
+          Proceeding to payment…
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="paymentPage-container">
       <Navigation />
-      <Link to="/">← Go back to order form</Link>
-      <h2>Complete Your Payment</h2>
-      {/* 🔥 Display the total to be paid */}
-      <div className="total">
-        You're paying{" "}
-        <span className="font-semibold">${orderData.total.toFixed(2)}</span> for
-        your order.
-      </div>
+      <span onClick={() => navigate(-1)} className="back-button">
+        ⬅ Back
+      </span>
+      <h2 className="page-title">PAYMENT PAGE</h2>
+      <div className="payment-wrapper">
+        {/* 🔥 Display the total to be paid */}
+        <div className="total">
+          You're paying{" "}
+          <span className="font-semibold">${orderData.total.toFixed(2)}</span>{" "}
+          for your order.
+        </div>
 
-      <Elements stripe={stripePromise} options={{ clientSecret }}>
-        <CheckoutForm orderData={orderData} navigate={navigate} />
-      </Elements>
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <CheckoutForm orderData={orderData} navigate={navigate} />
+        </Elements>
+      </div>
     </div>
   );
 };

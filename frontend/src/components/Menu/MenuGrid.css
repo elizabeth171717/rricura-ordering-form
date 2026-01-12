@@ -1,33 +1,41 @@
 .menu-container{
- 
-  width: 100%;
+ width: 100%;
  
 }
 
+.menu-content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 
+}
+
+
+.section-name, .group-name{
+  text-align: center;
+  font-weight: bold;
+  
+  margin: 1rem 0;
+}
+
+.group-name{
+ 
+  color: var(--brand-primary);
+ 
+}
 
 /* 📱 Mobile-first layout */
 .menu-grid {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 per row on small screens */
-  gap: 1rem;
+  gap: 3rem 2rem;
  width: 95%;
-}
-
-/* 🧱 Adjust grid items for medium screens (from 45rem up) */
-@media (min-width: 45rem) {
-  .menu-grid {
-    grid-template-columns: repeat(5, 1fr); /* 5 items per row */
-    gap: 1.5rem;
-  }
-}
-
-/* 💻 Optional larger screens — show more */
-@media (min-width: 70rem) {
-  .menu-grid {
-    grid-template-columns: repeat(7, 1fr); /* 7 items per row */
-  }
+justify-content: center;
+align-items: center;
 }
 
 /* Optional: Style each item’s box (no logic change) */
@@ -36,7 +44,7 @@
   border-radius: 10px;
   text-align: center;
   padding: .50rem;
-  background: #fff;
+  background: var(--white);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { CartContext } from "../Cartcontext/CartContext";
+import { CartContext } from "../../Cartcontext/CartContext";
+import "./CartDrawer.css";
 
 const CartDrawer = ({ isOpen, onClose }) => {
   const { cartItems, removeFromCart } = useContext(CartContext);
@@ -96,7 +97,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 ⬅ Keep Shopping
               </Link>
               <Link
-                to="/checkout"
+                to="/checkoutpage"
                 className="cart-btn primary"
                 onClick={onClose}
               >

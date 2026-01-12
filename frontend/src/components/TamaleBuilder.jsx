@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
-import PeopleCount from "./PeopleCount";
+import PeopleCount from "./PeopleCount/PeopleCount";
 import pulledChickenImg from "../assets/pulledchicken.jpg";
 import pulledPorkImg from "../assets/pulledpork.jpg";
 import chipillinImg from "../assets/chipilin.jpg";
@@ -14,6 +14,7 @@ import redSauceImg from "../assets/salsaroja.jpg";
 import tomateSauceImg from "../assets/tomatesauce.jpg";
 import blackBeanImg from "../assets/blackbean.jpg";
 import salsaVerde from "../assets/salsaverde.jpg";
+import IngredientsModal from "./Modal/Ingridients";
 // Cart Context
 
 import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
@@ -22,12 +23,9 @@ const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
 
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
+  { name: "Rajas", value: "Rajas", img: rajasTamaleImg },
   { name: "Pork", value: "Pork", img: pulledPorkImg },
-  {
-    name: "Rajas",
-    value: "Rajas",
-    img: rajasTamaleImg,
-  },
+
   { name: "Chipilin", value: "Chipilin", img: chipillinImg },
   { name: "Black Bean", value: "Black Bean", img: blackBeanImg },
   { name: "Sweet", value: "Sweet", img: sweetTamaleImg },
@@ -51,6 +49,7 @@ const TamaleBuilder = () => {
 
   const navigate = useNavigate();
   const { addToCart: addToCartContext } = useContext(CartContext);
+  const [isIngredientsOpen, setIsIngredientsOpen] = useState(false);
 
   const [totalTamales, setTotalTamales] = useState(null);
   const [filling, setFilling] = useState(null);
@@ -283,7 +282,7 @@ const TamaleBuilder = () => {
     if (showPopup) {
       const timer = setTimeout(() => {
         setShowPopup(false);
-      }, 5000); // 5 seconds
+      }, 7000); // 5 seconds
 
       return () => clearTimeout(timer);
     }
@@ -292,27 +291,24 @@ const TamaleBuilder = () => {
     return <p style={{ textAlign: "center" }}>Loading menu...</p>;
   }
   return (
-    <div className="step-container">
-      <p
-        style={{
-          color: "#9D0759",
-          fontFamily: "revert-layer",
-          textAlign: "center",
-        }}
-      >
-        CATERING MENU
-      </p>
+    <div className="menu-section-container">
+      <h2 className="page-title">CATERING MENU</h2>
       <PeopleCount setPeople={setTotalTamales} value={totalTamales} />
-      <h2>Build your TAMALE🫔 </h2>
+      <h2>
+        Build your TAMALE🫔{" "}
+        <span
+          onClick={() => setIsIngredientsOpen(true)}
+          className="ingridient-modal"
+        >
+          Ingredients
+        </span>
+      </h2>
+
       <div className="selected-summary">
         {filling && (
           <div className="selected-option">
             <h4>Filling</h4>
-            <img
-              src={filling.img}
-              alt={filling.name}
-              className="tamale-builder-img"
-            />
+            <img src={filling.img} alt={filling.name} />
             <p>{filling.name}</p>
             <button
               onClick={() => {
@@ -328,11 +324,7 @@ const TamaleBuilder = () => {
         {wrapper && (
           <div className="selected-option">
             <h4>Wrapper</h4>
-            <img
-              src={wrapper.img}
-              alt={wrapper.name}
-              className="tamale-builder-img"
-            />
+            <img src={wrapper.img} alt={wrapper.name} />
             <p>{wrapper.name}</p>
             <button
               onClick={() => {
@@ -348,11 +340,7 @@ const TamaleBuilder = () => {
         {sauce && (
           <div className="selected-option">
             <h4>Sauce</h4>
-            <img
-              src={sauce.img}
-              alt={sauce.name}
-              className="tamale-builder-img"
-            />
+            <img src={sauce.img} alt={sauce.name} />
             <p>{sauce.name}</p>
             <button onClick={() => setSauce(null)}>🖊️ Edit</button>
           </div>
@@ -499,6 +487,15 @@ const TamaleBuilder = () => {
             {popupType === "salsa" ? (
               <>
                 <p>Tamales are even better with salsa. Want to add some?</p>
+                <button
+                  onClick={() => {
+                    navigate("/OnlineOrdering/sides");
+                    setShowPopup(false);
+                  }}
+                  className="add-salsa-btn"
+                >
+                  Add Salsa
+                </button>
                 <img
                   src={salsaVerde}
                   alt="Tamale with Salsa"
@@ -507,12 +504,12 @@ const TamaleBuilder = () => {
                 <div className="popup-actions">
                   <button
                     onClick={() => {
-                      navigate("/OnlineOrdering/sides");
+                      navigate("/checkoutpage");
                       setShowPopup(false);
                     }}
                     className="add-salsa-btn"
                   >
-                    Add Salsa
+                    Ready to Checkout
                   </button>
                   <button
                     className="popup-close"
@@ -528,6 +525,10 @@ const TamaleBuilder = () => {
           </div>
         </div>
       )}
+      <IngredientsModal
+        isOpen={isIngredientsOpen}
+        onClose={() => setIsIngredientsOpen(false)}
+      />
     </div>
   );
 };

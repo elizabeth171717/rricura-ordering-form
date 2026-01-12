@@ -1,0 +1,25 @@
+
+.people-container{
+ margin: 1rem 0;
+
+}
+
+.select-number{
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width:45rem) {
+.people-container{
+ display: flex;
+ justify-content: center;
+ gap: 1rem;
+ align-items: center;
+}
+.select-number{
+ justify-content: center;
+}
+
+}

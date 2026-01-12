@@ -2,7 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { faHandPointDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/Navbar/Navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
@@ -20,7 +20,7 @@ import ImgGallery6 from "../assets/sweettamale.png";
 import ImgGallery7 from "../assets/rajas.jpg";
 import ImgGallery8 from "../assets/chickentamale.jpg";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 
 const HomePage = () => {
   return (
@@ -112,9 +112,8 @@ const HomePage = () => {
               in Brookhaven, Atlanta, and surrounding areas. We specialize in
               handmade tamales prepared fresh and delivered hot to your door for
               family gatherings, office lunches, parties, and special events. We
-              currently serve customers in Brookhaven, North Atlanta, and nearby
-              neighborhoods. We offer Local delivery with advance notice to
-              ensure freshness and quality.
+              offer Local delivery with advance notice to ensure freshness and
+              quality.
             </p>
           </div>
           <div className="graphic-container">
@@ -128,7 +127,7 @@ const HomePage = () => {
         </section>
         <section className="contaniner video-section">
           <div className="text-container">
-            <h2>HOW TO ORDER CATERING</h2>
+            <h2>HOW TO ORDER </h2>
             <p className="paragraph-text">
               Our tamales are perfect for birthdays, holidays, office catering,
               family events, and weekend gatherings. Customers love our simple
@@ -146,6 +145,9 @@ const HomePage = () => {
                 ✅ We prepare your order fresh and deliver it hot & ready.
               </p>
             </div>
+            <Link to="/OnlineOrdering" className="home-btn">
+              ORDER NOW
+            </Link>
           </div>
           <div className="graphic-container">
             <video width="100%" height="auto" controls>
@@ -156,7 +158,7 @@ const HomePage = () => {
         </section>
         <section className="container">
           <div className="text-container">
-            <h2>Our Catering Menu</h2>
+            <h2>OUR MENU</h2>
             <p className="paragraph-text">
               We offer traditional tamales: Chicken, Pork, Rajas, Black Beans,
               Chipillin, Sweet and Fruits. As well as specialty Tamales: Vegan .
