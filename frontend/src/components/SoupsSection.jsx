@@ -4,7 +4,8 @@ import PeopleCount from "./PeopleCount/PeopleCount";
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
-const CLIENT_ID = "universalmenu";
+const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
+const RESTAURANT_SLUG = "rricura-tamales";
 
 const SoupsSection = () => {
   const { addToCart: addToCartContext } = useContext(CartContext);
@@ -20,7 +21,9 @@ const SoupsSection = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+        );
         const data = await res.json();
         setMenuData(data);
       } catch (err) {
@@ -32,12 +35,12 @@ const SoupsSection = () => {
     fetchMenu();
   }, []);
 
-  // 2️⃣ Get Drinks section
+  // 2️⃣ Get soup section
   const soupSection = menuData?.sections?.find(
-    (s) => s.section?.toLowerCase() === "soups"
+    (s) => s.section?.toLowerCase() === "soups",
   );
 
-  // 3️⃣ Flatten items from Drinks section only
+  // 3️⃣ Flatten items from soup section only
   const allSoups = [
     ...(soupSection?.groups?.flatMap((g) => g.items) || []),
     ...(soupSection?.items || []),

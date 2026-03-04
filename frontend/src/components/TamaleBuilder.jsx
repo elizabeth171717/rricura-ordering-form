@@ -19,8 +19,8 @@ import IngredientsModal from "./Modal/Ingridients";
 
 import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
 import { BACKEND_URL } from "../constants/constants";
-const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
-
+const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
+const RESTAURANT_SLUG = "rricura-tamales";
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
   { name: "Rajas", value: "Rajas", img: rajasTamaleImg },
@@ -66,7 +66,9 @@ const TamaleBuilder = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+        );
         const data = await res.json();
         setMenuData(data);
       } catch (err) {
@@ -100,7 +102,7 @@ const TamaleBuilder = () => {
         wrapper: wrapper?.value || null,
         sauce: sauce?.value || null,
         totalTamales,
-      })
+      }),
     );
   }, [filling, wrapper, sauce, totalTamales]);
 
@@ -119,7 +121,7 @@ const TamaleBuilder = () => {
     // flatten items from sections -> groups -> items (same shape Menu.jsx uses)
     const allItems =
       menuData?.sections?.flatMap((section) =>
-        (section.groups || []).flatMap((group) => group.items || [])
+        (section.groups || []).flatMap((group) => group.items || []),
       ) || [];
 
     // helper to get a customProperty value (case-insensitive key)
@@ -128,7 +130,7 @@ const TamaleBuilder = () => {
       const found = arr.find(
         (p) =>
           String(p.key).trim().toLowerCase() ===
-          String(key).trim().toLowerCase()
+          String(key).trim().toLowerCase(),
       );
       return found?.value;
     };
@@ -136,7 +138,7 @@ const TamaleBuilder = () => {
     const assumedWrapper =
       filling.value === "Sweet" ? "Corn Husk" : wrapper?.value;
     const assumedSauce = ["Sweet", "Chipilin", "Black Bean"].includes(
-      filling.value
+      filling.value,
     )
       ? "None"
       : sauce?.value || "None";
@@ -370,7 +372,7 @@ const TamaleBuilder = () => {
       {activeStep === "wrapper" &&
         filling &&
         ["Chicken", "Pork", "Rajas", "Chipilin", "Black Bean"].includes(
-          filling.value
+          filling.value,
         ) && (
           <div className="step-popup">
             <div className="popup-card">
@@ -386,7 +388,7 @@ const TamaleBuilder = () => {
                       setActiveStep(
                         ["Chicken", "Pork", "Rajas"].includes(filling.value)
                           ? "sauce"
-                          : null
+                          : null,
                       );
                     }}
                   >
@@ -440,7 +442,7 @@ const TamaleBuilder = () => {
                   // Helper: safely find a property by key in customProperties
                   const getProp = (key) => {
                     const found = selected?.customProperties?.find(
-                      (p) => p.key?.toLowerCase() === key.toLowerCase()
+                      (p) => p.key?.toLowerCase() === key.toLowerCase(),
                     );
                     return found?.value || "";
                   };

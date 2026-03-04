@@ -4,7 +4,8 @@ import PeopleCount from "./PeopleCount/PeopleCount";
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
-const CLIENT_ID = "universalmenu";
+const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
+const RESTAURANT_SLUG = "rricura-tamales";
 
 const DrinksSection = () => {
   const { addToCart: addToCartContext } = useContext(CartContext);
@@ -20,7 +21,9 @@ const DrinksSection = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+        );
         const data = await res.json();
         setMenuData(data);
       } catch (err) {
@@ -34,7 +37,7 @@ const DrinksSection = () => {
 
   // 2️⃣ Get Drinks section
   const drinksSection = menuData?.sections?.find(
-    (s) => s.section?.toLowerCase() === "drinks"
+    (s) => s.section?.toLowerCase() === "drinks",
   );
 
   // 3️⃣ Flatten items from Drinks section only

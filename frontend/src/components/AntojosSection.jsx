@@ -4,8 +4,8 @@ import PeopleCount from "./PeopleCount/PeopleCount";
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
-const CLIENT_ID = "universalmenu";
-
+const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
+const RESTAURANT_SLUG = "rricura-tamales";
 const AntojosSection = () => {
   const { addToCart: addToCartContext } = useContext(CartContext);
   const [menuData, setMenuData] = useState(null);
@@ -20,7 +20,9 @@ const AntojosSection = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+        );
         const data = await res.json();
         setMenuData(data);
       } catch (err) {
@@ -33,7 +35,7 @@ const AntojosSection = () => {
   }, []);
 
   const antojitosSection = menuData?.sections?.find(
-    (s) => s.section?.toLowerCase() === "antojos"
+    (s) => s.section?.toLowerCase() === "antojos",
   );
 
   const allItems = [

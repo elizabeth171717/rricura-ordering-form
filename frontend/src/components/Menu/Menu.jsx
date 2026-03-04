@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "../Navbar/Navigation";
 import { BACKEND_URL } from "../../constants/constants";
-const CLIENT_ID = "universalmenu"; // 👈 your restaurant/client ID
+
+const CLIENT_ID = "anahuac";
+const RESTAURANT_SLUG = "rricura-tamales";
 import "./MenuGrid.css";
 
 function Menu() {
@@ -12,7 +14,9 @@ function Menu() {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+        );
         const data = await res.json();
         setMenu(data);
       } catch (err) {
@@ -22,38 +26,6 @@ function Menu() {
       }
     };
     fetchMenu();
-  }, []);
-
-  // 🔌 Real-time updates via WebSocket
-  useEffect(() => {
-    const socket = new WebSocket("ws://localhost:5000");
-
-    socket.onopen = () => {
-      console.log("✅ Connected to WebSocket server");
-    };
-
-    socket.onmessage = (event) => {
-      try {
-        const msg = JSON.parse(event.data);
-        if (msg.type === "menu-update") {
-          console.log("📡 Menu update received:", msg.data);
-          setMenu(msg.data);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error("❌ Error parsing WebSocket message:", err);
-      }
-    };
-
-    socket.onerror = (err) => {
-      console.error("❌ WebSocket error:", err);
-    };
-
-    socket.onclose = () => {
-      console.log("⚠️ WebSocket connection closed");
-    };
-
-    return () => socket.close();
   }, []);
 
   if (loading) {
@@ -70,7 +42,7 @@ function Menu() {
       <div className="menu-content">
         {menu.sections.map((section) => {
           const visibleUngroupedItems = (section.items || []).filter(
-            (item) => item.visible !== false
+            (item) => item.visible !== false,
           );
 
           return (
@@ -82,7 +54,7 @@ function Menu() {
                 section.groups.length > 0 &&
                 section.groups.map((group) => {
                   const visibleGroupItems = (group.items || []).filter(
-                    (item) => item.visible !== false
+                    (item) => item.visible !== false,
                   );
                   if (visibleGroupItems.length === 0) return null;
 

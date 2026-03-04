@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
-const CLIENT_ID = "universalmenu";
-
+const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
+const RESTAURANT_SLUG = "rricura-tamales";
 const SidesSection = () => {
   const { addToCart } = useContext(CartContext);
 
@@ -25,7 +25,9 @@ const SidesSection = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/${CLIENT_ID}/menu`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+        );
         const data = await res.json();
         setMenuData(data);
       } catch (err) {
@@ -40,7 +42,7 @@ const SidesSection = () => {
   if (loading) return <p style={{ textAlign: "center" }}>Loading sides...</p>;
 
   const sidesSection = menuData?.sections?.find(
-    (s) => s.section?.toLowerCase() === "sides"
+    (s) => s.section?.toLowerCase() === "sides",
   );
 
   if (!sidesSection) return <p>No sides found.</p>;

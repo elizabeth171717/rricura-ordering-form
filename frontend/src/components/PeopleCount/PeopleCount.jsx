@@ -61,7 +61,7 @@ const PeopleCount = ({ setPeople, value }) => {
       <div className="select-number">
         <div className="question">
           <label>
-            <p> How many would you like:</p>
+            <p> Start by selecting amount:</p>
           </label>
         </div>
         <div className="number">
