@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "../Navbar/Navigation";
 import { BACKEND_URL } from "../../constants/constants";
 
@@ -9,7 +9,6 @@ import "./MenuGrid.css";
 function Menu() {
   const [menu, setMenu] = useState(null);
   const [loading, setLoading] = useState(true);
-  const wsRef = useRef(null);
 
   // 🥇 Initial fetch (load once)
   useEffect(() => {
@@ -28,39 +27,6 @@ function Menu() {
     };
 
     fetchMenu();
-  }, []);
-
-  useEffect(() => {
-    const wsUrl = BACKEND_URL.replace("http", "ws");
-
-    wsRef.current = new WebSocket(wsUrl);
-
-    wsRef.current.onopen = () => {
-      console.log("🟢 Connected to menu updates");
-    };
-
-    wsRef.current.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-
-        if (message.type === "menu-update") {
-          console.log("📡 Live menu update received");
-          setMenu(message.data);
-        }
-      } catch (err) {
-        console.error("WebSocket parse error:", err);
-      }
-    };
-
-    wsRef.current.onclose = () => {
-      console.log("🔴 WebSocket disconnected");
-    };
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
   }, []);
 
   if (loading) {

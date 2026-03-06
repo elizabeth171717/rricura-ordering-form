@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PeopleCount from "./PeopleCount/PeopleCount";
 import { CartContext } from "../Cartcontext/CartContext";
@@ -16,7 +16,7 @@ const DrinksSection = () => {
   const [showStickySummary, setShowStickySummary] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-  const wsRef = useRef(null);
+
   // 1️⃣ Fetch Universal Menu
   useEffect(() => {
     const fetchMenu = async () => {
@@ -33,39 +33,6 @@ const DrinksSection = () => {
       }
     };
     fetchMenu();
-  }, []);
-
-  useEffect(() => {
-    const wsUrl = BACKEND_URL.replace("http", "ws");
-
-    wsRef.current = new WebSocket(wsUrl);
-
-    wsRef.current.onopen = () => {
-      console.log("🟢 Connected to menu updates");
-    };
-
-    wsRef.current.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-
-        if (message.type === "menu-update") {
-          console.log("📡 Live menu update received");
-          setMenuData(message.data);
-        }
-      } catch (err) {
-        console.error("WebSocket parse error:", err);
-      }
-    };
-
-    wsRef.current.onclose = () => {
-      console.log("🔴 WebSocket disconnected");
-    };
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
   }, []);
 
   // 2️⃣ Get Drinks section

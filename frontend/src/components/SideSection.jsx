@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
@@ -9,7 +9,7 @@ const SidesSection = () => {
 
   const [menuData, setMenuData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const wsRef = useRef(null);
+
   // Manual sizing and pricing
   const sizeOptions = [
     { label: "Small", price: 5 },
@@ -37,39 +37,6 @@ const SidesSection = () => {
       }
     };
     fetchMenu();
-  }, []);
-
-  useEffect(() => {
-    const wsUrl = BACKEND_URL.replace("http", "ws");
-
-    wsRef.current = new WebSocket(wsUrl);
-
-    wsRef.current.onopen = () => {
-      console.log("🟢 Connected to menu updates");
-    };
-
-    wsRef.current.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-
-        if (message.type === "menu-update") {
-          console.log("📡 Live menu update received");
-          setMenuData(message.data);
-        }
-      } catch (err) {
-        console.error("WebSocket parse error:", err);
-      }
-    };
-
-    wsRef.current.onclose = () => {
-      console.log("🔴 WebSocket disconnected");
-    };
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
   }, []);
 
   if (loading) return <p style={{ textAlign: "center" }}>Loading sides...</p>;
