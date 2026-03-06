@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useContext } from "react";
+import React, { useState, useMemo, useEffect, useContext, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
 import PeopleCount from "./PeopleCount/PeopleCount";
@@ -21,6 +21,7 @@ import { CartContext } from "../Cartcontext/CartContext"; // <- use the context,
 import { BACKEND_URL } from "../constants/constants";
 const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
 const RESTAURANT_SLUG = "rricura-tamales";
+
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
   { name: "Rajas", value: "Rajas", img: rajasTamaleImg },
@@ -46,7 +47,7 @@ const TamaleBuilder = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState("basic"); // "basic" or "salsa"
   const [showStickySummary, setShowStickySummary] = useState(true);
-
+  const wsRef = useRef(null);
   const navigate = useNavigate();
   const { addToCart: addToCartContext } = useContext(CartContext);
   const [isIngredientsOpen, setIsIngredientsOpen] = useState(false);
@@ -113,6 +114,39 @@ const TamaleBuilder = () => {
       setSauce(null);
     }
   }, [totalTamales]);
+
+  useEffect(() => {
+    const wsUrl = BACKEND_URL.replace("http", "ws");
+
+    wsRef.current = new WebSocket(wsUrl);
+
+    wsRef.current.onopen = () => {
+      console.log("🟢 Connected to menu updates");
+    };
+
+    wsRef.current.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+
+        if (message.type === "menu-update") {
+          console.log("📡 Live menu update received");
+          setMenuData(message.data);
+        }
+      } catch (err) {
+        console.error("WebSocket parse error:", err);
+      }
+    };
+
+    wsRef.current.onclose = () => {
+      console.log("🔴 WebSocket disconnected");
+    };
+
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
 
   // 🧮 Calculate selected item based on Universal Menu using customProperties
   const selected = useMemo(() => {
