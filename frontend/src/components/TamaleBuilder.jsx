@@ -7,11 +7,7 @@ import pulledPorkImg from "../assets/pulledpork.jpg";
 import chipillinImg from "../assets/chipilin.jpg";
 import rajasTamaleImg from "../assets/rajastamale.jpg";
 import sweetTamaleImg from "../assets/sweettamale.png";
-import bananaLeafImg from "../assets/bananaleaf.jpg";
-import cornHuskImg from "../assets/cornhusk.jpg";
-import greenSauceImg from "../assets/greensauce.jpeg";
-import redSauceImg from "../assets/salsaroja.jpg";
-import tomateSauceImg from "../assets/tomatesauce.jpg";
+
 import blackBeanImg from "../assets/blackbean.jpg";
 import salsaVerde from "../assets/salsaverde.jpg";
 import IngredientsModal from "./Modal/Ingridients";
@@ -33,14 +29,34 @@ const fillings = [
 ];
 
 const wrappers = [
-  { name: "Corn Husk", value: "Corn Husk", img: cornHuskImg },
-  { name: "Banana Leaf", value: "Banana Leaf", img: bananaLeafImg },
+  {
+    name: "Corn Husk",
+    value: "Corn Husk",
+    img: "https://res.cloudinary.com/dadjbgtb5/image/upload/v1773539933/cornhusk_menm8h.jpg",
+  },
+  {
+    name: "Banana Leaf",
+    value: "Banana Leaf",
+    img: "https://res.cloudinary.com/dadjbgtb5/image/upload/v1773539944/bananaleaf_xzncsn.jpg",
+  },
 ];
 
 const sauces = [
-  { name: "Green Sauce", value: "Green", img: greenSauceImg },
-  { name: "Red Sauce", value: "Red", img: redSauceImg },
-  { name: "Tomato Sauce", value: "Tomato", img: tomateSauceImg },
+  {
+    name: "Green Sauce",
+    value: "Green",
+    img: "https://res.cloudinary.com/dadjbgtb5/image/upload/v1773540052/greensauce_l2yjp8.jpg",
+  },
+  {
+    name: "Red Sauce",
+    value: "Red",
+    img: "https://res.cloudinary.com/dadjbgtb5/image/upload/v1773539988/salsaroja_sm1rq2.jpg",
+  },
+  {
+    name: "Tomato Sauce",
+    value: "Tomato",
+    img: "https://res.cloudinary.com/dadjbgtb5/image/upload/v1773539972/tomatesauce_a49bzm.jpg",
+  },
 ];
 
 const TamaleBuilder = () => {

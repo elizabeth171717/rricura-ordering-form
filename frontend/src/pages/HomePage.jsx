@@ -99,7 +99,11 @@ const HomePage = () => {
           <div className="graphic-container">
             {" "}
             <div className="hero-img">
-              <img src={TamalesTray} alt="tray of tamales in corn husks" />
+              <img
+                src="https://res.cloudinary.com/dadjbgtb5/image/upload/f_auto,q_auto,w_1600/v1773539283/tamalestray_w4rra2.png"
+                alt="tray of tamales in corn husks"
+                loading="eager"
+              />
             </div>
           </div>
         </section>{" "}
