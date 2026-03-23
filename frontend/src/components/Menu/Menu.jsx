@@ -77,30 +77,16 @@ function Menu() {
                               <img
                                 src={item.image}
                                 alt={item.name}
-                                style={{
-                                  width: "100%",
-                                  height: "150px",
-                                  objectFit: "cover",
-                                  borderRadius: "8px",
-                                  marginBottom: "0.8rem",
-                                }}
+                              
                               />
                             )}
-                            <p style={{ marginBottom: "0.5rem" }}>
+                            <p>
                               {item.name}
                             </p>
-                            <p
-                              style={{ marginBottom: "0.5rem", color: "grey" }}
-                            >
-                              {item.description}
-                            </p>
+                           
                             {!item.available && (
                               <p
-                                style={{
-                                  color: "red",
-                                  fontWeight: "bold",
-                                  marginTop: "0.5rem",
-                                }}
+                                
                               >
                                 ❌ Unavailable
                               </p>
@@ -118,37 +104,20 @@ function Menu() {
                   {visibleUngroupedItems.map((item) => (
                     <div
                       key={item.id || item._id}
-                      style={{
-                        border: "1px solid #ccc",
-                        borderRadius: "10px",
-                        textAlign: "center",
-                        opacity: item.available ? 1 : 0.6,
-                      }}
+                     
                     >
                       {item.image && (
                         <img
                           src={item.image}
                           alt={item.name}
-                          style={{
-                            width: "100%",
-                            height: "150px",
-                            objectFit: "cover",
-                            borderRadius: "8px",
-                            marginBottom: "0.8rem",
-                          }}
+                         
                         />
                       )}
                       <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
-                      <p style={{ marginBottom: "0.5rem", color: "grey" }}>
-                        {item.description}
-                      </p>
+                     
                       {!item.available && (
                         <p
-                          style={{
-                            color: "red",
-                            fontWeight: "bold",
-                            marginTop: "0.5rem",
-                          }}
+                         
                         >
                           ❌ Unavailable
                         </p>
