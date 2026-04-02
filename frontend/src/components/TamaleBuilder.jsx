@@ -258,7 +258,17 @@ const TamaleBuilder = () => {
     };
 
     // Add to global cart context
-    addToCartContext(newItem);
+const success = addToCartContext({
+  ...newItem,
+  orderType: "regular"
+});
+
+
+if (!success) {
+  alert("Orders must be placed separately.");
+  return;
+}
+
 
     // ✅ Popup handling
     if (newItem.filling?.toLowerCase() !== "sweet") {
@@ -267,7 +277,9 @@ const TamaleBuilder = () => {
       setPopupType("basic");
     }
 
-    setShowPopup(true);
+
+setShowPopup(true); // ✅ only runs if added
+
 
     setShowStickySummary(false); // 👈 THIS hides it
     // reset builder state
@@ -490,7 +502,7 @@ const TamaleBuilder = () => {
                 ADD TO CART
               </button>
               <span onClick={handleKeepShopping} className="keep-shopping-text">
-                Keep shopping
+                Cancel
               </span>
             </div>
           </div>

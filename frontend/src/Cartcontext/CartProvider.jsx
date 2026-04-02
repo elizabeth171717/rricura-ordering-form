@@ -15,28 +15,46 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("tamaleCart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (newItem) => {
-    setCartItems((prev) => [...prev, newItem]);
-    pushToDataLayer("add_to_cart", {
-      event: "add_to_cart",
-      ecommerce: {
-        currency: "USD",
-        value: newItem.price * newItem.quantity,
-        items: [
-          {
-            item_id: newItem.id,
-            item_name: newItem.name || newItem.filling,
-            item_category: newItem.type,
-            price: newItem.price,
-            quantity: newItem.quantity,
-            wrapper: newItem.wrapper || undefined,
-            sauce: newItem.sauce || undefined,
-            size: newItem.size || undefined,
-          },
-        ],
-      },
-    });
-  };
+  
+const addToCart = (newItem) => {
+ let success = true;
+
+  setCartItems((prev) => {
+    if (prev.length > 0) {
+      const currentType = prev[0].orderType;
+
+        if (currentType !== newItem.orderType) {
+       
+        success = false;
+        return prev; // 🚫 block
+      }
+    }
+
+    return [...prev, newItem]; // ✅ allow
+ 
+  });
+ if (!success) return false;
+  pushToDataLayer("add_to_cart", {
+    event: "add_to_cart",
+    ecommerce: {
+      currency: "USD",
+      value: newItem.price * newItem.quantity,
+      items: [
+        {
+          item_id: newItem.id,
+          item_name: newItem.name || newItem.filling,
+          item_category: newItem.type,
+          price: newItem.price,
+          quantity: newItem.quantity,
+          wrapper: newItem.wrapper || undefined,
+          sauce: newItem.sauce || undefined,
+          size: newItem.size || undefined,
+        },
+      ],
+    },
+  });
+   return true; // ✅ THIS is the real return
+};
 
   const removeFromCart = (indexToRemove) => {
     setCartItems((prev) => prev.filter((_, index) => index !== indexToRemove));

@@ -19,6 +19,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { cartItems, cartTotal, discount, finalCartTotal, coupon, setCoupon } =
     useContext(CartContext);
+    const orderType = cartItems[0]?.orderType;
   const [couponInput, setCouponInput] = useState("");
 
   const [customerName, setCustomerName] = useState("");
@@ -48,7 +49,7 @@ const Checkout = () => {
   const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
 
   const generateOrderNumber = () => {
-    const timestamp = Date.now();
+   
     const randomString = Math.random()
       .toString(36)
       .substring(2, 6)
@@ -56,6 +57,7 @@ const Checkout = () => {
     return `TML-${timestamp}-${randomString}`;
   };
 
+   const timestamp = Date.now();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -82,6 +84,8 @@ const Checkout = () => {
 
     console.log("CHECKOUT deliveryInfo:", deliveryInfo);
 
+const now = new Date();
+
     const orderData = {
       orderNumber,
       items: cartItems,
@@ -95,8 +99,16 @@ const Checkout = () => {
       customerName,
       customerEmail,
       customerPhone,
-      deliveryDate: selectedDate.toDateString(),
-      deliveryTime: selectedTime,
+     orderType,
+      deliveryDate:
+    orderType === "monday"
+      ? now.toDateString()
+      : selectedDate.toDateString(),
+
+  deliveryTime:
+    orderType === "monday"
+      ? now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      : selectedTime,
       deliveryAddress: deliveryInfo,
       customerMessage: customerMessage,
     };
@@ -138,6 +150,22 @@ const Checkout = () => {
 
     navigate("/payment-page", { state: { orderData } });
   };
+  
+  
+useEffect(() => {
+  if (orderType === "monday") {
+    const now = new Date();
+
+    setSelectedDate(now); // ✅ correct state
+
+    const time = now.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    setSelectedTime(time); // ✅ correct state
+  }
+}, [orderType]);
 
   const getItemDescription = (item) => {
     if (item.filling) {
@@ -213,7 +241,7 @@ const Checkout = () => {
               ))}
               <h2>Subtotal: ${cartTotal.toFixed(2)}</h2>
 
-              {/* ✅ Promo Code Section */}
+             
 
               {/* ✅ Promo Code Section */}
               <div className="promo-code">
@@ -259,11 +287,26 @@ const Checkout = () => {
           </div>
 
           <div className="right-container">
+
+            {orderType !== "monday" && (
+  <>     
+ 
             <DeliveryDateComponent onDateSelect={setSelectedDate} />
             <DeliveryTimeComponent
               selectedTime={selectedTime}
               onTimeSelect={setSelectedTime}
             />
+</>
+)}
+ {orderType === "monday" && (
+   <div className="auto-delivery-info">
+  <h3> Delivery Time</h3>
+    <p className="order-time">
+     🕒 {selectedDate ? selectedDate.toLocaleDateString() : ""} ASAP
+    </p>
+    </div>
+  )}
+
             <DeliveryForm onFeeCalculated={handleFeeCalculated} />
 
             <div className="price-breakdown">
@@ -285,6 +328,7 @@ const Checkout = () => {
                 <strong>Total: ${total.toFixed(2)}</strong>
               </h2>
               <br />
+              
               <TipSelector
                 subtotal={finalCartTotal}
                 onTipChange={setSelectedTip}

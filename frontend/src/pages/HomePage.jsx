@@ -10,7 +10,9 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
 import myVideo from "../assets/ordervideo.mp4";
 import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
-import TamalesTray from "../assets/tamalestray.png";
+
+import MondaySmallScreen from "../assets/monday-small-screen.png";
+import MondayBigScreen from "../assets/monday-big-screen.png";
 import ImgGallery1 from "../assets/chickengreencorn.jpg";
 import ImgGallery2 from "../assets/bananaleafchicken.jpg";
 import ImgGallery3 from "../assets/pintotamale.jpg";
@@ -107,6 +109,19 @@ const HomePage = () => {
             </div>
           </div>
         </section>{" "}
+       
+<section className="monday-special">
+  <Link to="/monday-special">
+    <picture>
+      <source media="(min-width: 768px)" srcSet={MondayBigScreen} />
+      <img
+        src={MondaySmallScreen}
+        alt="Rajas tamales , cheese and pepper in corn husk on the make"
+      />
+    </picture>
+  </Link>
+</section>
+
         {/* 🔥 New Local SEO Section (Added for Google) */}
         <section className="contaniner about-section">
           <div className="text-container">

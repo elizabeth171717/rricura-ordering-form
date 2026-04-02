@@ -9,6 +9,7 @@ import ThankYouPage from "./pages/ThankYouPage";
 import PaymentPage from "./pages/PaymentPage";
 import OnlineOrdering from "./pages/OnlineOrdering";
 import Menu from "./components/Menu/Menu";
+import MondayTmaleSpecial from "./components/MondayTamaleSpecial/MondayTamaleSpecial";
 
 // Sections (children)
 import TamaleBuilder from "./components/TamaleBuilder";
@@ -30,6 +31,7 @@ function App() {
           <Route path="/checkoutpage" element={<CheckoutPage />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/payment-page" element={<PaymentPage />} />
+         <Route path="/monday-special" element={<MondayTmaleSpecial/>}/>
 
           {/* ✅ ONLINE ORDERING LAYOUT */}
           <Route path="/OnlineOrdering" element={<OnlineOrdering />}>

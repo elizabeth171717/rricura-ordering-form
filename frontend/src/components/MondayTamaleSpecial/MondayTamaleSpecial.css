@@ -1,0 +1,52 @@
+.monday-menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 0 1rem;
+  margin: 2rem 0;
+}
+
+.monday-container h2 {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* card */
+.menu-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* image */
+.menu-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.qty-counter{
+    display: flex;
+    gap:1rem;
+    align-items: center;
+    font-weight: bolds;
+
+}
+
+/* tablet */
+@media (min-width: 600px) {
+  .monday-menu-grid  {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* desktop */
+@media (min-width: 900px) {
+  .monday-menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
