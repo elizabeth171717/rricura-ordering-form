@@ -13,6 +13,8 @@ import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
 
 import MondaySmallScreen from "../assets/monday-small-screen.png";
 import MondayBigScreen from "../assets/monday-big-screen.png";
+import WholesaleBigScreen from "../assets/wholesalebigscreen.png";
+import WholesaleSmallScreen from "../assets/wholesalesmallscreen.png";
 import ImgGallery1 from "../assets/chickengreencorn.jpg";
 import ImgGallery2 from "../assets/bananaleafchicken.jpg";
 import ImgGallery3 from "../assets/pintotamale.jpg";
@@ -116,6 +118,18 @@ const HomePage = () => {
       <source media="(min-width: 768px)" srcSet={MondayBigScreen} />
       <img
         src={MondaySmallScreen}
+        alt="Rajas tamales , cheese and pepper in corn husk on the make"
+      />
+    </picture>
+  </Link>
+</section>
+
+<section className="wholesale-special">
+  <Link to="/wholesale">
+    <picture>
+      <source media="(min-width: 768px)" srcSet={WholesaleBigScreen} />
+      <img
+        src={WholesaleSmallScreen}
         alt="Rajas tamales , cheese and pepper in corn husk on the make"
       />
     </picture>

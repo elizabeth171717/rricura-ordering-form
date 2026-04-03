@@ -8,6 +8,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ThankYouPage from "./pages/ThankYouPage";
 import PaymentPage from "./pages/PaymentPage";
 import OnlineOrdering from "./pages/OnlineOrdering";
+import Wholesale from "./components/Wholesale/Wholesale";
 import Menu from "./components/Menu/Menu";
 import MondayTmaleSpecial from "./components/MondayTamaleSpecial/MondayTamaleSpecial";
 
@@ -32,7 +33,7 @@ function App() {
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/payment-page" element={<PaymentPage />} />
          <Route path="/monday-special" element={<MondayTmaleSpecial/>}/>
-
+<Route path="wholesale" element={<Wholesale/>}/>
           {/* ✅ ONLINE ORDERING LAYOUT */}
           <Route path="/OnlineOrdering" element={<OnlineOrdering />}>
             {/* 👇 DEFAULT PAGE */}

@@ -6,9 +6,10 @@
   margin: 2rem 0;
 }
 
-.monday-container h2 {
+.title-container  {
   text-align: center;
   margin-top: 2rem;
+  padding: 0 1rem;
 }
 
 /* card */
@@ -17,13 +18,13 @@
   border-radius: 16px;
   padding: 16px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
 }
 
 /* image */
 .menu-card img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 10px;

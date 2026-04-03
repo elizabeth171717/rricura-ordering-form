@@ -58,14 +58,14 @@ const isMonday = new Date().getDay() === 1;
   const increaseQty = (id) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: (prev[id] || 0) + 1,
+      [id]: (prev[id] || 1) + 1,
     }));
   };
 
   const decreaseQty = (id) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: Math.max((prev[id] || 0) - 1, 0),
+      [id]: Math.max((prev[id] || 1) - 1, 1),
     }));
   };
 
@@ -77,7 +77,7 @@ const isMonday = new Date().getDay() === 1;
 
 
     const id = item._id || item.id;
-    const qty = quantities[id] || 0;
+    const qty = quantities[id] || 1;
 
     if (qty === 0) return;
 
@@ -117,9 +117,12 @@ const isMonday = new Date().getDay() === 1;
   return (
     <div className="monday-container">
       <Navigation />
-
-      <h2>🫔 Monday Tamale Special</h2>
-
+<div className="title-container">
+      <h2>🫔 MONDAY TAMALE SPECIAL</h2>
+      <p>Every Monday we’re serving tamales by the piece, with a different filling each week to keep things exciting. Pair them with one of our fresh drinks—no minimum order needed. 
+        We deliver throughout Brookhaven and nearby areas, as orders come in, until we sell out.
+      </p>
+</div>
       <div className="monday-menu-grid">
         {items.map((item) => {
           const id = item._id || item.id;
