@@ -321,6 +321,8 @@ setShowPopup(true); // ✅ only runs if added
   if (loading) {
     return <p style={{ textAlign: "center" }}>Loading menu...</p>;
   }
+
+  console.log("SELECTED:", selected);
   return (
     <div className="menu-section-container">
       <PeopleCount setPeople={setTotalTamales} value={totalTamales} />
@@ -465,6 +467,7 @@ setShowPopup(true); // ✅ only runs if added
                 <img src={selected.image} alt={selected.name || "Preview"} />
               )}
             </div>
+
             <div className="summary-details">
               <p>
                 {(() => {

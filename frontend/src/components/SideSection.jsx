@@ -2,33 +2,29 @@ import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../Cartcontext/CartContext";
 import { BACKEND_URL } from "../constants/constants";
 
-const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
+const CLIENT_ID = "anahuac";
 const RESTAURANT_SLUG = "rricura-tamales";
+
 const SidesSection = () => {
   const { addToCart } = useContext(CartContext);
 
   const [menuData, setMenuData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Manual sizing and pricing
-  const sizeOptions = [
-    { label: "Small", price: 5 },
-    { label: "Medium", price: 8 },
-    { label: "Large", price: 12 },
-  ];
-
   const [selectedOptions, setSelectedOptions] = useState({});
   const [quantities, setQuantities] = useState({});
   const [showPopup, setShowPopup] = useState(false);
 
-  // Fetch menu
+  // 🔥 Fetch menu
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const res = await fetch(
-          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`,
+          `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`
         );
         const data = await res.json();
+
+        console.log("FULL MENU:", data); // 👈 DEBUG
         setMenuData(data);
       } catch (err) {
         console.error("Failed to fetch Universal Menu:", err);
@@ -36,27 +32,40 @@ const SidesSection = () => {
         setLoading(false);
       }
     };
+
     fetchMenu();
   }, []);
 
   if (loading) return <p style={{ textAlign: "center" }}>Loading sides...</p>;
 
-  const sidesSection = menuData?.sections?.find(
-    (s) => s.section?.toLowerCase() === "sides",
-  );
+  // 🔍 Find sides section
+
+const sidesSection = menuData?.sections?.find(
+  (s) => s.section?.trim().toLowerCase() === "sides"
+);
 
   if (!sidesSection) return <p>No sides found.</p>;
 
+  // 🔥 Get all sides (supports both grouped + non-grouped)
   const sides = [
     ...(sidesSection.groups?.flatMap((g) => g.items) || []),
     ...(sidesSection.items || []),
   ];
 
-  const handleSelectSize = (sideId, size) => {
-    setSelectedOptions((prev) => ({ ...prev, [sideId]: size }));
-    setQuantities((prev) => ({ ...prev, [sideId]: 1 }));
+  // ✅ Select modifier (size)
+  const handleSelectModifier = (sideId, modifier) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [sideId]: modifier,
+    }));
+
+    setQuantities((prev) => ({
+      ...prev,
+      [sideId]: 1,
+    }));
   };
 
+  // ➕➖ Quantity
   const updateQuantity = (sideId, amount) => {
     setQuantities((prev) => ({
       ...prev,
@@ -64,18 +73,19 @@ const SidesSection = () => {
     }));
   };
 
+  // 🛒 Add to cart
   const handleAddToCart = (side) => {
-    const selectedSize = selectedOptions[side.id];
+    const selectedModifier = selectedOptions[side.id];
     const qty = quantities[side.id] || 1;
 
-    if (!selectedSize) return;
+    if (!selectedModifier) return;
 
     const newItem = {
       type: "side",
-      id: `${side.id}-${selectedSize.label}`,
-      name: `${side.name} (${selectedSize.label})`,
+      id: `${side.id}-${selectedModifier.id}`,
+      name: `${side.name} (${selectedModifier.name})`,
       img: side.image || null,
-      price: selectedSize.price,
+      price: selectedModifier.price,
       quantity: qty,
     };
 
@@ -89,61 +99,86 @@ const SidesSection = () => {
     <div className="menu-section-container">
       <div className="grid-container">
         <div className="grid">
-          {sides.map((side) => {
-            const selectedSize = selectedOptions[side.id];
-            const qty = quantities[side.id] || 1;
+  {sides.map((side) => {
+    const selectedModifier = selectedOptions[side.id];
+    const qty = quantities[side.id] || 1;
+
+    return (
+      <div key={side.id} className="sides-card">
+        <h2>{side.name}</h2>
+
+        {side.image && (
+          <img
+            src={side.image}
+            alt={side.name}
+            className="option-card"
+          />
+        )}
+
+        <div className="options-grid">
+          {side.modifiers?.map((mod) => {
+            const isSelected =
+              selectedModifier?.id === mod.id;
 
             return (
-              <div key={side.id} className="sides-card">
-                <h2>{side.name}</h2>
-                {side.image && (
-                  <img
-                    src={side.image}
-                    alt={side.name}
-                    className="option-card"
-                  />
-                )}
-
-                <div className="options-grid">
-                  {sizeOptions.map((opt) => (
-                    <div key={opt.label}>
-                      <div
-                        className={`option-card ${
-                          selectedSize?.label === opt.label ? "selected" : ""
-                        }`}
-                        onClick={() => handleSelectSize(side.id, opt)}
-                      >
-                        <p>{opt.label}</p>
-                        <p>${opt.price}</p>
-                      </div>
-
-                      {/* SHOW CONTROLS DIRECTLY UNDER SELECTED SIZE */}
-                      {selectedSize?.label === opt.label && (
-                        <div className="add-inline">
-                          <button onClick={() => updateQuantity(side.id, -1)}>
-                            -
-                          </button>
-                          <span>{qty}</span>
-                          <button onClick={() => updateQuantity(side.id, 1)}>
-                            +
-                          </button>
-                          <button
-                            className="add-btn"
-                            onClick={() => handleAddToCart(side)}
-                          >
-                            Add to Cart
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+              <div key={mod.id}>
+                <div
+                  className={`option-card ${
+                    isSelected ? "selected" : ""
+                  }`}
+                  onClick={() =>
+                    handleSelectModifier(side.id, mod)
+                  }
+                >
+                  <p>{mod.name}</p>
+                  <p>${mod.price}</p>
                 </div>
+
+                {isSelected && (
+                  <div className="add-inline">
+                    <button
+                      onClick={() =>
+                        updateQuantity(side.id, -1)
+                      }
+                    >
+                      -
+                    </button>
+
+                    <span>{qty}</span>
+
+                    <button
+                      onClick={() =>
+                        updateQuantity(side.id, 1)
+                      }
+                    >
+                      +
+                    </button>
+
+                    <button
+                      className="add-btn"
+                      onClick={() =>
+                        handleAddToCart(side)
+                      }
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
         </div>
+      </div>
+    );
+  })}
+</div>
 
-        {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+        {/* ✅ POPUP */}
+        {showPopup && (
+          <div className="cart-popup">
+            ✅ Added to cart!
+          </div>
+        )}
       </div>
     </div>
   );

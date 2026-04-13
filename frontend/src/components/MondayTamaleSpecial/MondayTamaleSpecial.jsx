@@ -9,10 +9,11 @@ const RESTAURANT_SLUG = "rricura-tamales";
 
 // ✅ ONLY THESE WILL SHOW
 const allowedItems = [
-  "Chicken Tamale - Green Sauce",
-  "Rajas Tamale - Green Sauce",
-"Agua de Jamaica",
-"Soft Drinks",
+  "Chicken-Green-Corn Husk",
+ "Jamaica",
+"Champurrado",
+"Rajas-Green-Corn Husk",
+
 ];
 
 function MondayTamaleSpecial() {
@@ -110,9 +111,6 @@ const isMonday = new Date().getDay() === 1;
     return <p style={{ textAlign: "center" }}>Loading menu...</p>;
   }
 
-  if (items.length === 0) {
-    return <p style={{ textAlign: "center" }}>No items available</p>;
-  }
 
   return (
     <div className="monday-container">
@@ -120,42 +118,47 @@ const isMonday = new Date().getDay() === 1;
 <div className="title-container">
       <h2>🫔 MONDAY TAMALE SPECIAL</h2>
       <p>Every Monday we’re serving tamales by the piece, with a different filling each week to keep things exciting. Pair them with one of our fresh drinks—no minimum order needed. 
-        We deliver throughout Brookhaven and nearby areas, as orders come in, until we sell out.
+        We deliver throughout Brookhaven and nearby areas, as orders come in starting at 8:00am, until we sell out.
       </p>
 </div>
       <div className="monday-menu-grid">
-        {items.map((item) => {
-          const id = item._id || item.id;
-          const qty = quantities[id] || 1;
+      {items.length === 0 ? (
+  <p style={{ textAlign: "center", width: "100%" }}>
+    No items available today
+  </p>
+) : (
+  items.map((item) => {
+    const id = item._id || item.id;
+    const qty = quantities[id] || 1;
 
-          return (
-            <div key={id} className="menu-card">
-              {item.image && <img src={item.image} alt={item.name} />}
+    return (
+      <div key={id} className="menu-card">
+        {item.image && <img src={item.image} alt={item.name} />}
 
-              <p>{item.name}</p>
+        <p>{item.name}</p>
 
-              {!item.available && <p>❌ Unavailable</p>}
+        {!item.available && <p>❌ Unavailable</p>}
 
-              {item.available && (
-                <>
-                  <div className="qty-counter">
-                    <button onClick={() => decreaseQty(id)}>-</button>
-                    <span>{qty}</span>
-                    <button onClick={() => increaseQty(id)}>+</button>
-                  </div>
-
-                
-                  <button
-  onClick={() => handleAddToCart(item)}
-  disabled={!isMonday}
->
-  {isMonday ? "Add to Cart" : "Available Monday Only"}
-</button>
-                </>
-              )}
+        {item.available && (
+          <>
+            <div className="qty-counter">
+              <button onClick={() => decreaseQty(id)}>-</button>
+              <span>{qty}</span>
+              <button onClick={() => increaseQty(id)}>+</button>
             </div>
-          );
-        })}
+
+            <button
+              onClick={() => handleAddToCart(item)}
+              disabled={!isMonday}
+            >
+              {isMonday ? "Add to Cart" : "Available Monday Only"}
+            </button>
+          </>
+        )}
+      </div>
+    );
+  })
+)}
       </div>
       <Footer/>
     </div>
