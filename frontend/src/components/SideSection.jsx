@@ -89,7 +89,17 @@ const sidesSection = menuData?.sections?.find(
       quantity: qty,
     };
 
-    addToCart(newItem);
+ // Add to global cart context
+const success = addToCart({
+  ...newItem,
+  orderType: "catering"
+});
+
+
+if (!success) {
+  alert("Monday Orders must be placed separately.");
+  return;
+}
 
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2000);

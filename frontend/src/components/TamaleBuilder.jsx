@@ -260,7 +260,7 @@ const TamaleBuilder = () => {
     // Add to global cart context
 const success = addToCartContext({
   ...newItem,
-  orderType: "regular"
+  orderType: "catering"
 });
 
 

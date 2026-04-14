@@ -66,7 +66,20 @@ const SoupsSection = () => {
       img: selectedSoup.image || null,
     };
 
-    addToCartContext(newItem);
+     // Add to global cart context
+const success = addToCartContext({
+  ...newItem,
+  orderType: "catering"
+});
+
+
+if (!success) {
+  alert("Monday Orders must be placed separately.");
+  return;
+}
+
+
+
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2500);
 

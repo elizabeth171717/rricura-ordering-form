@@ -22,7 +22,7 @@ function MondayTamaleSpecial() {
   const [quantities, setQuantities] = useState({});
 const isMonday = new Date().getDay() === 1;
   const { addToCart } = useContext(CartContext);
-
+ const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     const fetchMenu = async () => {
       try {
@@ -101,6 +101,12 @@ const isMonday = new Date().getDay() === 1;
       return;
     }
 
+
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2500);
+
+
+
     setQuantities((prev) => ({
       ...prev,
       [id]: 0,
@@ -161,6 +167,8 @@ const isMonday = new Date().getDay() === 1;
 )}
       </div>
       <Footer/>
+      {/* Added popup */}
+      {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
     </div>
   );
 }
