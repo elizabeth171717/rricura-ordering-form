@@ -265,7 +265,7 @@ const success = addToCartContext({
 
 
 if (!success) {
-  alert("Orders must be placed separately.");
+  alert("Monday Orders must be placed separately.");
   return;
 }
 

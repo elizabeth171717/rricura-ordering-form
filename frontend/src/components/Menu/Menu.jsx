@@ -83,7 +83,12 @@ function Menu() {
                             <p>
                               {item.name}
                             </p>
-                           
+                           {/* ✅ LOW STOCK MESSAGE */}
+{item.remaining !== undefined && item.remaining > 0 && item.remaining <= 5 && (
+  <p style={{ color: "orange", fontWeight: "bold" }}>
+    ⚠️ Only {item.remaining} left
+  </p>
+)}
                             {!item.available && (
                               <p
                                 
@@ -114,7 +119,12 @@ function Menu() {
                         />
                       )}
                       <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
-                     
+                         {/* ✅ LOW STOCK MESSAGE */}
+{item.remaining !== undefined && item.remaining > 0 && item.remaining <= 5 && (
+  <p style={{ color: "orange", fontWeight: "bold" }}>
+    ⚠️ Only {item.remaining} left
+  </p>
+)}
                       {!item.available && (
                         <p
                          

@@ -30,10 +30,10 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <Helmet>
-        <title>Brookhaven & Atlanta Catering | Authentic Mexican Tamales</title>
+        <title> Tamales in Atlanta | Brookhaven & Atlanta Catering </title>
         <meta
           name="description"
-          content="Tamales in Atlanta, order chicken tamales online for catering in Brookhaven & Atlanta, GA. Perfect for events of all sizes."
+          content="Tamales in Atlanta, We cater Authentic Mexican Tamales in Brookhaven, GA and nearby areas. Perfect for events of all sizes."
         />
       </Helmet>
 
@@ -139,14 +139,14 @@ const HomePage = () => {
         {/* 🔥 New Local SEO Section (Added for Google) */}
         <section className="contaniner about-section">
           <div className="text-container">
-            <h2>Authentic Mexican TAMALES Catering for Every Occasion</h2>
+            <h2>We cater the best Mexican Tamales in Atlanta</h2>
             <p className="paragraph-text">
               Rricura Tamales proudly offers authentic Mexican tamale catering
               in Brookhaven, Atlanta, and surrounding areas. We specialize in
               handmade tamales prepared fresh and delivered hot to your door for
               family gatherings, office lunches, parties, and special events. We
               offer Local delivery with advance notice to ensure freshness and
-              quality.
+              quality. 
             </p>
           </div>
           <div className="graphic-container">
