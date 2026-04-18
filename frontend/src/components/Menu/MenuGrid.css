@@ -69,9 +69,3 @@ border-bottom: 1px solid #9D0759;;
   margin: 0.5rem 0;
   font-size: 0.95rem;
 }
-
-/* UNAVAILABLE STYLE */
-.menu-grid .unavailable {
-  color: red;
-  font-size: 0.85rem;
-}

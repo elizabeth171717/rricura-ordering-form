@@ -66,12 +66,7 @@ function Menu() {
                         {visibleGroupItems.map((item) => (
                           <div
                             key={item.id || item._id}
-                            style={{
-                              border: "1px solid #ccc",
-                              borderRadius: "10px",
-                              textAlign: "center",
-                              opacity: item.available ? 1 : 0.6,
-                            }}
+                          
                           >
                             {item.image && (
                               <img
@@ -83,19 +78,7 @@ function Menu() {
                             <p>
                               {item.name}
                             </p>
-                           {/* ✅ LOW STOCK MESSAGE */}
-{item.remaining !== undefined && item.remaining > 0 && item.remaining <= 5 && (
-  <p style={{ color: "orange", fontWeight: "bold" }}>
-    ⚠️ Only {item.remaining} left
-  </p>
-)}
-                            {!item.available && (
-                              <p
-                                
-                              >
-                                ❌ Unavailable
-                              </p>
-                            )}
+                         
                           </div>
                         ))}
                       </div>
@@ -119,19 +102,7 @@ function Menu() {
                         />
                       )}
                       <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
-                         {/* ✅ LOW STOCK MESSAGE */}
-{item.remaining !== undefined && item.remaining > 0 && item.remaining <= 5 && (
-  <p style={{ color: "orange", fontWeight: "bold" }}>
-    ⚠️ Only {item.remaining} left
-  </p>
-)}
-                      {!item.available && (
-                        <p
-                         
-                        >
-                          ❌ Unavailable
-                        </p>
-                      )}
+                      
                     </div>
                   ))}
                 </div>

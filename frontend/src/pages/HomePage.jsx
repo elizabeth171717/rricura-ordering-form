@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <Helmet>
-        <title> Tamales in Atlanta | Brookhaven & Atlanta Catering </title>
+        <title>The Best Tamales in Atlanta & Brookhaven</title>
         <meta
           name="description"
           content="Tamales in Atlanta, We cater Authentic Mexican Tamales in Brookhaven, GA and nearby areas. Perfect for events of all sizes."

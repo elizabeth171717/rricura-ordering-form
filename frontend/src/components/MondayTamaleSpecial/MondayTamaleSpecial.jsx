@@ -142,7 +142,12 @@ const isMonday = new Date().getDay() === 1;
         {item.image && <img src={item.image} alt={item.name} />}
 
         <p>{item.name}</p>
-
+   {/* ✅ LOW STOCK MESSAGE */}
+{item.remaining !== undefined && item.remaining > 0 && item.remaining <= 5 && (
+  <p style={{ color: "orange", fontWeight: "bold" }}>
+    ⚠️ Only {item.remaining} left
+  </p>
+)}
         {!item.available && <p>❌ Unavailable</p>}
 
         {item.available && (
