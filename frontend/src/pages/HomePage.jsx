@@ -38,6 +38,11 @@ const HomePage = () => {
       </Helmet>
 
       <Navigation />
+<div className="marquee">
+  <div className="marquee-content">
+    MONDAY SPECIAL — BUY TAMALES BY THE PIECE — WE DELIVER BROOKHAVEN & NEARBY AREAS
+  </div>
+</div>
       <div className="sections-container">
         <section className="contaniner hero-section">
           <div className="text-container">
