@@ -9,7 +9,8 @@ const RESTAURANT_SLUG = "rricura-tamales";
 
 // ✅ ONLY THESE WILL SHOW
 const allowedItems = [
-  "Chicken-Green-Corn Husk",
+
+  "Chicken-Red-Corn Husk",
  "Jamaica",
 "Champurrado",
 "Rajas-Green-Corn Husk",
