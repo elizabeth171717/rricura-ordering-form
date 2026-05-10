@@ -103,6 +103,9 @@ const HomePage = () => {
               <Link to="/OnlineOrdering" className="home-btn">
                 ORDER NOW
               </Link>
+               <Link to="/digitalmenu" className="home-btn">
+                DIGITAL MENU
+              </Link>
             </div>
           </div>
           <div className="graphic-container">

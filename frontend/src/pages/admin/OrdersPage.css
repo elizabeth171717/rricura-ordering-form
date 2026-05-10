@@ -1,0 +1,132 @@
+/*home-page*/
+
+.dashboard-links a {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+
+/*home-page*/
+.dashboard-container {
+  padding: 1rem;
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.search-filters{
+margin: 1rem 0;
+display: flex;
+gap: .25rem;
+flex-direction: column;
+}
+.action-btns{
+    display: flex;
+}
+
+@media (min-width:45rem) {
+    .search-filters{
+
+flex-direction: row;
+}
+}
+
+.search-filters input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.search-filters button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.order-row:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.expanded-row td {
+  background-color: #f9f9f9;
+}
+
+.print-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.expanded-content {
+  padding: 1rem;
+}
+
+
+.order-row:hover {
+  background-color: #f9fafb;
+  cursor: pointer;
+}
+
+.receipt {
+  font-family: 'Courier New', Courier, monospace;
+  max-width: 400px;
+  margin: auto;
+  padding: 16px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: .50rem;
+}
+.receipt h2 {
+  margin-bottom: 0.25rem;
+}
+
+.justify-between{
+  display: flex;
+  justify-content: space-between;
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+    
+  }
+
+  .printable-receipt,
+  .printable-receipt * {
+    visibility: visible !important;
+  }
+
+  .printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 57mm;
+    font-size: 12px;
+  }
+
+
+}
+
+

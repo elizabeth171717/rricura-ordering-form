@@ -2,6 +2,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import "./styles/layout.css";
 import "./styles/variables.css";
+
+//PrivateRoutes
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminLogin from "./pages/admin/AdminLogin";
+import OrdersPage from "./pages/admin/OrdersPage";
 // Pages
 import HomePage from "./pages/HomePage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -11,7 +16,7 @@ import OnlineOrdering from "./pages/OnlineOrdering";
 import Wholesale from "./components/Wholesale/Wholesale";
 import Menu from "./components/Menu/Menu";
 import MondayTmaleSpecial from "./components/MondayTamaleSpecial/MondayTamaleSpecial";
-
+import DigitalMenu from "./components/DigitalMenu/DigitalMenu";
 // Sections (children)
 import TamaleBuilder from "./components/TamaleBuilder";
 import DrinkSection from "./components/DrinkSection";
@@ -34,8 +39,25 @@ function App() {
           <Route path="/payment-page" element={<PaymentPage />} />
          <Route path="/monday-special" element={<MondayTmaleSpecial/>}/>
 <Route path="wholesale" element={<Wholesale/>}/>
+<Route path="/digitalmenu" element={<DigitalMenu/>}/>
+
+
+        {/* ADMIN */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        <Route
+          path="/admin/dashboard"
+          element={<AdminDashboard />}
+        />
+
+        <Route
+          path="/admin/orders"
+          element={<OrdersPage />}
+        />
+
           {/* ✅ ONLINE ORDERING LAYOUT */}
           <Route path="/OnlineOrdering" element={<OnlineOrdering />}>
+
             {/* 👇 DEFAULT PAGE */}
             <Route index element={<TamaleBuilder />} />
 
