@@ -12,7 +12,7 @@ const allowedItems = [
 
   "Chicken-Red-Corn Husk",
  "Jamaica",
-"Champurrado",
+
 "Rajas-Green-Corn Husk",
 
 ];
