@@ -61,10 +61,6 @@ console.log("MONDAY ITEMS:", combinedItems);
 
 setItems(combinedItems);
 
-        console.log("MONDAY ITEMS:", filteredItems);
-
-        setItems(filteredItems);
-
       } catch (err) {
         console.error(
           "Failed to fetch Monday specials:",
@@ -110,10 +106,7 @@ setItems(combinedItems);
       return;
     }
 
-    if (!settings?.available) {
-      return;
-    }
-
+   
     const id = item.id;
 
     const qty = quantities[id] || 1;
