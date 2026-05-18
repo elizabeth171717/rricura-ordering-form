@@ -7,6 +7,7 @@ import "./styles/variables.css";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminLogin from "./pages/admin/AdminLogin";
 import OrdersPage from "./pages/admin/OrdersPage";
+import MondayMenuSelection from "./pages/admin/MondayMenuSelection";
 // Pages
 import HomePage from "./pages/HomePage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -53,6 +54,11 @@ function App() {
         <Route
           path="/admin/orders"
           element={<OrdersPage />}
+        />
+
+          <Route
+          path="/admin/mondaymenuselection"
+          element={<MondayMenuSelection />}
         />
 
           {/* ✅ ONLINE ORDERING LAYOUT */}

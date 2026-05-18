@@ -1,62 +1,86 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+} from "react";
+
 import Navigation from "../Navbar/Navigation";
-import Footer from "../Footer/Footer"
+import Footer from "../Footer/Footer";
+
 import { BACKEND_URL } from "../../constants/constants";
+
 import { CartContext } from "../../Cartcontext/CartContext";
+
 import "./MondayTamaleSpecial.css";
+
 const CLIENT_ID = "anahuac";
 const RESTAURANT_SLUG = "rricura-tamales";
 
-// ✅ ONLY THESE WILL SHOW
-const allowedItems = [
-
-  "Chicken-Red-Corn Husk",
- "Jamaica",
-
-"Rajas-Green-Corn Husk",
-
-];
+const CURRENT_VIEW = "monday-special";
 
 function MondayTamaleSpecial() {
-  const [items, setItems] = useState([]); // ✅ IMPORTANT: we use items now
+  const [items, setItems] = useState([]);
+
   const [loading, setLoading] = useState(true);
+
   const [quantities, setQuantities] = useState({});
-const isMonday = new Date().getDay() === 1;
+
+  const [showPopup, setShowPopup] = useState(false);
+
   const { addToCart } = useContext(CartContext);
- const [showPopup, setShowPopup] = useState(false);
+
+  const isMonday = new Date().getDay() === 1;
+
+  // =============================
+  // LOAD MONDAY SPECIAL ITEMS
+  // =============================
   useEffect(() => {
-    const fetchMenu = async () => {
+    const fetchMondaySpecials = async () => {
       try {
-        const res = await fetch(
+        // ✅ FETCH MENU
+        const menuRes = await fetch(
           `${BACKEND_URL}/api/${CLIENT_ID}/public-menu/${RESTAURANT_SLUG}`
         );
 
-        const data = await res.json();
+        const menuData = await menuRes.json();
 
-        if (!data.sections) return;
+        if (!menuData.sections) {
+          setItems([]);
+          return;
+        }
+const combinedItems =
+  menuData.sections.flatMap((section) => [
+    ...(section.items || []),
 
-        // ✅ FLATTEN EVERYTHING
-        const combinedItems = data.sections.flatMap((section) => [
-          ...(section.items || []),
-          ...(section.groups || []).flatMap((g) => g.items || []),
-        ]);
+    ...(section.groups || []).flatMap(
+      (group) => group.items || []
+    ),
+  ]);
 
-        // ✅ FILTER ONLY WHAT YOU WANT
-        const filtered = combinedItems.filter((item) =>
-          allowedItems.includes(item.name)
-        );
+console.log("MONDAY ITEMS:", combinedItems);
 
-        setItems(filtered); // ✅ ONLY THESE WILL RENDER
+setItems(combinedItems);
+
+        console.log("MONDAY ITEMS:", filteredItems);
+
+        setItems(filteredItems);
+
       } catch (err) {
-        console.error("Failed to fetch menu:", err);
+        console.error(
+          "Failed to fetch Monday specials:",
+          err
+        );
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMenu();
+    fetchMondaySpecials();
   }, []);
 
+  // =============================
+  // QUANTITY CONTROLS
+  // =============================
   const increaseQty = (id) => {
     setQuantities((prev) => ({
       ...prev,
@@ -71,25 +95,42 @@ const isMonday = new Date().getDay() === 1;
     }));
   };
 
+  // =============================
+  // ADD TO CART
+  // =============================
   const handleAddToCart = (item) => {
-     if (!isMonday) {
-    alert("Monday special is only available on Mondays");
-    return;
-  }
+    const settings =
+      item.displaySettings?.[CURRENT_VIEW];
 
+    if (!isMonday) {
+      alert(
+        "Monday special is only available on Mondays"
+      );
 
-    const id = item._id || item.id;
+      return;
+    }
+
+    if (!settings?.available) {
+      return;
+    }
+
+    const id = item.id;
+
     const qty = quantities[id] || 1;
-
-    if (qty === 0) return;
 
     const newItem = {
       type: "tamale",
+
       name: item.name,
+
       img: item.image,
+
       price: item.price,
+
       quantity: qty,
-      customProperties: item.customProperties || [],
+
+      customProperties:
+        item.customProperties || [],
     };
 
     const success = addToCart({
@@ -98,83 +139,189 @@ const isMonday = new Date().getDay() === 1;
     });
 
     if (!success) {
-      alert("Orders must be placed separately.");
+      alert(
+        "Orders must be placed separately."
+      );
+
       return;
     }
 
-
     setShowPopup(true);
-    setTimeout(() => setShowPopup(false), 2500);
 
-
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2500);
 
     setQuantities((prev) => ({
       ...prev,
-      [id]: 0,
+      [id]: 1,
     }));
   };
 
+  // =============================
+  // LOADING
+  // =============================
   if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading menu...</p>;
+    return (
+      <p style={{ textAlign: "center" }}>
+        Loading menu...
+      </p>
+    );
   }
 
-
+  // =============================
+  // UI
+  // =============================
   return (
     <div className="monday-container">
       <Navigation />
-<div className="title-container">
-      <h2>🫔 MONDAY TAMALE SPECIAL</h2>
-      <p>Every Monday we’re serving tamales by the piece, with a different filling each week to keep things exciting. Pair them with one of our fresh drinks—no minimum order needed. 
-        We deliver throughout Brookhaven and nearby areas, as orders come in starting at 8:00am, until we sell out.
-      </p>
-</div>
+
+      <div className="title-container">
+        <h2>
+          🫔 MONDAY TAMALE SPECIAL
+        </h2>
+
+        <p>
+          Every Monday we’re serving tamales
+          by the piece, with a different
+          filling each week to keep things
+          exciting.
+        </p>
+      </div>
+
       <div className="monday-menu-grid">
-      {items.length === 0 ? (
-  <p style={{ textAlign: "center", width: "100%" }}>
-    No items available today
-  </p>
-) : (
-  items.map((item) => {
-    const id = item._id || item.id;
-    const qty = quantities[id] || 1;
+        {items.length === 0 ? (
+          <p
+            style={{
+              textAlign: "center",
+              width: "100%",
+            }}
+          >
+            No items available today
+          </p>
+        ) : (
+          items.map((item) => {
+            const id = item.id;
 
-    return (
-      <div key={id} className="menu-card">
-        {item.image && <img src={item.image} alt={item.name} />}
+            const qty =
+              quantities[id] || 1;
 
-        <p>{item.name}</p>
-   {/* ✅ LOW STOCK MESSAGE */}
-{item.remaining !== undefined && item.remaining > 0 && item.remaining <= 5 && (
-  <p style={{ color: "orange", fontWeight: "bold" }}>
-    ⚠️ Only {item.remaining} left
-  </p>
-)}
-        {!item.available && <p>❌ Unavailable</p>}
+            // ✅ CURRENT VIEW SETTINGS
+            const settings =
+              item.displaySettings?.[
+                CURRENT_VIEW
+              ] || {
+                visible: true,
+                available: true,
+                remaining: null,
+              };
+if (!settings.visible) {
+  return null;
+}
 
-        {item.available && (
-          <>
-            <div className="qty-counter">
-              <button onClick={() => decreaseQty(id)}>-</button>
-              <span>{qty}</span>
-              <button onClick={() => increaseQty(id)}>+</button>
-            </div>
+            return (
+              <div
+                key={id}
+                className="menu-card"
+              >
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                  />
+                )}
 
-            <button
-              onClick={() => handleAddToCart(item)}
-              disabled={!isMonday}
-            >
-              {isMonday ? "Add to Cart" : "Available Monday Only"}
-            </button>
-          </>
+                <p>{item.name}</p>
+
+                {item.description && (
+                  <p>{item.description}</p>
+                )}
+
+                <p>${item.price}</p>
+
+                {/* LOW STOCK */}
+                {settings.remaining !== null &&
+                  settings.remaining > 0 &&
+                  settings.remaining <= 5 && (
+                    <p
+                      style={{
+                        color: "orange",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ⚠️ Only{" "}
+                      {settings.remaining} left
+                    </p>
+                  )}
+
+                {/* SOLD OUT */}
+                {settings.remaining === 0 && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    ❌ Sold Out
+                  </p>
+                )}
+
+                {/* UNAVAILABLE */}
+                {!settings.available && (
+                  <p>
+                    ❌ Unavailable
+                  </p>
+                )}
+
+                {/* AVAILABLE */}
+                {settings.available && (
+                  <>
+                    <div className="qty-counter">
+                      <button
+                        onClick={() =>
+                          decreaseQty(id)
+                        }
+                      >
+                        -
+                      </button>
+
+                      <span>{qty}</span>
+
+                      <button
+                        onClick={() =>
+                          increaseQty(id)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() =>
+                        handleAddToCart(item)
+                      }
+                      disabled={!isMonday}
+                    >
+                      {isMonday
+                        ? "Add to Cart"
+                        : "Available Monday Only"}
+                    </button>
+                  </>
+                )}
+              </div>
+            );
+          })
         )}
       </div>
-    );
-  })
-)}
-      </div>
-      <Footer/>
-      {/* Added popup */}
-      {showPopup && <div className="cart-popup">✅ Added to cart!</div>}
+
+      <Footer />
+
+      {/* POPUP */}
+      {showPopup && (
+        <div className="cart-popup">
+          ✅ Added to cart!
+        </div>
+      )}
     </div>
   );
 }

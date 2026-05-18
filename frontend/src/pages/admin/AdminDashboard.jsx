@@ -118,6 +118,25 @@ const AdminDashboard = () => {
         </Link>
       </div>
 
+  {/* NAV BUTTONS */}
+      <div>
+        <Link to="/admin/mondaymenuselection">
+          <button
+            style={{
+              padding: "20px 40px",
+              fontSize: "1.5rem",
+              cursor: "pointer",
+              borderRadius: "12px",
+              border: "none",
+            }}
+          >
+           Monday Menu selection
+          </button>
+        </Link>
+      </div>
+
+
+
       {/* ANIMATION */}
       <style>
         {`
