@@ -77,12 +77,27 @@ setItems(combinedItems);
   // =============================
   // QUANTITY CONTROLS
   // =============================
-  const increaseQty = (id) => {
-    setQuantities((prev) => ({
+
+
+const increaseQty = (id, maxRemaining) => {
+  setQuantities((prev) => {
+    const current = prev[id] || 1;
+
+    // 🚫 stop at remaining stock
+    if (
+      maxRemaining !== null &&
+      current >= maxRemaining
+    ) {
+      return prev;
+    }
+
+    return {
       ...prev,
-      [id]: (prev[id] || 1) + 1,
-    }));
-  };
+      [id]: current + 1,
+    };
+  });
+};
+
 
   const decreaseQty = (id) => {
     setQuantities((prev) => ({
@@ -118,7 +133,11 @@ setItems(combinedItems);
 
       img: item.image,
 
-      price: item.price,
+       price:
+    item.prices?.[CURRENT_VIEW] ??
+    item.basePrice ??
+    0,
+
 
       quantity: qty,
 
@@ -126,6 +145,16 @@ setItems(combinedItems);
         item.customProperties || [],
     };
 
+    if (
+  settings.remaining !== null &&
+  qty > settings.remaining
+) {
+  alert(
+    `Only ${settings.remaining} available`
+  );
+
+  return;
+}
     const success = addToCart({
       ...newItem,
       orderType: "monday",
@@ -230,8 +259,12 @@ if (!settings.visible) {
                   <p>{item.description}</p>
                 )}
 
-                <p>${item.price}</p>
-
+                <p>
+  $
+  {item.prices?.[CURRENT_VIEW] ??
+    item.basePrice ??
+    0}
+</p>
                 {/* LOW STOCK */}
                 {settings.remaining !== null &&
                   settings.remaining > 0 &&
@@ -282,8 +315,8 @@ if (!settings.visible) {
 
                       <button
                         onClick={() =>
-                          increaseQty(id)
-                        }
+  increaseQty(id, settings.remaining)
+}
                       >
                         +
                       </button>

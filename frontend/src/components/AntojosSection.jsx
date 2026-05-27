@@ -6,6 +6,9 @@ import { BACKEND_URL } from "../constants/constants";
 
 const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
 const RESTAURANT_SLUG = "rricura-tamales";
+const CURRENT_VIEW = "catering";
+
+
 const AntojosSection = () => {
   const { addToCart: addToCartContext } = useContext(CartContext);
   const [menuData, setMenuData] = useState(null);
@@ -43,13 +46,23 @@ const AntojosSection = () => {
     ...(antojitosSection?.items || []),
   ];
 
+
+   const getItemPrice = (item) => {
+  return (
+    item.prices?.[CURRENT_VIEW] ??
+    item.basePrice ??
+    0
+  );
+};
+
+
   // 3️⃣ Derived value: isReady
   const isReady = selectedAntojo && quantity && quantity >= 1;
 
   // 4️⃣ Subtotal
-  const subtotal = isReady
-    ? (selectedAntojo.price * quantity).toFixed(2)
-    : null;
+   const subtotal = isReady
+  ? (getItemPrice(selectedAntojo) * quantity).toFixed(2)
+  : null;
 
   // 5️⃣ Add to cart
   const handleAddToCart = () => {
@@ -60,7 +73,8 @@ const AntojosSection = () => {
       id: selectedAntojo.id,
       name: selectedAntojo.name,
       description: selectedAntojo.description,
-      price: selectedAntojo.price,
+      
+      price: getItemPrice(selectedAntojo),
       quantity,
       img: selectedAntojo.image || null,
     };
@@ -149,7 +163,7 @@ if (!success) {
               Add to Cart
             </button>
             <span onClick={handleKeepShopping} className="keep-shopping-text">
-              Keep shopping
+              Cancel
             </span>
           </div>
         </div>

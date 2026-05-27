@@ -17,6 +17,8 @@ import { CartContext } from "../Cartcontext/CartContext"; // <- use the context,
 import { BACKEND_URL } from "../constants/constants";
 const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
 const RESTAURANT_SLUG = "rricura-tamales";
+const CURRENT_VIEW = "catering";
+
 
 const fillings = [
   { name: "Chicken", value: "Chicken", img: pulledChickenImg },
@@ -192,10 +194,21 @@ const TamaleBuilder = () => {
     });
   }, [menuData, filling, wrapper, sauce]);
 
-  const subtotal =
-    selected?.price && totalTamales
-      ? (selected.price * totalTamales).toFixed(2)
-      : null;
+const getItemPrice = (item) => {
+  return (
+    item.prices?.[CURRENT_VIEW] ??
+    item.basePrice ??
+    0
+  );
+};
+
+ const subtotal =
+  selected && totalTamales
+    ? (
+        getItemPrice(selected) *
+        totalTamales
+      ).toFixed(2)
+    : null;
 
   const hasAllRequiredSelections = (() => {
     if (!filling) return false;
@@ -215,12 +228,13 @@ const TamaleBuilder = () => {
     }
   })();
 
-  const isReady =
-    selected &&
-    selected.price &&
-    hasAllRequiredSelections &&
-    totalTamales &&
-    totalTamales >= 12;
+
+    const isReady =
+  selected &&
+  getItemPrice(selected) > 0 &&
+  hasAllRequiredSelections &&
+  totalTamales &&
+  totalTamales >= 12;
 
   const handleAddToCart = () => {
     if (!isReady || !selected) return;
@@ -249,7 +263,7 @@ const TamaleBuilder = () => {
       type: "tamale",
       name: selected.name,
       img: selected.image,
-      price: selected.price,
+    price: getItemPrice(selected),
       quantity: totalTamales,
       filling: fillingValue,
       wrapper: wrapperValue,

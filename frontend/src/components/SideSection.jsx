@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../constants/constants";
 
 const CLIENT_ID = "anahuac";
 const RESTAURANT_SLUG = "rricura-tamales";
+const CURRENT_VIEW = "catering";
 
 const SidesSection = () => {
   const { addToCart } = useContext(CartContext);
@@ -73,6 +74,14 @@ const sidesSection = menuData?.sections?.find(
     }));
   };
 
+  const getItemPrice = (item) => {
+  return (
+    item.prices?.[CURRENT_VIEW] ??
+    item.basePrice ??
+    0
+  );
+};
+
   // 🛒 Add to cart
   const handleAddToCart = (side) => {
     const selectedModifier = selectedOptions[side.id];
@@ -80,14 +89,22 @@ const sidesSection = menuData?.sections?.find(
 
     if (!selectedModifier) return;
 
+    
     const newItem = {
-      type: "side",
-      id: `${side.id}-${selectedModifier.id}`,
-      name: `${side.name} (${selectedModifier.name})`,
-      img: side.image || null,
-      price: selectedModifier.price,
-      quantity: qty,
-    };
+  type: "side",
+
+  id: `${side.id}-${selectedModifier.id}`,
+
+  name: `${side.name} (${selectedModifier.name})`,
+
+  img: side.image || null,
+
+  price:
+    selectedModifier.price ??
+    getItemPrice(side),
+
+  quantity: qty,
+};
 
  // Add to global cart context
 const success = addToCart({
@@ -141,7 +158,11 @@ if (!success) {
                   }
                 >
                   <p>{mod.name}</p>
-                  <p>${mod.price}</p>
+                 <p>
+  $
+  {mod.price ??
+    getItemPrice(side)}
+</p>
                 </div>
 
                 {isSelected && (

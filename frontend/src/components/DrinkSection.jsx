@@ -6,6 +6,7 @@ import { BACKEND_URL } from "../constants/constants";
 
 const CLIENT_ID = "anahuac"; // 👈 your restaurant/client ID
 const RESTAURANT_SLUG = "rricura-tamales";
+const CURRENT_VIEW = "catering";
 
 const DrinksSection = () => {
   const { addToCart: addToCartContext } = useContext(CartContext);
@@ -46,11 +47,21 @@ const DrinksSection = () => {
     ...(drinksSection?.items || []),
   ];
 
+  const getItemPrice = (item) => {
+  return (
+    item.prices?.[CURRENT_VIEW] ??
+    item.basePrice ??
+    0
+  );
+};
+
   // 4️⃣ Derived value: isReady
   const isReady = selectedDrink && quantity && quantity >= 1;
 
   // 5️⃣ Subtotal
-  const subtotal = isReady ? (selectedDrink.price * quantity).toFixed(2) : null;
+   const subtotal = isReady
+  ? (getItemPrice(selectedDrink) * quantity).toFixed(2)
+  : null;
 
   // 6️⃣ Add to cart
   const handleAddToCart = () => {
@@ -61,7 +72,8 @@ const DrinksSection = () => {
       id: selectedDrink.id,
       name: selectedDrink.name,
       description: selectedDrink.description,
-      price: selectedDrink.price,
+    
+      price: getItemPrice(selectedDrink),
       quantity,
       img: selectedDrink.image || null,
     };
@@ -153,7 +165,7 @@ if (!success) {
               Add to Cart
             </button>
             <span onClick={handleKeepShopping} className="keep-shopping-text">
-              Keep shopping
+              Cancel
             </span>
           </div>
         </div>
