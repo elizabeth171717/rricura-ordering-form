@@ -21,6 +21,7 @@ import ImgGallery3 from "../assets/pintotamale.jpg";
 import ImgGallery4 from "../assets/holiday.jpg";
 import ImgGallery5 from "../assets/family.jpg";
 import ImgGallery6 from "../assets/sweettamale.png";
+
 import ImgGallery7 from "../assets/rajas.jpg";
 import ImgGallery8 from "../assets/chickentamale.jpg";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -33,14 +34,14 @@ const HomePage = () => {
         <title>The Best Tamales in Atlanta & Brookhaven</title>
         <meta
           name="description"
-          content="Tamales in Atlanta, We cater Authentic Mexican Tamales in Brookhaven, GA and nearby areas. Perfect for events of all sizes."
+          content="World cup Tamales catering in Atlanta, We cater Authentic Mexican Tamales in Brookhaven, GA and nearby areas. Perfect for events of all sizes."
         />
       </Helmet>
 
       <Navigation />
 <div className="marquee">
   <div className="marquee-content">
-    MONDAY SPECIAL — BUY TAMALES BY THE PIECE — WE DELIVER BROOKHAVEN & NEARBY AREAS
+  ⚽Book Your World Cup Catering Today!⚽ Celebrate every World Cup match with authentic Latin flavors. 
   </div>
 </div>
       <div className="sections-container">
@@ -89,7 +90,7 @@ const HomePage = () => {
               </a>
             </div>
             <div className="hero-title">
-              <h2>Tamale Catering in Brookhaven & Atlanta, GA</h2>
+              <h2>World Cup ⚽ Tamale Catering in Brookhaven & Atlanta, GA</h2>
             </div>
             <div className="hero-btn">
               <FontAwesomeIcon
@@ -105,6 +106,7 @@ const HomePage = () => {
               </Link>
              
             </div>
+             
           </div>
           <div className="graphic-container">
             {" "}

@@ -4,7 +4,7 @@
   width: 100%;
   overflow: hidden;
   background-color: #000; /* change if you want */
-  color: #fff;
+  color: gold;
   padding: 10px 0;
   white-space: nowrap;
 }
@@ -63,6 +63,15 @@ display: flex;
 flex-direction: column;
 
 }
+
+/**HERO-SECTION**/
+.hero-section .text-container{
+
+background-image: url('../assets/world-cup.jpg');
+
+}
+
+
 
 .hero-title {
   opacity: 0;
