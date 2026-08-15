@@ -5,7 +5,7 @@ import { faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 import CartDrawer from "../CartDrawer/CartDrawer";
-import WC from "../../assets/world-cup.jpg";
+import OPEN from "../../assets/open.png";
 const Navigation = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { cartCount } = useContext(CartContext); // comes straight from context
@@ -18,7 +18,7 @@ const Navigation = () => {
            
         </Link>
           <img  style={{ width: "50px" }}
-                src={WC}
+                src={OPEN}
                 alt=""
 
               />

@@ -41,7 +41,7 @@ const HomePage = () => {
       <Navigation />
 <div className="marquee">
   <div className="marquee-content">
-  ⚽Book Your World Cup Catering Today!⚽ Celebrate every World Cup match with authentic Latin flavors. 
+ WE CATER Chicken, Pork, Rajas, Beans, Chipilin, Picadillo, Sweet & Fruit TAMALES IN ATLANTA. 
   </div>
 </div>
       <div className="sections-container">
@@ -90,7 +90,7 @@ const HomePage = () => {
               </a>
             </div>
             <div className="hero-title">
-              <h2>World Cup ⚽ Tamale Catering in Brookhaven & Atlanta, GA</h2>
+              <h2>Tamale Catering in Brookhaven & Atlanta, GA</h2>
             </div>
             <div className="hero-btn">
               <FontAwesomeIcon

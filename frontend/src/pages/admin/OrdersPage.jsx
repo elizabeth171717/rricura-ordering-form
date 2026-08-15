@@ -18,21 +18,22 @@ const OrdersPage = () => {
   const [searchOrderNumber, setSearchOrderNumber] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
 
-  const receiptRef = useRef();
+  const receiptRef = useRef(null);
 
-  const printReceipt = useReactToPrint({
-    content: () => receiptRef.current,
-    documentTitle: `Receipt-${
-      orders.find((o) => o._id === selectedOrderId)?.orderNumber
-    }`,
-  });
+const printReceipt = useReactToPrint({
+  contentRef: receiptRef,
+  documentTitle: "Receipt",
+});
 
-  const handlePrint = (order) => {
-    setSelectedOrderId(order._id);
-    setTimeout(() => {
-      printReceipt();
-    }, 100);
-  };
+const handlePrint = (order) => {
+  setSelectedOrderId(order._id);
+
+  setTimeout(() => {
+    console.log("REF:", receiptRef.current);
+    printReceipt();
+  }, 300);
+};
+
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -318,13 +319,13 @@ const OrdersPage = () => {
       </div>
 
       {/* Hidden Receipt for Printing */}
-      {selectedOrderId && (
-        <div style={{ display: "none" }}>
-          <div ref={receiptRef}>
-            <Receipt order={orders.find((o) => o._id === selectedOrderId)} />
-          </div>
-        </div>
-      )}
+     <div style={{ display: "none" }}>
+  <div ref={receiptRef}>
+    <Receipt
+      order={orders.find((o) => o._id === selectedOrderId)}
+    />
+  </div>
+</div>
     </div>
   );
 };
