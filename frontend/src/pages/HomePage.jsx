@@ -8,6 +8,7 @@ import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import myVideo from "../assets/ordervideo.mp4";
 import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
 
@@ -88,6 +89,16 @@ const HomePage = () => {
                   style={{ fontSize: "1.75rem", color: "white" }}
                 />
               </a>
+              <a
+  href="https://share.google/ihhOJFwNaIQ39VLgf"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <FontAwesomeIcon
+    icon={faGoogle}
+    style={{ fontSize: "1.75rem", color: "white" }}
+  />
+</a>
             </div>
             <div className="hero-title">
               <h2>Tamale Catering in Brookhaven & Atlanta, GA</h2>

@@ -5,6 +5,7 @@ import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "./Footer.css";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -40,6 +41,16 @@ const Footer = () => {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon icon={faTiktok} style={{ fontSize: "1.50rem" }} />
+        </a>
+                  <a
+          href="https://share.google/ihhOJFwNaIQ39VLgf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon
+            icon={faGoogle}
+            style={{ fontSize: "1.50rem" }}
+          />
         </a>
       </div>
     </footer>
