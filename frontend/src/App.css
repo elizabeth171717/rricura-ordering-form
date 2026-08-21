@@ -84,8 +84,45 @@ padding: 2rem;
 text-align: center;
 border-radius: 50%;
 }
+.hero-descrition {
+  display: flex;
+  gap: 8px;
+  font-size: 1.50rem;
+}
 
+.desciption-title {
+  color: gold;
+}
 
+.hero-descrition p {
+  margin: 0;
+}
+
+.slide-container {
+  background-color: gold;
+  font-family: cursive;
+  padding-left: .25rem;
+  position: relative;
+  width: 250px;
+  height: 1.5em;
+}
+
+.slide {
+  position: absolute;
+  opacity: 0;
+  animation: showSlide 40s infinite;
+  animation-delay: calc(var(--i) * 2s);
+}
+
+@keyframes showSlide {
+  0%, 4% {
+    opacity: 1;
+  }
+
+  5%, 100% {
+    opacity: 0;
+  }
+}
 
 @keyframes slideInLeft {
   to {

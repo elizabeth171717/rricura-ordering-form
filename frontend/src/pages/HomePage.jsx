@@ -92,6 +92,42 @@ const HomePage = () => {
             <div className="hero-title">
               <h2>Tamale Catering in Brookhaven & Atlanta, GA</h2>
             </div>
+            <div className="hero-descrition">
+  <p className="desciption-title" >Perfect for</p>
+
+  <div className="slide-container">
+    {[
+      "Fundraisers",
+      "Birthdays",
+      "Anniversaries",
+      "Graduations",
+      "Holidays",
+      "Weddings",
+      "Baby Showers",
+      "Corporate meetings",
+      "Picnics",
+      "Office lunches",
+      "Retirement parties",
+      "Bridal showers",
+      "Game-day",
+      "Memorial services",
+      "Family reunions",
+      "Baby gender reveal",
+      "Rehearsals",
+      "Sports tailgates",
+      "Charity galas",
+      "Product launches"
+    ].map((text, i) => (
+      <p
+        className="slide"
+        style={{ "--i": i }}
+        key={text}
+      >
+        {text}
+      </p>
+    ))}
+  </div>
+</div>
             <div className="hero-btn">
               <FontAwesomeIcon
                 icon={faHandPointDown}
