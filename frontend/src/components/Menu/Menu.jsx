@@ -40,77 +40,49 @@ function Menu() {
   return (
     <div className="menu-container">
       <Navigation />
-      <div className="menu-content">
-        {menu.sections.map((section) => {
-          const visibleUngroupedItems = (section.items || []).filter(
-            (item) => item.visible !== false,
-          );
+   <div className="menu-content">
+  {menu.sections.map((section) => {
+    const ungroupedItems = (section.items || []).filter(
+      (item) => item.visible !== false
+    );
 
-          return (
-            <div key={section.id || section._id}>
-              <h2 className="section-name">{section.section}</h2>
+    const groupedItems = (section.groups || []).flatMap((group) =>
+      (group.items || []).filter((item) => item.visible !== false)
+    );
 
-              {/* 👇 Render Groups (NEW) */}
-              {section.groups &&
-                section.groups.length > 0 &&
-                section.groups.map((group) => {
-                  const visibleGroupItems = (group.items || []).filter(
-                    (item) => item.visible !== false,
-                  );
-                  if (visibleGroupItems.length === 0) return null;
+    // Combine everything in the section, without displaying groups
+    const allItems = [...ungroupedItems, ...groupedItems];
 
-                  return (
-                    <div key={group.id || group._id}>
-                      <h3 className="group-name">{group.groupName}</h3>
-                      <div className="menu-grid">
-                        {visibleGroupItems.map((item) => (
-                          <div
-                            key={item.id || item._id}
-                          
-                          >
-                            {item.image && (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                              
-                              />
-                            )}
-                            <p>
-                              {item.name}
-                            </p>
-                         
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
+    if (allItems.length === 0) return null;
 
-              {/* 👇 Render ungrouped items as before */}
-              {visibleUngroupedItems.length > 0 && (
-                <div className="menu-grid">
-                  {visibleUngroupedItems.map((item) => (
-                    <div
-                      key={item.id || item._id}
-                     
-                    >
-                      {item.image && (
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                         
-                        />
-                      )}
-                      <p style={{ marginBottom: "0.5rem" }}>{item.name}</p>
-                      
-                    </div>
-                  ))}
-                </div>
+    return (
+      <section
+        className="menu-section"
+        key={section.id || section._id}
+      >
+        <h2 className="section-name">{section.section}</h2>
+
+        <div className="menu-grid">
+          {allItems.map((item) => (
+            <div
+              className="menu-item"
+              key={item.id || item._id}
+            >
+              {item.image && (
+                <img
+                  src={item.image}
+                  alt={item.name}
+                />
               )}
+
+              <p>{item.name}</p>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</div>
     </div>
   );
 }

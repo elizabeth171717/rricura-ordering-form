@@ -1,71 +1,150 @@
+/* =========================
+   MENU PAGE
+========================= */
+
 .menu-container {
   width: 100%;
+  min-height: 100vh;
+  background: #fff;
 }
 
 .menu-content {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 40px 25px 80px;
 }
 
-/* SECTION TITLES */
+
+/* =========================
+   SECTION
+========================= */
+
+.menu-section {
+  margin-bottom: 70px;
+}
+
 .section-name {
-  font-size: 1.8rem;
-  margin: 2rem 0 1rem;
- 
+  margin: 0 0 30px;
   text-align: center;
-border-bottom: 1px solid #9D0759;;
- padding: .50rem 0;
+
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  color: #222;
 }
 
-.group-name {
-  font-size: 1.3rem;
-  margin: 1.5rem 0 0.8rem;
-}
 
-/* 🔥 GRID MAGIC */
+/* =========================
+   ITEMS GRID
+========================= */
+
 .menu-grid {
   display: grid;
-  gap: 1rem;
 
-  /* Small screens: exactly 2 columns */
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 35px 25px;
 }
 
-/* Bigger screens: auto-fit but controlled width */
-@media (min-width: 600px) {
+
+/* =========================
+   ITEM
+========================= */
+
+.menu-item {
+  text-align: center;
+}
+
+.menu-item img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+}
+
+.menu-item p {
+  margin: 12px 0 0;
+
+  font-size: 1.05rem;
+  font-weight: 600;
+
+  color: #222;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .menu-content {
+    padding: 35px 20px 60px;
+  }
+
   .menu-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
-    justify-content: center; /* prevents stretch */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 20px;
+  }
+
+  .section-name {
+    font-size: 1.8rem;
   }
 }
 
-/* 💎 CARD STYLE */
-.menu-grid > div {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 0.8rem;
-  text-align: center;
 
-  /* SAME HEIGHT */
-  height: 260px;
+/* =========================
+   MOBILE
+========================= */
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+@media (max-width: 600px) {
+  .menu-content {
+    padding: 30px 15px 50px;
+  }
+
+  .menu-section {
+    margin-bottom: 55px;
+  }
+
+  .section-name {
+    margin-bottom: 22px;
+
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px 12px;
+  }
+
+  .menu-item p {
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
+
+  .menu-item img {
+    border-radius: 8px;
+  }
 }
 
-/* IMAGE */
-.menu-grid img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
-}
 
-/* TEXT */
-.menu-grid p {
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 380px) {
+  .menu-grid {
+    gap: 20px 10px;
+  }
+
+  .menu-item p {
+    font-size: 0.9rem;
+  }
 }
