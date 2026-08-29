@@ -39,7 +39,22 @@ const Checkout = () => {
 const [customerInfoTracked, setCustomerInfoTracked] = useState(false);
 const [datetimeTracked, setDatetimeTracked] = useState(false);
 
-// ✅ GA4 checkout_datetime
+
+  const taxRate = 0.08;
+
+  useEffect(() => {
+    stripePromise.then(() => {
+      console.log("✅ Stripe.js has started downloading in the background");
+    });
+    window.scrollTo(0, 0);
+  }, []);
+
+  const tax = finalCartTotal * taxRate;
+  const deliveryFee = deliveryInfo?.fee || 0;
+  const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
+
+
+  // ✅ GA4 checkout_datetime
 useEffect(() => {
   if (
     orderType === "monday" ||
@@ -86,18 +101,6 @@ useEffect(() => {
   total,
 ]);
 
-  const taxRate = 0.08;
-
-  useEffect(() => {
-    stripePromise.then(() => {
-      console.log("✅ Stripe.js has started downloading in the background");
-    });
-    window.scrollTo(0, 0);
-  }, []);
-
-  const tax = finalCartTotal * taxRate;
-  const deliveryFee = deliveryInfo?.fee || 0;
-  const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
 
   const generateOrderNumber = () => {
    
