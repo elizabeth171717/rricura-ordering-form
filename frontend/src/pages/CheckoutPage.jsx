@@ -53,6 +53,47 @@ const [datetimeTracked, setDatetimeTracked] = useState(false);
   const deliveryFee = deliveryInfo?.fee || 0;
   const total = finalCartTotal + tax + deliveryFee + (selectedTip || 0);
 
+ // ✅ GA4 checkout_customer_info
+useEffect(() => {
+  if (
+    customerInfoTracked ||
+    !customerName.trim() ||
+    !customerEmail.trim() ||
+    !customerPhone.trim() ||
+    cartItems.length === 0
+  ) {
+    return;
+  }
+
+  pushToDataLayer("checkout_customer_info", {
+    event: "checkout_customer_info",
+    ecommerce: {
+      currency: "USD",
+      value: cartTotal,
+      items: cartItems.map((item) => ({
+        item_id: item.id,
+        item_name: item.name || item.filling,
+        item_category: item.type,
+        price: item.price,
+        quantity: item.quantity,
+        wrapper: item.wrapper || undefined,
+        sauce: item.sauce || undefined,
+        size: item.size || undefined,
+      })),
+    },
+  });
+
+  console.log("👤 GA4 checkout_customer_info");
+
+  setCustomerInfoTracked(true);
+}, [
+  customerName,
+  customerEmail,
+  customerPhone,
+  customerInfoTracked,
+  cartItems,
+  cartTotal,
+]);
 
   // ✅ GA4 checkout_datetime
 useEffect(() => {
@@ -133,48 +174,7 @@ useEffect(() => {
       return;
     }
 
-   // ✅ GA4 checkout_customer_info
-useEffect(() => {
-  if (
-    customerInfoTracked ||
-    !customerName.trim() ||
-    !customerEmail.trim() ||
-    !customerPhone.trim() ||
-    cartItems.length === 0
-  ) {
-    return;
-  }
-
-  pushToDataLayer("checkout_customer_info", {
-    event: "checkout_customer_info",
-    ecommerce: {
-      currency: "USD",
-      value: cartTotal,
-      items: cartItems.map((item) => ({
-        item_id: item.id,
-        item_name: item.name || item.filling,
-        item_category: item.type,
-        price: item.price,
-        quantity: item.quantity,
-        wrapper: item.wrapper || undefined,
-        sauce: item.sauce || undefined,
-        size: item.size || undefined,
-      })),
-    },
-  });
-
-  console.log("👤 GA4 checkout_customer_info");
-
-  setCustomerInfoTracked(true);
-}, [
-  customerName,
-  customerEmail,
-  customerPhone,
-  customerInfoTracked,
-  cartItems,
-  cartTotal,
-]);
-
+   
     const orderNumber = generateOrderNumber();
     setIsSubmitting(true);
 
@@ -209,7 +209,7 @@ const now = new Date();
       customerMessage: customerMessage,
     };
 
- 
+
 
     // ✅ GA4 add_payment_info (right before sending them to Stripe)
     pushToDataLayer("add_payment_info", {
