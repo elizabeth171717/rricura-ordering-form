@@ -35,6 +35,57 @@ const Checkout = () => {
   const [couponError, setCouponError] = useState("");
   const [customerMessage, setCustomerMessage] = useState("");
 
+
+const [customerInfoTracked, setCustomerInfoTracked] = useState(false);
+const [datetimeTracked, setDatetimeTracked] = useState(false);
+
+// ✅ GA4 checkout_datetime
+useEffect(() => {
+  if (
+    orderType === "monday" ||
+    !selectedDate ||
+    !selectedTime ||
+    datetimeTracked ||
+    cartItems.length === 0
+  ) {
+    return;
+  }
+
+  pushToDataLayer("checkout_datetime", {
+    event: "checkout_datetime",
+    ecommerce: {
+      currency: "USD",
+      value: total,
+      items: cartItems.map((item) => ({
+        item_id: item.id,
+        item_name: item.name || item.filling,
+        item_category: item.type,
+        price: item.price,
+        quantity: item.quantity,
+        wrapper: item.wrapper || undefined,
+        sauce: item.sauce || undefined,
+        size: item.size || undefined,
+      })),
+    },
+    delivery_date: selectedDate.toDateString(),
+    delivery_time: selectedTime,
+  });
+
+  console.log("📅 GA4 checkout_datetime:", {
+    date: selectedDate.toDateString(),
+    time: selectedTime,
+  });
+
+  setDatetimeTracked(true);
+}, [
+  selectedDate,
+  selectedTime,
+  orderType,
+  datetimeTracked,
+  cartItems,
+  total,
+]);
+
   const taxRate = 0.08;
 
   useEffect(() => {
@@ -79,6 +130,48 @@ const Checkout = () => {
       return;
     }
 
+   // ✅ GA4 checkout_customer_info
+useEffect(() => {
+  if (
+    customerInfoTracked ||
+    !customerName.trim() ||
+    !customerEmail.trim() ||
+    !customerPhone.trim() ||
+    cartItems.length === 0
+  ) {
+    return;
+  }
+
+  pushToDataLayer("checkout_customer_info", {
+    event: "checkout_customer_info",
+    ecommerce: {
+      currency: "USD",
+      value: cartTotal,
+      items: cartItems.map((item) => ({
+        item_id: item.id,
+        item_name: item.name || item.filling,
+        item_category: item.type,
+        price: item.price,
+        quantity: item.quantity,
+        wrapper: item.wrapper || undefined,
+        sauce: item.sauce || undefined,
+        size: item.size || undefined,
+      })),
+    },
+  });
+
+  console.log("👤 GA4 checkout_customer_info");
+
+  setCustomerInfoTracked(true);
+}, [
+  customerName,
+  customerEmail,
+  customerPhone,
+  customerInfoTracked,
+  cartItems,
+  cartTotal,
+]);
+
     const orderNumber = generateOrderNumber();
     setIsSubmitting(true);
 
@@ -113,20 +206,7 @@ const now = new Date();
       customerMessage: customerMessage,
     };
 
-    // ✅ GA4 begin_checkout
-    pushToDataLayer("begin_checkout", {
-      event: "begin_checkout",
-      ecommerce: {
-        currency: "USD",
-        value: total, // total order value (quantity × basePrice)
-        items: cartItems.map((item) => ({
-          item_name: item.name || item.filling, // ✅ same naming as add_to_cart
-          item_category: item.type, // ✅ same
-          price: item.price, // ✅ already your calculated order price
-          quantity: item.quantity, // ✅ same
-        })),
-      },
-    });
+ 
 
     // ✅ GA4 add_payment_info (right before sending them to Stripe)
     pushToDataLayer("add_payment_info", {

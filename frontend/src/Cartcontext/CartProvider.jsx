@@ -57,18 +57,111 @@ const addToCart = (newItem) => {
 };
 
   const removeFromCart = (indexToRemove) => {
-    setCartItems((prev) => prev.filter((_, index) => index !== indexToRemove));
-  };
+  setCartItems((prev) => {
+    const removedItem = prev[indexToRemove];
 
-  const updateQuantity = (id, options, quantity) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id && item.options === options
-          ? { ...item, quantity }
-          : item
-      )
+    if (!removedItem) return prev;
+
+    pushToDataLayer("remove_from_cart", {
+      event: "remove_from_cart",
+      ecommerce: {
+        currency: "USD",
+        value: removedItem.price * removedItem.quantity,
+        items: [
+          {
+            item_id: removedItem.id,
+            item_name: removedItem.name || removedItem.filling,
+            item_category: removedItem.type,
+            price: removedItem.price,
+            quantity: removedItem.quantity,
+            wrapper: removedItem.wrapper || undefined,
+            sauce: removedItem.sauce || undefined,
+            size: removedItem.size || undefined,
+          },
+        ],
+      },
+    });
+
+    return prev.filter((_, index) => index !== indexToRemove);
+  });
+};
+
+
+const updateQuantity = (id, options, quantity) => {
+  setCartItems((prev) => {
+    const existingItem = prev.find(
+      (item) => item.id === id && item.options === options
     );
-  };
+
+    if (!existingItem) return prev;
+
+    const oldQuantity = existingItem.quantity;
+
+    // Don't allow invalid quantities
+    if (quantity < 0) return prev;
+
+    // Quantity did not actually change
+    if (quantity === oldQuantity) return prev;
+
+    const quantityDifference = quantity - oldQuantity;
+
+    // Customer DECREASED quantity
+    if (quantityDifference < 0) {
+      const removedQuantity = Math.abs(quantityDifference);
+
+      pushToDataLayer("remove_from_cart", {
+        event: "remove_from_cart",
+        ecommerce: {
+          currency: "USD",
+          value: existingItem.price * removedQuantity,
+          items: [
+            {
+              item_id: existingItem.id,
+              item_name: existingItem.name || existingItem.filling,
+              item_category: existingItem.type,
+              price: existingItem.price,
+              quantity: removedQuantity,
+              wrapper: existingItem.wrapper || undefined,
+              sauce: existingItem.sauce || undefined,
+              size: existingItem.size || undefined,
+            },
+          ],
+        },
+      });
+    }
+
+    // Customer INCREASED quantity
+    if (quantityDifference > 0) {
+      const addedQuantity = quantityDifference;
+
+      pushToDataLayer("add_to_cart", {
+        event: "add_to_cart",
+        ecommerce: {
+          currency: "USD",
+          value: existingItem.price * addedQuantity,
+          items: [
+            {
+              item_id: existingItem.id,
+              item_name: existingItem.name || existingItem.filling,
+              item_category: existingItem.type,
+              price: existingItem.price,
+              quantity: addedQuantity,
+              wrapper: existingItem.wrapper || undefined,
+              sauce: existingItem.sauce || undefined,
+              size: existingItem.size || undefined,
+            },
+          ],
+        },
+      });
+    }
+
+    return prev.map((item) =>
+      item.id === id && item.options === options
+        ? { ...item, quantity }
+        : item
+    );
+  });
+};
 
   const clearCart = () => setCartItems([]);
 

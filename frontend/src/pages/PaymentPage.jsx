@@ -7,6 +7,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "../stripe";
 import CheckoutForm from "../components/CheckoutForm";
 import axios from "axios";
+import { pushToDataLayer } from "../analytics/gtmEvents";
 import { BACKEND_URL } from "../constants/constants";
 
 console.log("📦 Backend URL:", BACKEND_URL);
@@ -22,6 +23,38 @@ const PaymentPage = () => {
 
   const { orderData } = location.state || {};
   const [clientSecret, setClientSecret] = useState("");
+
+  // =========================================================
+  // GA4 view_payment
+  // Fires when customer reaches the payment page
+  // =========================================================
+  useEffect(() => {
+    if (!orderData || !orderData.total || !orderData.items?.length) {
+      return;
+    }
+
+    pushToDataLayer("view_payment", {
+      event: "view_payment",
+      ecommerce: {
+        currency: "USD",
+        value: orderData.total,
+
+        items: orderData.items.map((item) => ({
+          item_id: item.id,
+          item_name: item.name || item.filling,
+          item_category: item.type,
+          price: item.price,
+          quantity: item.quantity,
+          wrapper: item.wrapper || undefined,
+          sauce: item.sauce || undefined,
+          size: item.size || undefined,
+        })),
+      },
+    });
+
+    console.log("💳 GA4 view_payment:", orderData);
+  }, [orderData]);
+
 
   useEffect(() => {
     if (orderData?.total && orderData?.customerEmail) {
