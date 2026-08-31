@@ -38,7 +38,12 @@ const HomePage = () => {
           content="World cup Tamales catering in Atlanta, We cater Authentic Mexican Tamales in Brookhaven, GA and nearby areas. Perfect for events of all sizes."
         />
       </Helmet>
+<div className="marquee">
+  <div className="marquee-content">
+ Important Event coming up? Your guests want tamales 🫔 Feed from 12 up to 1000 guests & more!!!
 
+  </div>
+</div>
       <Navigation />
 
       <div className="sections-container">
