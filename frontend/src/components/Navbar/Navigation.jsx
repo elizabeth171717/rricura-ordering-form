@@ -12,6 +12,12 @@ const Navigation = () => {
 
   return (
     <>
+    <div className="marquee">
+      <div className="marquee-content">
+     Important Event coming up? Your guests want tamales 🫔 Feed from 12 up to 1000 guests & more!!!
+    
+      </div>
+    </div>
       <div className="navigation">
         <Link to="/">
           <img className="logo" src="/logo.png" alt="Logo" />
