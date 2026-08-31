@@ -40,12 +40,7 @@ const HomePage = () => {
       </Helmet>
 
       <Navigation />
-<div className="marquee">
-  <div className="marquee-content">
- Important Event coming up? Your guests want tamales 🫔 Feed from 12 up to 1000 guests & more!!!
 
-  </div>
-</div>
       <div className="sections-container">
         <section className="contaniner hero-section">
           <div className="text-container">
