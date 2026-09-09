@@ -142,23 +142,6 @@ url('../src/assets/bannerimg.png');
   }
 }
 
-.bouncing-pointer {
-  font-size: 2.5rem;
-  margin-left: 50%;
-  animation: bounce 1s infinite;
-  display: block;
- 
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(10px);
-  }
-}
 
 
 .home-btn{
