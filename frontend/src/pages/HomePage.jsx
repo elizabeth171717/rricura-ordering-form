@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { faHandPointDown } from "@fortawesome/free-solid-svg-icons";
+
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navbar/Navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,13 +9,13 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import myVideo from "../assets/ordervideo.mp4";
-import ORDERCHICKEN from "../assets/ORDERCHICKEN.png";
 
-import MondaySmallScreen from "../assets/monday-small-screen.png";
-import MondayBigScreen from "../assets/monday-big-screen.png";
-import WholesaleBigScreen from "../assets/wholesalebigscreen.png";
-import WholesaleSmallScreen from "../assets/wholesalesmallscreen.png";
+import BEANSRICE from "../assets/b&r.jpg";
+import MOLE from "../assets/mole.jpg";
+import PORKMOLE from "../assets/porkmole.jpg";
+import BUFFET from "../assets/buffet.jpg";
+import TOSTADA from "../assets/tostada.jpg";
+import AGUAS from "../assets/aguas.jpg";
 import ImgGallery1 from "../assets/chickengreencorn.jpg";
 import ImgGallery2 from "../assets/bananaleafchicken.jpg";
 import ImgGallery3 from "../assets/pintotamale.jpg";
@@ -97,8 +97,19 @@ const HomePage = () => {
 </a>
             </div>
             <div className="hero-title">
-              <h2>Tamale Catering in Brookhaven & Atlanta, GA</h2>
+              <h1>Mexican Food Catering in Brookhaven & Atlanta, GA</h1>
             </div>
+  <div className="hero-btn">
+              
+              <Link to="/menu" className="home-btn">
+                MENU
+              </Link>
+              <Link to="/OnlineOrdering" className="home-btn">
+                ORDER NOW
+              </Link>
+             
+            </div>
+            
             <div className="hero-descrition">
   <p className="desciption-title" >Perfect for</p>
 
@@ -135,120 +146,19 @@ const HomePage = () => {
     ))}
   </div>
 </div>
-            <div className="hero-btn">
-              <FontAwesomeIcon
-                icon={faHandPointDown}
-                className="bouncing-pointer"
-                style={{ color: "white" }}
-              />
-              <Link to="/menu" className="home-btn">
-                MENU
-              </Link>
-              <Link to="/OnlineOrdering" className="home-btn">
-                ORDER NOW
-              </Link>
-             
-            </div>
-             
-          </div>
-          <div className="graphic-container">
-            {" "}
-            <div className="hero-img">
-              <img
-                src="https://res.cloudinary.com/dadjbgtb5/image/upload/f_auto,q_auto,w_1600/v1773539283/tamalestray_w4rra2.png"
-                alt="tray of tamales in corn husks"
-                loading="eager"
-              />
-            </div>
-          </div>
+           </div>
         </section>{" "}
-       
-<section className="monday-special">
-  <Link to="/monday-special">
-    <picture>
-      <source media="(min-width: 768px)" srcSet={MondayBigScreen} />
-      <img
-        src={MondaySmallScreen}
-        alt="Rajas tamales , cheese and pepper in corn husk on the make"
-      />
-    </picture>
-  </Link>
-</section>
 
-<section className="wholesale-special">
-  <Link to="/wholesale">
-    <picture>
-      <source media="(min-width: 768px)" srcSet={WholesaleBigScreen} />
-      <img
-        src={WholesaleSmallScreen}
-        alt="Rajas tamales , cheese and pepper in corn husk on the make"
-      />
-    </picture>
-  </Link>
-</section>
+  
+ 
 
-        {/* 🔥 New Local SEO Section (Added for Google) */}
-        <section className="contaniner about-section">
-          <div className="text-container">
-            <h2>We cater the best Mexican Tamales in Atlanta</h2>
-            <p className="paragraph-text">
-              Rricura Tamales proudly offers authentic Mexican tamale catering
-              in Brookhaven, Atlanta, and surrounding areas. We specialize in
-              handmade tamales prepared fresh and delivered hot to your door for
-              family gatherings, office lunches, parties, and special events. We
-              offer Local delivery with advance notice to ensure freshness and
-              quality. 
-            </p>
-          </div>
-          <div className="graphic-container">
-            <Link to="/OnlineOrdering">
-              <img
-                src={ORDERCHICKEN}
-                alt="chicken tamales with red sauce in the making"
-              />
-            </Link>
-          </div>
-        </section>
-        <section className="contaniner video-section">
-          <div className="text-container">
-            <h2>HOW TO ORDER </h2>
-            <p className="paragraph-text">
-              Our tamales are perfect for birthdays, holidays, office catering,
-              family events, and weekend gatherings. Customers love our simple
-              online ordering process and reliable local delivery throughout the
-              Atlanta area.
-            </p>
-            <div className="list">
-              <p className="paragraph-text">
-                ✅ Choose your tamale flavors & quantity..
-              </p>
-              <p className="paragraph-text">
-                ✅ Select your delivery date and time.
-              </p>
-              <p className="paragraph-text">
-                ✅ We prepare your order fresh and deliver it hot & ready.
-              </p>
-            </div>
-            <Link to="/OnlineOrdering" className="home-btn">
-              ORDER NOW
-            </Link>
-          </div>
-          <div className="graphic-container">
-            <video width="100%" height="auto" controls>
-              <source src={myVideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </section>
+     
+
         <section className="container">
           <div className="text-container">
-            <h2>OUR MENU</h2>
-            <p className="paragraph-text">
-              We offer traditional tamales: Chicken, Pork, Rajas, Black Beans,
-              Chipillin, Sweet and Fruits. As well as specialty Tamales: Vegan .
-              Make it a combo, add salsa verde and aguas frescas for the full
-              expirience.
-            </p>
+            
+             <h2>Hosting an event soon? Don't settle for boring party platters.
+             Let’s be honest—Mexican food is what your guests actually want!</h2>
           </div>
           <div className="graphic-container">
             <div className="gallery">
@@ -256,13 +166,24 @@ const HomePage = () => {
                 src={ImgGallery1}
                 alt="Chicken tamales with green sauce in corn husk on the make"
               />
+              <img
+                src={MOLE}
+                alt="Rajas tamales , cheese and pepper in corn husk"
+              />
+              <img
+                src={AGUAS}
+                alt="Chicken tamales with red sauce in corn husk on the make"
+              />
               <img src={ImgGallery2} alt="Banana leaf tamale" />
+               <img src={BEANSRICE} alt="Banana leaf tamale" />
               <img src={ImgGallery3} alt="Black bean tamales in a plate" />
               <img
                 src={ImgGallery4}
                 alt="single corn husk tamales in a plate"
               />
+              <img src={PORKMOLE} alt="Banana leaf tamale" />
               <img src={ImgGallery5} alt="Single banan leaf tamale i a plate" />
+              <img src={TOSTADA} alt="Banana leaf tamale" />
               <img src={ImgGallery6} alt="Bulk of red sweet tamales" />
               <img
                 src={ImgGallery7}
@@ -272,6 +193,7 @@ const HomePage = () => {
                 src={ImgGallery8}
                 alt="Chicken tamales with red sauce in corn husk on the make"
               />
+               <img src={BUFFET} alt="Banana leaf tamale" />
             </div>
           </div>
         </section>

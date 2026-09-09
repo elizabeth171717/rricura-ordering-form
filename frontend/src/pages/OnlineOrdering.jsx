@@ -1,12 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
 import Navigation from "../components/Navbar/Navigation";
+
 import Footer from "../components/Footer/Footer";
 
 const OnlineOrdering = () => {
   return (
     <>
       <Navigation />
-
+      <div className="title-container">
+<h3>DROP-OFF CATERING AVIALABLE 6 DAYS A WEEK "MONDAY- SATURDAY"  FROM 8:00AM  TO 9:00PM .
+             </h3>
+</div>
       {/* 🔁 CATEGORY TOGGLE — ALWAYS VISIBLE */}
       <div className="category-toggle">
         <NavLink
@@ -16,7 +20,16 @@ const OnlineOrdering = () => {
             isActive ? "category-link active" : "category-link"
           }
         >
-          🫔 Tamales
+          Tamales
+        </NavLink>
+
+<NavLink
+          to="guisados"
+          className={({ isActive }) =>
+            isActive ? "category-link active" : "category-link"
+          }
+        >
+          Guisados
         </NavLink>
 
         <NavLink
@@ -25,7 +38,7 @@ const OnlineOrdering = () => {
             isActive ? "category-link active" : "category-link"
           }
         >
-          🥤 Drinks
+           Drinks
         </NavLink>
 
         <NavLink
@@ -34,7 +47,7 @@ const OnlineOrdering = () => {
             isActive ? "category-link active" : "category-link"
           }
         >
-          🥣 Sides
+           Sides
         </NavLink>
 
         <NavLink
@@ -43,7 +56,7 @@ const OnlineOrdering = () => {
             isActive ? "category-link active" : "category-link"
           }
         >
-          🌽 Antojos
+           Antojos
         </NavLink>
         <NavLink
           to="soups"
@@ -59,7 +72,7 @@ const OnlineOrdering = () => {
       <div className="step-container">
         <Outlet />
       </div>
-
+    
       <Footer />
     </>
   );

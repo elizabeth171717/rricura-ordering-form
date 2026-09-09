@@ -61,31 +61,42 @@ gap: 1rem;
 background-color: var(--brand-primary); /* or brand color */
 display: flex;
 flex-direction: column;
-
+background-image: 
+linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+url('../src/assets/bannerimg.png');
+ background-size: cover;
+  background-position: center;
 }
-
-/**HERO-SECTION**/
-.hero-section .text-container{
-
-background-image: url('../assets/world-cup.jpg');
-
-}
-
-
 
 .hero-title {
   opacity: 0;
   transform: translateX(-50px);
   animation: slideInLeft 0.8s ease-out forwards;
-  animation-delay: 0.2s; /* optional delay */
-background-color: var(--white);
-color: var(--brand-primary);
-padding: 2rem;
-text-align: center;
-border-radius: 50%;
+  animation-delay: 0.2s;
+
+  color: var(--white);
+
+  font-size: clamp(1.85rem, 2.5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+
+  text-align: center;
+
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+
+  /* Makes the letters pop against the food */
+  text-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.8),
+    0 6px 20px rgba(0, 0, 0, 0.55);
 }
+
+
 .hero-descrition {
   display: flex;
+  align-items: center;
   gap: 8px;
   font-size: 1.50rem;
 }
@@ -330,6 +341,10 @@ gap: 1rem;
   background: #f2f2f2;
   color: var(--text-primary);
  font-weight: bold;
+}
+
+.title-container{
+text-align: center;
 }
 
 .category-link.active {

@@ -5,7 +5,7 @@ import { faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 import CartDrawer from "../CartDrawer/CartDrawer";
-import OPEN from "../../assets/open.png";
+import MEXICANFLAG from "../../assets/mexicanflag.png";
 const Navigation = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { cartCount } = useContext(CartContext); // comes straight from context
@@ -14,7 +14,7 @@ const Navigation = () => {
     <>
     <div className="marquee">
       <div className="marquee-content">
-     Important Event coming up? Your guests want tamales 🫔 Feed from 12 up to 1000 guests & more!!!
+     Important Event coming up? Your guests want "AUTHENTIC MEXICAN FOOD" Feed from 10 up to 1000 guests or more!!!
     
       </div>
     </div>
@@ -24,7 +24,7 @@ const Navigation = () => {
            
         </Link>
           <img  style={{ width: "50px" }}
-                src={OPEN}
+                src={MEXICANFLAG}
                 alt=""
 
               />

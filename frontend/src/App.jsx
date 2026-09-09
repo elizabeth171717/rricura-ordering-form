@@ -24,7 +24,7 @@ import DrinkSection from "./components/DrinkSection";
 import AntojosSection from "./components/AntojosSection";
 import SidesSection from "./components/SideSection";
 import SoupsSection from "./components/SoupsSection";
-
+import Guisados from "./components/Guisados";
 // Cart Context
 import { CartProvider } from "./Cartcontext/CartProvider";
 
@@ -74,6 +74,7 @@ function App() {
             <Route path="sides" element={<SidesSection />} />
             <Route path="antojos" element={<AntojosSection />} />
             <Route path="soups" element={<SoupsSection />} />
+            <Route path="guisados" element={<Guisados />} />
           </Route>
 
           {/* ✅ SAFETY REDIRECT */}

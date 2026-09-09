@@ -11,6 +11,7 @@ import sweetTamaleImg from "../assets/sweettamale.png";
 import blackBeanImg from "../assets/blackbean.jpg";
 import salsaVerde from "../assets/salsaverde.jpg";
 import IngredientsModal from "./Modal/Ingridients";
+
 // Cart Context
 
 import { CartContext } from "../Cartcontext/CartContext"; // <- use the context, NOT the provider
@@ -576,6 +577,8 @@ setShowPopup(true); // ✅ only runs if added
         isOpen={isIngredientsOpen}
         onClose={() => setIsIngredientsOpen(false)}
       />
+
+      
     </div>
   );
 };
