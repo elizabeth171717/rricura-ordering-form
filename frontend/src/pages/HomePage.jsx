@@ -9,7 +9,7 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-
+import BARBACOA3 from "../assets/barbacoa3.jpg";
 import BEANSRICE from "../assets/b&r.jpg";
 import MOLE from "../assets/mole.jpg";
 import PORKMOLE from "../assets/porkmole.jpg";
@@ -187,6 +187,10 @@ const HomePage = () => {
               <img src={ImgGallery6} alt="Bulk of red sweet tamales" />
               <img
                 src={ImgGallery7}
+                alt="Rajas tamales , cheese and pepper in corn husk"
+              />
+              <img
+                src={BARBACOA3}
                 alt="Rajas tamales , cheese and pepper in corn husk"
               />
               <img

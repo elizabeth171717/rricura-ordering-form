@@ -126,25 +126,39 @@ if (!success) {
       {/* Quantity picker */}
       <PeopleCount value={quantity} setPeople={setQuantity} />
 
-      {/* Drinks selection grid */}
-      <div className="grid-container">
-        <div className="grid">
-          {allGuisados.map((guisado) => (
-            <div
-              key={guisado.id}
-              className={`option-card ${
-                selectedGuisado?.id === guisado.id ? "selected" : ""
-              }`}
-              onClick={() => setSelectedGuisado(guisado)}
-            >
-              {guisado.image && (
-                <img src={guisado.image} alt={guisado.name} className="product-img" />
-              )}
-              <p>{guisado.name}</p>
-            </div>
-          ))}
-        </div>
+      
+{/* Guisados selection grid */}
+<div className="guisados-container">
+  {allGuisados.map((guisado) => (
+    <div
+      key={guisado.id}
+      className={`guisado-card ${
+        selectedGuisado?.id === guisado.id ? "selected" : ""
+      }`}
+      onClick={() => setSelectedGuisado(guisado)}
+    >
+      {guisado.image && (
+        <img
+          src={guisado.image}
+          alt={guisado.name}
+          className="guisado-img"
+        />
+      )}
+
+      <div className="guisado-info">
+        <p className="guisado-name">{guisado.name}</p>
+
+        {guisado.description && (
+          <p className="guisado-description">
+            {guisado.description}
+          </p>
+        )}
       </div>
+    </div>
+  ))}
+</div>
+
+
 
       {/* Summary + Add to Cart */}
       {isReady && showStickySummary && (
@@ -158,9 +172,7 @@ if (!success) {
             <p>
               {quantity} {selectedGuisado.name} — ${subtotal}
             </p>
-            {selectedGuisado.description && (
-              <p className="description">{selectedGuisado.description}</p>
-            )}
+           
             <button onClick={handleAddToCart} className="add-btn">
               Add to Cart
             </button>
