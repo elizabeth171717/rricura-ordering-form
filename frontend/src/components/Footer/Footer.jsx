@@ -6,6 +6,7 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "./Footer.css";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -52,6 +53,12 @@ const Footer = () => {
             style={{ fontSize: "1.50rem" }}
           />
         </a>
+        <a href="mailto:rricura828@gmail.com">
+  <FontAwesomeIcon
+    icon={faEnvelope}
+    style={{ fontSize: "1.50rem"}}
+  />
+</a>
       </div>
     </footer>
   );

@@ -58,7 +58,6 @@ gap: 1rem;
 /**HERO-SECTION**/
 .hero-section{
 
-background-color: var(--brand-primary); /* or brand color */
 display: flex;
 flex-direction: column;
 background-image: 

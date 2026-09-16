@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import ORDERRAJAS from "../assets/ORDERRAJAS.png";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import BARBACOA3 from "../assets/barbacoa3.jpg";
@@ -96,6 +97,12 @@ const HomePage = () => {
 >
   <FontAwesomeIcon
     icon={faGoogle}
+    style={{ fontSize: "1.75rem", color: "white" }}
+  />
+</a>
+<a href="mailto:rricura828@gmail.com">
+  <FontAwesomeIcon
+    icon={faEnvelope}
     style={{ fontSize: "1.75rem", color: "white" }}
   />
 </a>
