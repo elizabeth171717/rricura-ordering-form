@@ -203,34 +203,301 @@ justify-content: center;
 /**FULL-TEXT**/
 
 /**GALLERY**/
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* small screens default 2 columns */
-  gap: 10px; /* space between images */
-  padding: 10px;
-}
+/* ================================
+   RRICURA MODERN FOOD GALLERY
+   Mobile First
+================================ */
 
-.gallery img {
+.graphic-container {
   width: 100%;
-  height: auto;
+  overflow: hidden;
+  padding: 20px 0 35px;
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+/* Every image becomes a floating card */
+.gallery img {
+  position: absolute;
+  width: 72%;
+  max-width: 330px;
+  height: 330px;
+
   object-fit: cover;
-  border-radius: 10px; /* optional rounded corners */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* optional shadow */
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.22),
+    0 5px 15px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+
+  animation: galleryFloat 20s infinite ease-in-out;
+
+  will-change: transform, opacity;
 }
 
-/* Medium screens (tablet, >=768px) → 3 columns */
-@media (min-width: 768px) {
-  .gallery {
-    grid-template-columns: repeat(3, 1fr);
+/* Different starting positions create depth */
+.gallery img:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.gallery img:nth-child(2) {
+  animation-delay: -1s;
+}
+
+.gallery img:nth-child(3) {
+  animation-delay: -2s;
+}
+
+.gallery img:nth-child(4) {
+  animation-delay: -3s;
+}
+
+.gallery img:nth-child(5) {
+  animation-delay: -4s;
+}
+
+.gallery img:nth-child(6) {
+  animation-delay: -5s;
+}
+
+.gallery img:nth-child(7) {
+  animation-delay: -6s;
+}
+
+.gallery img:nth-child(8) {
+  animation-delay: -7s;
+}
+
+.gallery img:nth-child(9) {
+  animation-delay: -8s;
+}
+
+.gallery img:nth-child(10) {
+  animation-delay: -9s;
+}
+
+.gallery img:nth-child(11) {
+  animation-delay: -10s;
+}
+
+.gallery img:nth-child(12) {
+  animation-delay: -11s;
+}
+
+.gallery img:nth-child(13) {
+  animation-delay: -12s;
+}
+
+.gallery img:nth-child(14) {
+  animation-delay: -13s;
+}
+
+.gallery img:nth-child(15) {
+  animation-delay: -14s;
+}
+
+.gallery img:nth-child(16) {
+  animation-delay: -15s;
+}
+
+.gallery img:nth-child(17) {
+  animation-delay: -16s;
+}
+
+.gallery img:nth-child(18) {
+  animation-delay: -17s;
+}
+
+.gallery img:nth-child(19) {
+  animation-delay: -18s;
+}
+
+.gallery img:nth-child(20) {
+  animation-delay: -19s;
+}
+
+
+/* ==================================
+   THE ANIMATION
+================================== */
+
+@keyframes galleryFloat {
+
+  /* Hidden / far behind */
+  0% {
+    opacity: 0;
+    transform:
+      translateX(110%)
+      translateY(15px)
+      rotate(8deg)
+      scale(0.72);
+    z-index: 1;
+  }
+
+  /* Coming into view */
+  8% {
+    opacity: 0.55;
+    transform:
+      translateX(55%)
+      translateY(5px)
+      rotate(5deg)
+      scale(0.82);
+    z-index: 2;
+  }
+
+  /* Left side */
+  18% {
+    opacity: 0.75;
+    transform:
+      translateX(-65%)
+      translateY(5px)
+      rotate(-5deg)
+      scale(0.82);
+    z-index: 2;
+  }
+
+  /* Moving toward center */
+  28% {
+    opacity: 1;
+    transform:
+      translateX(-18%)
+      translateY(0)
+      rotate(-2deg)
+      scale(0.94);
+    z-index: 4;
+  }
+
+  /* CENTER HERO */
+  40% {
+    opacity: 1;
+    transform:
+      translateX(0)
+      translateY(-5px)
+      rotate(0deg)
+      scale(1);
+    z-index: 10;
+  }
+
+  /* Hold */
+  55% {
+    opacity: 1;
+    transform:
+      translateX(0)
+      translateY(-5px)
+      rotate(0deg)
+      scale(1);
+    z-index: 10;
+  }
+
+  /* Leave toward left */
+  68% {
+    opacity: 0.75;
+    transform:
+      translateX(-65%)
+      translateY(5px)
+      rotate(-5deg)
+      scale(0.82);
+    z-index: 3;
+  }
+
+  /* Disappear */
+  80% {
+    opacity: 0;
+    transform:
+      translateX(-120%)
+      translateY(15px)
+      rotate(-8deg)
+      scale(0.7);
+    z-index: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translateX(-120%)
+      translateY(15px)
+      rotate(-8deg)
+      scale(0.7);
+    z-index: 1;
   }
 }
 
-/* Large screens (desktop, >=1024px) → 4 columns */
-@media (min-width: 1024px) {
+
+/* ==================================
+   TABLET
+================================== */
+
+@media (min-width: 600px) {
+
+  .graphic-container {
+    padding: 30px 0 50px;
+  }
+
   .gallery {
-    grid-template-columns: repeat(4, 1fr);
+    height: 500px;
+  }
+
+  .gallery img {
+    width: 58%;
+    max-width: 390px;
+    height: 390px;
+    border-radius: 28px;
   }
 }
+
+
+/* ==================================
+   DESKTOP
+================================== */
+
+@media (min-width: 1000px) {
+
+  .graphic-container {
+    padding: 40px 0;
+  }
+
+  .gallery {
+    height: 560px;
+  }
+
+  .gallery img {
+    width: 430px;
+    height: 430px;
+    border-radius: 30px;
+  }
+}
+
+
+/* ==================================
+   REDUCE MOTION
+   Accessibility
+================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .gallery img {
+    animation: none;
+    opacity: 0;
+  }
+
+  .gallery img:first-child {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /**GALLERY**/
 
 

@@ -22,9 +22,13 @@ import ImgGallery3 from "../assets/pintotamale.jpg";
 import ImgGallery4 from "../assets/holiday.jpg";
 import ImgGallery5 from "../assets/family.jpg";
 import ImgGallery6 from "../assets/sweettamale.png";
-
 import ImgGallery7 from "../assets/rajas.jpg";
 import ImgGallery8 from "../assets/chickentamale.jpg";
+import ImgGallery9 from "../assets/porkrajastamales.jpg";
+import ImgGallery10 from "../assets/tamalesmasa.jpg";
+import ImgGallery11 from "../assets/uncookedbarbacoa.jpg";
+import ImgGallery12 from "../assets/barbacoaplate.jpg";
+import ImgGallery13 from "../assets/barbacoabuffet.jpg";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import Footer from "../components/Footer/Footer";
 
@@ -163,6 +167,10 @@ const HomePage = () => {
           <div className="graphic-container">
             <div className="gallery">
               <img
+                src={ImgGallery13}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
+              <img
                 src={ImgGallery1}
                 alt="Chicken tamales with green sauce in corn husk on the make"
               />
@@ -174,9 +182,17 @@ const HomePage = () => {
                 src={AGUAS}
                 alt="Chicken tamales with red sauce in corn husk on the make"
               />
+               <img
+                src={ImgGallery10}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
               <img src={ImgGallery2} alt="Banana leaf tamale" />
                <img src={BEANSRICE} alt="Banana leaf tamale" />
               <img src={ImgGallery3} alt="Black bean tamales in a plate" />
+               <img
+                src={ImgGallery11}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
               <img
                 src={ImgGallery4}
                 alt="single corn husk tamales in a plate"
@@ -184,6 +200,10 @@ const HomePage = () => {
               <img src={PORKMOLE} alt="Banana leaf tamale" />
               <img src={ImgGallery5} alt="Single banan leaf tamale i a plate" />
               <img src={TOSTADA} alt="Banana leaf tamale" />
+               <img
+                src={ImgGallery12}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
               <img src={ImgGallery6} alt="Bulk of red sweet tamales" />
               <img
                 src={ImgGallery7}
@@ -197,7 +217,11 @@ const HomePage = () => {
                 src={ImgGallery8}
                 alt="Chicken tamales with red sauce in corn husk on the make"
               />
-               <img src={BUFFET} alt="Banana leaf tamale" />
+               <img
+                src={ImgGallery9}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
+             
             </div>
           </div>
         </section>
