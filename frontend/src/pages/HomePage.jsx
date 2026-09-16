@@ -166,10 +166,7 @@ const HomePage = () => {
           </div>
           <div className="graphic-container">
             <div className="gallery">
-              <img
-                src={ImgGallery13}
-                alt="Chicken tamales with green sauce in corn husk on the make"
-              />
+             
               <img
                 src={ImgGallery1}
                 alt="Chicken tamales with green sauce in corn husk on the make"
@@ -221,7 +218,10 @@ const HomePage = () => {
                 src={ImgGallery9}
                 alt="Chicken tamales with green sauce in corn husk on the make"
               />
-             
+              <img
+                src={ImgGallery13}
+                alt="Chicken tamales with green sauce in corn husk on the make"
+              />
             </div>
           </div>
         </section>
