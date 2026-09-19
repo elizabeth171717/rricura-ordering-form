@@ -1,6 +1,6 @@
-import React from "react";
-import { Helmet } from "react-helmet";
 
+import { Helmet } from "react-helmet";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navbar/Navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ import BARBACOA3 from "../assets/barbacoa3.jpg";
 import BEANSRICE from "../assets/b&r.jpg";
 import MOLE from "../assets/mole.jpg";
 import PORKMOLE from "../assets/porkmole.jpg";
-import BUFFET from "../assets/buffet.jpg";
+
 import TOSTADA from "../assets/tostada.jpg";
 import AGUAS from "../assets/aguas.jpg";
 import ImgGallery1 from "../assets/chickengreencorn.jpg";
@@ -34,6 +34,113 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import Footer from "../components/Footer/Footer";
 
 const HomePage = () => {
+const [currentIndex, setCurrentIndex] = useState(0);
+const [isPaused, setIsPaused] = useState(false);
+
+const testimonials = [
+  {
+    initials: "JM",
+    name: "Jose M.",
+   
+    text: "The chicken tostadas are the bomb!!!"
+  },
+  {
+    initials: "DR",
+    name: "Daniela R.",
+    text: "Rajas tamales are now my favorite tamales, 100% recommended."
+  },
+  {
+    initials: "SC",
+    name: "Susana C.",
+    
+    text: "Muy buenos, me recuerdan a los tamales de mi mama."
+  },
+  {
+    initials: "MS",
+    name: "Michael S.",
+   
+    text: "Best tamales I ever had!!"
+  },
+  {
+    initials: "AL",
+    name: "Angela L.",
+
+    text: "I catered tamales from rricura tamales for my babyshower , they were very good!."
+  },
+  {
+    initials: "CP",
+    name: "Carlos P.",
+
+    text: "Excellent choice, we ordered the pork pozole it was delicious!."
+  },
+  {
+    initials: "KN",
+    name: "Kevin N.",
+
+    text: "My kids loved the chicken empanadas!"
+  },
+  {
+    initials: "RB",
+    name: "Raquel B.",
+  
+    text: "Muy buenos, los recominedo."
+  },
+  {
+    initials: "JW",
+    name: "James W.",
+
+    text: "I ordered tamales and mole for my bday it was absolutely delicious."
+  },
+  {
+    initials: "LM",
+    name: "Laura M.",
+   
+    text: "Food Tastes like home"
+  },
+  {
+    initials: "AS",
+    name: "Alex S.",
+
+    text: "We had the pork tamales with green sauce, they were yummy."
+  },
+  {
+    initials: "TG",
+    name: "Tina G.",
+   
+    text: " I Highly recommend Rricura tamales, their mole is out of these world both chicken and pork."
+  }
+];
+
+useEffect(() => {
+  if (isPaused) return;
+
+  const interval = setInterval(() => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === testimonials.length - 1
+        ? 0
+        : prevIndex + 1
+    );
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [isPaused, testimonials.length]);
+
+const nextTestimonial = () => {
+  setCurrentIndex((prevIndex) =>
+    prevIndex === testimonials.length - 1
+      ? 0
+      : prevIndex + 1
+  );
+};
+
+const previousTestimonial = () => {
+  setCurrentIndex((prevIndex) =>
+    prevIndex === 0
+      ? testimonials.length - 1
+      : prevIndex - 1
+  );
+};
+
   return (
     <div className="homepage">
       <Helmet>
@@ -271,6 +378,131 @@ const HomePage = () => {
             </Link>
           </div>
         </section>
+
+
+
+<section className="testimonials" id="testimonials">
+
+  <div className="testimonials-heading">
+
+    <span className="section-eyebrow">
+      REAL EXPERIENCES
+    </span>
+
+    <h2>WHAT OUR COSTUMERS SAY</h2>
+
+    <p>
+      See why poeple choose Rricura for their important Events
+      
+    </p>
+
+  </div>
+
+
+  <div
+    className="testimonial-slider"
+    onMouseEnter={() => setIsPaused(true)}
+    onMouseLeave={() => setIsPaused(false)}
+    onTouchStart={() => setIsPaused(true)}
+    onTouchEnd={() => setIsPaused(false)}
+  >
+
+    <div
+      className="testimonial-track"
+      style={{
+        transform: `translateX(-${currentIndex * 100}%)`
+      }}
+    >
+
+      {testimonials.map((testimonial, index) => (
+
+        <article
+          className="testimonial-card"
+          key={index}
+        >
+
+          <div className="testimonial-top">
+
+            <div className="reviewer">
+
+              <div className="reviewer-avatar">
+                {testimonial.initials}
+              </div>
+
+              <div>
+                <h3>{testimonial.name}</h3>
+                <span>{testimonial.role}</span>
+              </div>
+
+            </div>
+
+
+            <div className="google-rating">
+
+              <span>Google</span>
+
+              <div className="stars">
+                ★★★★★
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <p className="testimonial-text">
+            “{testimonial.text}”
+          </p>
+
+        </article>
+
+      ))}
+
+    </div>
+
+
+    <button
+      className="testimonial-arrow testimonial-prev"
+      aria-label="Previous testimonial"
+      onClick={previousTestimonial}
+    >
+      <i className="fa-solid fa-arrow-left"></i>
+    </button>
+
+
+    <button
+      className="testimonial-arrow testimonial-next"
+      aria-label="Next testimonial"
+      onClick={nextTestimonial}
+    >
+      <i className="fa-solid fa-arrow-right"></i>
+    </button>
+
+  </div>
+
+
+  <div
+    className="testimonial-dots"
+    aria-label="Testimonial navigation"
+  >
+
+    {testimonials.map((_, index) => (
+
+      <button
+        key={index}
+        className={`testimonial-dot ${
+          index === currentIndex ? "active" : ""
+        }`}
+        aria-label={`Go to testimonial ${index + 1}`}
+        onClick={() => setCurrentIndex(index)}
+      />
+
+    ))}
+
+  </div>
+
+</section>
+
       </div>
       <Footer />
     </div>
