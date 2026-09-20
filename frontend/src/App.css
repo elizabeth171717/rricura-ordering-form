@@ -37,7 +37,7 @@
 }
 
 .text-container{
-  padding: 3rem 1rem;
+  padding: 2.5rem 1rem;
  display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,7 +61,6 @@ gap: 1rem;
 display: flex;
 flex-direction: column;
 background-image: 
-
 url('../src/assets/bannerimg.png');
  background-size: cover;
   background-position: center;
@@ -96,7 +95,7 @@ url('../src/assets/bannerimg.png');
 .hero-descrition {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   font-size: 1.50rem;
 }
 
@@ -144,42 +143,22 @@ url('../src/assets/bannerimg.png');
 
 
 .home-btn{
+
   display: inline-block;
 color: var(--white);
   padding: 1rem;
-
-  border-radius: 6px;
-  font-weight: bold;
+font-size: 1.5rem;
+  /* Makes the letters pop against the food */
+  text-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.8),
+    0 6px 20px rgba(0, 0, 0, 0.55);
+  font-weight: bolder;
+ text-decoration: overline;
 text-align: center;
-text-decoration:underline;
 }
 
 /**HERO-SECTION**/
 
-
-/**VIDEO-SECTION**/
-.video-section{
-  background-color: var(--brand-primary);
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
-  
-}
-
-.video-section .graphic-container{
-display: flex;
-justify-content: center;
-  align-items: center;
-  padding: 3rem;
-}
-
- video {
-  width: 70%;   /* make video responsive */
-  height: auto;  /* let it fill the container */
-  object-fit: cover; /* keeps aspect ratio */
-  border-radius: 12px; /* optional, just for style */
-}
-/**VIDEO-SECTION**/
 
 
 /**FULL-TEXT**/
