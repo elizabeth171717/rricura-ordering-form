@@ -14,7 +14,7 @@ const Navigation = () => {
     <>
     <div className="marquee">
       <div className="marquee-content">
-     Important Event coming up? Your guests want "AUTHENTIC MEXICAN FOOD" Feed from 10 up to 1000 guests or more!!!
+     ORDER YOUR THANKSGIVING TAMALES TODAY, AUTHENTIC MEXICAN FLAVOR FOR YOUR TABLE!!!
     
       </div>
     </div>

@@ -141,6 +141,30 @@ const previousTestimonial = () => {
   );
 };
 
+
+
+const [showMobileOrder, setShowMobileOrder] = useState(false);
+
+useEffect(() => {
+  const heroSection = document.querySelector(".hero-section");
+
+  if (!heroSection) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      // Show the button once the hero is no longer visible.
+      setShowMobileOrder(!entry.isIntersecting);
+    },
+    {
+      threshold: 0,
+    }
+  );
+
+  observer.observe(heroSection);
+
+  return () => observer.disconnect();
+}, []);
+
   return (
     <div className="homepage">
       <Helmet>
@@ -504,6 +528,16 @@ const previousTestimonial = () => {
 </section>
 
       </div>
+       {showMobileOrder && (
+        <Link
+          to="/OnlineOrdering"
+          className="mobile-sticky-order"
+          aria-label="Order Mexican food catering now"
+        >
+          ORDER NOW
+          <span aria-hidden="true"> →</span>
+        </Link>
+      )}
       <Footer />
     </div>
   );
