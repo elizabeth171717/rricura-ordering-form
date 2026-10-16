@@ -60,6 +60,7 @@ const Footer = () => {
   />
 </a>
       </div>
+      <p>Website by: <a href="https://www.facebook.com/liz.ramirez.96155/" target="_blank" rel="noopener noreferrer" className="my-name">Elizabeth TR </a></p>
     </footer>
   );
 };
