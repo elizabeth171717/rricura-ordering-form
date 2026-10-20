@@ -171,7 +171,7 @@ useEffect(() => {
         <title>The Best Tamales in Atlanta & Brookhaven</title>
         <meta
           name="description"
-          content="World cup Tamales catering in Atlanta, We cater Authentic Mexican Tamales in Brookhaven, GA and nearby areas. Perfect for events of all sizes."
+          content="Thanksgiving dinner delivered to your door hot & ready to eat."
         />
       </Helmet>
 
@@ -239,7 +239,7 @@ useEffect(() => {
 </a>
             </div>
             <div className="hero-title">
-              <h1>Mexican Food Catering in Brookhaven & Atlanta, GA</h1>
+              <h1>Thanksgiving dinner delivered to your door hot & ready to eat</h1>
             </div>
   <div className="hero-btn">
               
