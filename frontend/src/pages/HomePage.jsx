@@ -239,7 +239,7 @@ useEffect(() => {
 </a>
             </div>
             <div className="hero-title">
-              <h1>Thanksgiving dinner delivered to your door hot & ready to eat</h1>
+              <h1>TAMALES FOR THE HOLIDAYS</h1>
             </div>
   <div className="hero-btn">
               
