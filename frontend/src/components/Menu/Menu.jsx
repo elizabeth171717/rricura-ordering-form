@@ -3,7 +3,7 @@ import Navigation from "../Navbar/Navigation";
 import { BACKEND_URL } from "../../constants/constants";
 
 const CLIENT_ID = "anahuac";
-const RESTAURANT_SLUG = "exce-store ";
+const RESTAURANT_SLUG = "rricura-tamales";
 import "./MenuGrid.css";
 
 function Menu() {
