@@ -171,7 +171,7 @@ useEffect(() => {
         <title>The Best Tamales in Atlanta & Brookhaven</title>
         <meta
           name="description"
-          content="Thanksgiving dinner delivered to your door hot & ready to eat."
+          content="Order tamales for your Thanksgiving dinner today, authentic Mexican flavor for your Brookhaven & Atlanta neighbors."
         />
       </Helmet>
 
@@ -239,7 +239,7 @@ useEffect(() => {
 </a>
             </div>
             <div className="hero-title">
-              <h1>TAMALES FOR THE HOLIDAYS</h1>
+              <h1>Make your holidays special with authentic homemade Mexican tamales from Rricura!</h1>
             </div>
   <div className="hero-btn">
               

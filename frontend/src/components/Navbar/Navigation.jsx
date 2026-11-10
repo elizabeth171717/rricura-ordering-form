@@ -14,7 +14,7 @@ const Navigation = () => {
     <>
     <div className="marquee">
       <div className="marquee-content">
-     ORDER YOUR THANKSGIVING TAMALES TODAY, AUTHENTIC MEXICAN FLAVOR FOR YOUR TABLE!!!
+     ORDER TAMALES FOR YOUR THANKSGIVING DINNER TODAY, AUTHENTIC MEXICAN FLAVOR FOR BROOKHAVEN & ATLANTA NEIGHBORS!!!
     
       </div>
     </div>
