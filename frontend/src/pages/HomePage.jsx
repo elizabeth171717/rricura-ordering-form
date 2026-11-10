@@ -239,7 +239,7 @@ useEffect(() => {
 </a>
             </div>
             <div className="hero-title">
-              <h1>Make your holidays special with authentic homemade Mexican tamales from Rricura!</h1>
+              <h1>Make your THANKSGIVING special with authentic homemade Mexican tamales from Rricura!</h1>
             </div>
   <div className="hero-btn">
               
