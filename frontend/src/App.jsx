@@ -65,7 +65,7 @@ function App() {
             <Route index element={<TamaleBuilder />} />
 
             {/* 👇 NESTED SECTIONS */}
-            <Route path="tamales" element={<TamaleBuilder />} />
+            
             <Route path="drinks" element={<DrinkSection />} />
             <Route path="sides" element={<SidesSection />} />
             <Route path="antojos" element={<AntojosSection />} />
