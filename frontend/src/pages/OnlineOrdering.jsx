@@ -1,11 +1,69 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Navigation from "../components/Navbar/Navigation";
 
 import Footer from "../components/Footer/Footer";
 
 const OnlineOrdering = () => {
+  const location = useLocation();
+ const currentPath = location.pathname.replace(/\/+$/, "");
+
+ const seoPages = {
+    "/OnlineOrdering": {
+      title: "Authentic Mexican Tamales for Catering | Rricura",
+      description:
+        "Order authentic homemade Mexican tamales from Rricura in Brookhaven and Atlanta, GA."
+    },
+
+    "/OnlineOrdering/drinks": {
+      title: "Mexican Drinks for Catering | Rricura",
+      description:
+        "Add refreshing Mexican drinks to your catering order from Rricura in Brookhaven and Atlanta."
+    },
+
+    "/OnlineOrdering/guisados": {
+      title: "Authentic Mexican Guisados | Rricura",
+      description:
+        "Order authentic Mexican guisados for your next gathering or event in Atlanta and Brookhaven."
+    },
+
+    "/OnlineOrdering/sides": {
+      title: "Mexican Catering Sides | Rricura",
+      description:
+        "Complete your Mexican catering order with delicious sides from Rricura in Atlanta."
+    },
+
+    "/OnlineOrdering/antojos": {
+      title: "Authentic Mexican Antojitos | Rricura",
+      description:
+        "Explore authentic Mexican antojitos from Rricura for your next gathering or celebration."
+    },
+
+    "/OnlineOrdering/soups": {
+      title: "Authentic Mexican Soups | Rricura",
+      description:
+        "Order traditional Mexican soups from Rricura in Brookhaven and Atlanta, GA."
+    }
+  };
+
+  const seo = seoPages[currentPath] || seoPages["/OnlineOrdering"];
+
+  const canonicalUrl = `https://www.rricuratamales.com${currentPath}`;
   return (
     <>
+        <Helmet>
+    <title>{seo.title}</title>
+
+    <meta
+      name="description"
+      content={seo.description}
+    />
+
+    <link
+      rel="canonical"
+      href={canonicalUrl}
+    />
+  </Helmet>
       <Navigation />
       <div className="title-container">
 <h3>DROP-OFF CATERING AVIALABLE 6 DAYS A WEEK "MONDAY- SATURDAY"  FROM 8:00AM  TO 9:00PM .
