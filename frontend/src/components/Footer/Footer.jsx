@@ -23,7 +23,7 @@ const Footer = () => {
           <FontAwesomeIcon icon={faFacebook} style={{ fontSize: "1.50rem" }} />
         </a>
         <a
-          href="https://www.instagram.com/r_ricura/"
+          href="https://www.instagram.com/rricura_tamales?psln=MXV3MDJxYmN6bHo0Ng=="
           target="_blank"
           rel="noopener noreferrer"
         >

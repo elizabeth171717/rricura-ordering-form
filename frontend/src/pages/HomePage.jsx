@@ -192,7 +192,7 @@ useEffect(() => {
                 />
               </a>
               <a
-                href="https://www.instagram.com/r_ricura/"
+                href="https://www.instagram.com/rricura_tamales?psln=MXV3MDJxYmN6bHo0Ng=="
                 target="_blank"
                 rel="noopener noreferrer"
               >
